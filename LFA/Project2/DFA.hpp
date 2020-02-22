@@ -18,7 +18,7 @@
  *  5. Last line contains szF number  -> the ending states
 **/
 
-const string EPSILON = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ1234567890";
+const std::string EPSILON = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ1234567890";
 
 class DFA
 {

@@ -77,6 +77,9 @@ bool DFA::IsAccepted(const string & s) const
 DFA DFA::Minimize() const
 {
     int Q = edges.size();
+    int cnt_states = 0;
+    int id_end_nodes = -1, not_end_nodes = -1;
+
     map <int, vector <int>> states;
     vector <int> node_state(Q);
 
@@ -84,19 +87,22 @@ DFA DFA::Minimize() const
         if (!reachable[i])
             continue;
         if (end_nodes.find(i) != end_nodes.end()) {
-            node_state[i] = 1;
-            states[1].push_back(i);
+            if (id_end_nodes == -1)
+                id_end_nodes = cnt_states++;
+            node_state[i] = id_end_nodes;
+            states[id_end_nodes].push_back(i);
         }
         else {
-            node_state[i] = 0;
-            states[0].push_back(i);
+            if (not_end_nodes == -1)
+                not_end_nodes = cnt_states++;
+            node_state[i] = not_end_nodes;
+            states[not_end_nodes].push_back(i);
         }
     }
 
     // while there is at least one class for which a caracter of epsilon does not send all 
     // nodes in the same class, I have to break it in half
 
-    int cnt_states = 2;
     auto delta = [&](int nod, char c) {
         if (edges[nod].find(c) == edges[nod].end())
             return -1;
@@ -122,6 +128,8 @@ DFA DFA::Minimize() const
                         int where = (given ? cnt_states++ : st);
                         given = 1;
                         states[where] = i.second;
+                        for (auto x : i.second)
+                            node_state[x] = where;
                     }
                 }
             }
@@ -130,9 +138,18 @@ DFA DFA::Minimize() const
 
     /// construction of new DFA
     vector <map <char, int>> new_edges(cnt_states);
-    /// There is a problem when there is no non-ending node for eq, as there won't be
-    // any node with state=0
-    TODO   
+    set <int> new_end_nodes;
+    int new_start_node = node_state[start_node];
+
+    for (int i = 0; i < cnt_states; i++) {
+        int x = states[i][0];
+        if (end_nodes.find(x) != end_nodes.end())
+            new_end_nodes.insert(i);
+        for (auto tr : edges[x])
+            new_edges[i][tr.first] = node_state[tr.second];
+    }
+
+    return DFA(new_edges, new_start_node, new_end_nodes);
 }
 
 istream & operator>> (istream & in, DFA & dfa)
