@@ -1,3 +1,4 @@
 DataAnalysis/daily_engagement_full.csv
 .vscode/
 *.gch
+*.out
