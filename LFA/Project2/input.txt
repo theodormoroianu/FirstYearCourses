@@ -1,8 +1,34 @@
-5 4
+3 9
+0 0 a  
+0 0 b
+0 1 c
+1 0 a
+1 2 b
+1 2 c
+2 2 a 
+2 2 b
+2 2 c
+0
+2
+0 1
+
+
+
+5 10
+
 1 2 a
-2 1 d
-1 0 v
+2 1 b
+1 0 c
 3 1 a
+
 2
 2
 2 3
+
+5 nodes, 4 edges
+Edge from 1 to 2 with color a
+Edge from 2 to 1 with color d
+Edge from 1 to 0 with color v
+Edge from 3 to 1 with color a
+Starting node is 2
+Ending nodes are { 2, 3 }

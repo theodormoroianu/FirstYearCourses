@@ -9,6 +9,13 @@ void Assert(bool x)
 
 void DFA::compute_reachability() 
 {
+    // if there are no nodes (I have an empty DFA)
+    // I add a virtual node with no edges and no ending_states
+    if (edges.empty()) {
+        edges.emplace_back();
+        start_node = 0;
+    }
+
     int Q = edges.size();
     vector <bool> reachable_from_start(Q, 0);
     vector <bool> reachable_from_end(Q, 0);
@@ -49,12 +56,16 @@ void DFA::compute_reachability()
         }
     }
 
+    // a node is reachable if it sees both starting and ending nodes
     reachable = vector <bool> (Q);
     for (int i = 0; i < Q; i++)
         reachable[i] = (reachable_from_end[i] & reachable_from_start[i]);
 }
 
-DFA::DFA() : start_node(-1) { }
+DFA::DFA()
+{
+    compute_reachability();
+}
 
 
 DFA::DFA(vector <map <char, int>> edges, int start_node, set <int> end_nodes) :
@@ -103,8 +114,9 @@ DFA DFA::Minimize() const
     // while there is at least one class for which a caracter of epsilon does not send all 
     // nodes in the same class, I have to break it in half
 
+    // which state a node with an edge is going to (-1 if none)
     auto delta = [&](int nod, char c) {
-        if (edges[nod].find(c) == edges[nod].end())
+        if (edges[nod].find(c) == edges[nod].end() || !reachable[edges[nod].at(c)])
             return -1;
         return node_state[edges[nod].at(c)];
     };
@@ -146,7 +158,8 @@ DFA DFA::Minimize() const
         if (end_nodes.find(x) != end_nodes.end())
             new_end_nodes.insert(i);
         for (auto tr : edges[x])
-            new_edges[i][tr.first] = node_state[tr.second];
+            if (reachable[tr.second])
+                new_edges[i][tr.first] = node_state[tr.second];
     }
 
     return DFA(new_edges, new_start_node, new_end_nodes);
