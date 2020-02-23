@@ -3,7 +3,7 @@
 ## Univ courses
 
 1. LFA - Limbaje formale si automate
-2. TehniciWeb - Tehnici de programare web
+2. [Tehnici de Programare Web](https://github.com/WebToLearn/laborator-tehnici-web)
 
 ## Online courses
 
