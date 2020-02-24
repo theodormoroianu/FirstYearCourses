@@ -17,3 +17,7 @@ File [daily_engagement_full](https://www.udacity.com/api/nodes/5430778793/supple
 2. [Introduction to Cybersecurity](https://classroom.udacity.com/courses/ud1337)
 
 3. [Root-Me](https://www.root-me.org/en/Challenges/App-Script/)
+
+## Good2Know
+
+* [GDB CheatSheet](https://darkdust.net/files/GDB%20Cheat%20Sheet.pdf)
