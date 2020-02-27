@@ -69,10 +69,6 @@ hr {
 
 .resume-date-container {
     padding: 3px 10px 3px 10px;
-    /* border-color: rgb(185, 184, 184);
-    /* border-width: 5px; */
-    /* border-style: solid;
-    text-align: right; */
     background-color: rgb(89, 222, 255);
     border-radius: 5px;
 }
@@ -82,5 +78,32 @@ hr {
 }
 
 .resume-date--yellow {
-    background-color: yellow;
+    background-color: rgb(255, 255, 67);
+}
+
+.resume-subtitle {
+    font-weight: bold;
+    font-size: 22px;
+    white-space:nowrap;
+    margin-right: 25px;
+}
+
+.resume-aside {
+    border-left: 2px solid #f1f1f1;
+    padding-left: 10px;
+}
+
+.skills-item {
+    border: 2px solid rgb(179, 179, 179);
+    border-radius: 10px;
+    padding: 0px 5px 0px 5px;
+    margin: 10px 5px 10px 5px;
+    font-weight: bolder;
+    color: white;
+}
+
+.photoshop {
+    margin-right: 20px;
+    border-radius: 10px;
+    background-color: #c0392b;
 }
