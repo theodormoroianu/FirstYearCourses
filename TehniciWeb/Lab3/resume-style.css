@@ -1,0 +1,246 @@
+* {
+  font-family: 'Open Sans', ;
+  font-family: 'Lato', ;
+}
+
+.title {
+    margin: 0p;
+    font-family: 'Lato';
+    font-size: 38px;
+    font-weight: bold;
+    text-align: center;
+    text-transform: uppercase;
+}
+
+.subtitle {
+    color: #999;
+    margin-bottom: 1em;
+    font-family: 'Lato';
+    font-size: 1.5em;
+    text-transform: uppercase;
+    text-align: center;
+}
+
+.menu {
+    width: 990px;
+    margin: 80px auto 0 auto;
+    text-align: center;
+}
+
+.menu-item {
+    display: inline-block;
+    margin-right: 10px;
+    margin-left: 20px;
+    padding: 10px 40px 10px 40px;
+    background-color: white;
+    text-decoration: none;
+    font-weight: bold;
+    text-transform: uppercase;
+    font-family: 'Lato';
+    font-size: 14px;
+    color: #999;
+    vertical-align: bottom;
+}
+
+.menu-item-active {
+    position: relative;
+    bottom: -1px;
+    color: #c0392b;
+    padding: 15px 40px 15px 40px;
+    margin-top: 0;
+}
+
+.resume-content {
+    margin-right: 20px;
+}
+
+hr {
+    margin-top: 25px;
+    margin-bottom: 25px;
+    border: 1px;
+    border-color: #f1f1f1;
+    border-style: solid;
+}
+
+.resume-date {
+    display: flex;
+    justify-content: flex-end;
+}
+
+.resume-date-container {
+    padding: 3px 10px 3px 10px;
+    background-color: rgb(89, 222, 255);
+    border-radius: 5px;
+    color: white;
+}
+
+.resume-date--green {
+    background-color: rgb(0, 255, 0);
+}
+
+.resume-date--yellow {
+    background-color: rgb(255, 255, 67);
+}
+
+.resume-subtitle {
+    font-weight: bold;
+    font-size: 22px;
+    white-space:nowrap;
+    margin-right: 25px;
+}
+
+.resume-aside {
+    border-left: 2px solid #f1f1f1;
+    padding-left: 10px;
+}
+
+.skills-item {
+    border: 2px solid rgb(179, 179, 179);
+    /*border-radius: 5px;
+    padding: 0px 5px 0px 5px; */
+    margin: 10px 5px 10px 5px;
+    font-weight: bolder;
+    color: white;
+    /*background-color: #c0392b;*/
+}
+
+.skills-bg {
+    position: relative;
+}
+
+.skills-bg:before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    bottom: 0;
+    right: 0;
+    background-image: linear-gradient(135deg,rgba(255,255,255,.15) 25%,transparent 25%,transparent 50%,rgba(255,255,255,.15) 50%,rgba(255,255,255,.15) 75%,transparent 75%,transparent); 
+    background-size: 5rem 5rem;
+    z-index: 1;
+    border-top-right-radius: 8px;
+    border-bottom-right-radius: 8px;
+    border-top-left-radius: 20px;
+    border-bottom-left-radius: 20px;
+    overflow: hidden;
+}
+
+  .photoshop {
+    width: 10;
+    padding-right: 20px;
+    background-color: #c0392b;
+}
+
+.ilustrator {
+    width: 10;
+    padding-right: 20px;
+    background-color: #2bc037;
+}
+
+.indesign {
+    width: 10;
+    padding-right: 20px;
+    background-color: #2b41c0;
+}
+
+.xd {
+    width: 10;
+    padding-right: 20px;
+    background-color: #b6c02bbe;
+}
+
+.sketch {
+    width: 10;
+    padding-right: 20px;
+    background-color: #c0392b;
+}
+
+.office {
+    width: 10;
+    padding-right: 20px;
+    background-color: #2ba2c0;
+}
+
+.linux {
+    width: 10;
+    padding-right: 20px;
+    background-color: #2bc05d;
+}
+
+.h3 {
+    width: 10;
+    padding-right: 20px;
+    background-color: #c0392b;
+}
+
+.ul {
+    width: 10;
+    padding-right: 20px;
+    background-color: #8cc02b;
+}
+
+.li {
+    width: 10;
+    padding-right: 20px;
+    background-color: #2b71c0;
+}
+
+.user {
+    width: 10;
+    padding-right: 20px;
+    background-color: #2d2bc0;
+}
+
+.typography {
+    width: 10;
+    padding-right: 20px;
+    background-color: #c0392b;
+}
+
+.web {
+    width: 10;
+    padding-right: 20px;
+    background-color: #c0392b;
+}
+
+.h3 {
+    width: 10;
+    padding-right: 20px;
+    background-color: #b6c02b;
+}
+
+.li {
+    width: 10;
+    padding-right: 20px;
+    background-color: #2bc0a7;
+}
+
+.html {
+    width: 10;
+    padding-right: 20px;
+    background-color: green;
+}
+
+.php {
+    width: 10;
+    padding-right: 20px;
+    background-color: #c0392b;
+}
+
+.javascript {
+    width: 10;
+    padding-right: 20px;
+    background-color: #912bc0;
+}
+
+.ruby {
+    width: 10;
+    padding-right: 20px;
+    background-color: #2bc058;
+}
+
+.python {
+    width: 10;
+    padding-right: 20px;
+    background-color: #2b7dc0;
+}
