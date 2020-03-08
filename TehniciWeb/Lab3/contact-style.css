@@ -1,0 +1,23 @@
+@media (max-width: 768px) {
+    .contact-container {
+        flex-direction: column;
+        justify-content: space-evenly;
+    }
+}
+@media (min-width: 768px) {
+    .contact-container {
+        flex-direction: row;
+        justify-content: space-evenly;
+    }
+}
+
+.contact-item {
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+}
+
+.icon {
+    font-size: 100px;
+}
