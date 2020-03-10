@@ -12,11 +12,11 @@ mt19937 rnd(time(0));
 
 int main()
 {
-    auto v = Tester(SkipListSort, 1000000, "BubbleSort");
+    auto v = Tester(QuickSort, 1000000, "QuickSort");
 
     cout << "Benchmarks:\n";
     for (auto i : v)
-        cout << "For n = " << i.first << ", CountSort took " << i.second << " second\n";
+        cout << "For n = " << i.first << ", QuickSort took " << i.second << " second\n";
 
     return 0;
 }
