@@ -1,37 +1,40 @@
 #include "DFA.hpp"
+#include "NFA.hpp"
 using namespace std;
 
-void Assert(bool x)
-{
-    if (!x)
-        throw exception();
+namespace {
+    void Assert(bool x)
+    {
+        if (!x)
+            throw exception();
+    }
 }
 
 void DFA::compute_reachability() 
 {
     // if there are no nodes (I have an empty DFA)
     // I add a virtual node with no edges and no ending_states
-    if (edges.empty()) {
-        edges.emplace_back();
-        start_node = 0;
+    if (edges_.empty()) {
+        edges_.emplace_back();
+        start_node_ = 0;
     }
 
-    int Q = edges.size();
+    int Q = edges_.size();
     vector <bool> reachable_from_start(Q, 0);
     vector <bool> reachable_from_end(Q, 0);
     vector <vector <int>> rev_edges(Q);
 
     for (int i = 0; i < Q; i++)
-        for (auto it : edges[i])
+        for (auto it : edges_[i])
             rev_edges[it.second].push_back(i);
 
-    vector <int> bfs = { start_node };
-    reachable_from_start[start_node] = 1;
+    vector <int> bfs = { start_node_ };
+    reachable_from_start[start_node_] = 1;
 
     // compute reachable_from_start (aka if i can get there from start)
     for (int it = 0; it < (int)bfs.size(); it++) {
         int node = bfs[it];
-        for (auto tranz : edges[node]) {
+        for (auto tranz : edges_[node]) {
             if (!reachable_from_start[tranz.second]) {
                 reachable_from_start[tranz.second] = 1;
                 bfs.push_back(tranz.second);
@@ -41,7 +44,7 @@ void DFA::compute_reachability()
 
     // compute reachable_from_end (aka if i can get to an end_node)
     bfs.clear();
-    for (auto i : end_nodes) {
+    for (auto i : end_nodes_) {
         bfs.push_back(i);
         reachable_from_end[i] = 1;
     }
@@ -57,9 +60,9 @@ void DFA::compute_reachability()
     }
 
     // a node is reachable if it sees both starting and ending nodes
-    reachable = vector <bool> (Q);
+    reachable_ = vector <bool> (Q);
     for (int i = 0; i < Q; i++)
-        reachable[i] = (reachable_from_end[i] & reachable_from_start[i]);
+        reachable_[i] = (reachable_from_end[i] & reachable_from_start[i]);
 }
 
 DFA::DFA()
@@ -69,25 +72,25 @@ DFA::DFA()
 
 
 DFA::DFA(vector <map <char, int>> edges, int start_node, set <int> end_nodes) :
-    edges(edges), start_node(start_node), end_nodes(end_nodes)
+    edges_(edges), start_node_(start_node), end_nodes_(end_nodes)
 {
     compute_reachability();
 }
 
 bool DFA::IsAccepted(const string & s) const
 {
-    int state = start_node;
+    int state = start_node_;
     for (auto i : s) {
-        if (edges[state].find(i) == edges[state].end())
+        if (edges_[state].find(i) == edges_[state].end())
             return 0;
-        state = edges[state].at(i);
+        state = edges_[state].at(i);
     }
-    return end_nodes.find(state) != end_nodes.end();
+    return end_nodes_.find(state) != end_nodes_.end();
 }
 
 DFA DFA::Minimize() const
 {
-    int Q = edges.size();
+    int Q = edges_.size();
     int cnt_states = 0;
     int id_end_nodes = -1, not_end_nodes = -1;
 
@@ -95,9 +98,9 @@ DFA DFA::Minimize() const
     vector <int> node_state(Q);
 
     for (int i = 0; i < Q; i++) {
-        if (!reachable[i])
+        if (!reachable_[i])
             continue;
-        if (end_nodes.find(i) != end_nodes.end()) {
+        if (end_nodes_.find(i) != end_nodes_.end()) {
             if (id_end_nodes == -1)
                 id_end_nodes = cnt_states++;
             node_state[i] = id_end_nodes;
@@ -116,9 +119,9 @@ DFA DFA::Minimize() const
 
     // which state a node with an edge is going to (-1 if none)
     auto delta = [&](int nod, char c) {
-        if (edges[nod].find(c) == edges[nod].end() || !reachable[edges[nod].at(c)])
+        if (edges_[nod].find(c) == edges_[nod].end() || !reachable_[edges_[nod].at(c)])
             return -1;
-        return node_state[edges[nod].at(c)];
+        return node_state[edges_[nod].at(c)];
     };
 
     for (bool ok = 1; (ok ^= 1) == 0; ) {
@@ -151,18 +154,68 @@ DFA DFA::Minimize() const
     /// construction of new DFA
     vector <map <char, int>> new_edges(cnt_states);
     set <int> new_end_nodes;
-    int new_start_node = node_state[start_node];
+    int new_start_node = node_state[start_node_];
 
     for (int i = 0; i < cnt_states; i++) {
         int x = states[i][0];
-        if (end_nodes.find(x) != end_nodes.end())
+        if (end_nodes_.find(x) != end_nodes_.end())
             new_end_nodes.insert(i);
-        for (auto tr : edges[x])
-            if (reachable[tr.second])
+        for (auto tr : edges_[x])
+            if (reachable_[tr.second])
                 new_edges[i][tr.first] = node_state[tr.second];
     }
 
     return DFA(new_edges, new_start_node, new_end_nodes);
+}
+
+DFA operator~(const DFA & dfa)
+{
+    DFA ans = dfa;
+    int q = ans.edges_.size();
+    for (int i = 0; i < q; i++) {
+        if (ans.end_nodes_.find(i) != ans.end_nodes_.end())
+            ans.end_nodes_.erase(i);
+        else
+            ans.end_nodes_.insert(i);
+    }
+    return ans;
+}
+
+DFA operator|(const DFA & a, const DFA & b)
+{
+    int sz_a = a.edges_.size(), sz_b = b.edges_.size();
+    vector <map <char, vector <int>>> new_edges(sz_a + sz_b + 1);
+    
+    /// add edges of a
+    for (int i = 0; i < sz_a; i++)
+        for (auto e : a.edges_[i])
+            new_edges[i + 1][e.first].push_back(e.second + 1);
+
+    for (int i = 0; i < sz_a; i++)
+        for (auto e : a.edges_[i])
+            new_edges[i + sz_a + 1][e.first].push_back(e.second + sz_a + 1);
+    
+    new_edges[0][0].push_back(1);
+    new_edges[0][0].push_back(sz_a + 1);
+
+    int new_start_node = 0;
+    set <int> new_end_nodes;
+    
+    for (auto i : a.end_nodes_)
+        new_end_nodes.insert(i);
+    for (auto i : b.end_nodes_)
+        new_end_nodes.insert(i);
+
+    NFA reuniune(new_edges, new_start_node, new_end_nodes);
+
+    return static_cast <DFA> (reuniune);
+}
+
+
+DFA operator&(const DFA & a, const DFA & b)
+{
+    /// a & b = ~((~a) | (~b))
+    return ~((~a) | (~b));
 }
 
 istream & operator>> (istream & in, DFA & dfa)
@@ -174,7 +227,7 @@ istream & operator>> (istream & in, DFA & dfa)
         Assert(Q >= 1);
         Assert(szTranz >= 0);
 
-        dfa.edges = vector <map <char, int>> (Q);
+        dfa.edges_ = vector <map <char, int>> (Q);
         
         while (szTranz--) {
             int X, Y;
@@ -182,12 +235,12 @@ istream & operator>> (istream & in, DFA & dfa)
             in >> X >> Y >> c;
 
             Assert(min(X, Y) >= 0 && max(X, Y) < Q);
-            Assert(dfa.edges[X].find(c) == dfa.edges[X].end());
-            dfa.edges[X][c] = Y;
+            Assert(dfa.edges_[X].find(c) == dfa.edges_[X].end());
+            dfa.edges_[X][c] = Y;
         }
 
-        in >> dfa.start_node;
-        Assert(dfa.start_node >= 0 && dfa.start_node < Q);
+        in >> dfa.start_node_;
+        Assert(dfa.start_node_ >= 0 && dfa.start_node_ < Q);
 
         int szF;
         in >> szF;
@@ -196,8 +249,8 @@ istream & operator>> (istream & in, DFA & dfa)
         while (szF--) {
             int X;
             in >> X;
-            Assert(X >= 0 && X < Q && dfa.end_nodes.find(X) == dfa.end_nodes.end());
-            dfa.end_nodes.insert(X);
+            Assert(X >= 0 && X < Q && dfa.end_nodes_.find(X) == dfa.end_nodes_.end());
+            dfa.end_nodes_.insert(X);
         }
     }
     catch (...) {
@@ -215,22 +268,22 @@ istream & operator>> (istream & in, DFA & dfa)
 ostream & operator<< (ostream & out, DFA & dfa)
 {
     out << "DFA at memory " << &dfa << ":\n";
-    out << "Number of states: " << dfa.edges.size() << endl;
-    out << "Starting state: " << dfa.start_node << endl;
+    out << "Number of states: " << dfa.edges_.size() << endl;
+    out << "Starting state: " << dfa.start_node_ << endl;
     out << "Ending states: " << "{ ";
-    for (auto i : dfa.end_nodes)
+    for (auto i : dfa.end_nodes_)
         out << i << ' ';
     out << "}\n";
     
     out << "Reachable nodes: " << " { ";
-    for (int i = 0; i < (int)dfa.edges.size(); i++)
-        if (dfa.reachable[i])
+    for (int i = 0; i < (int)dfa.edges_.size(); i++)
+        if (dfa.reachable_[i])
             out << i << ' ';
     out << "}\n";
-    for (int i = 0; i < (int)dfa.edges.size(); i++) {
+    for (int i = 0; i < (int)dfa.edges_.size(); i++) {
         out << "Edges from " << i << ": ";
         string sep = "";
-        for (auto it : dfa.edges[i]) {
+        for (auto it : dfa.edges_[i]) {
             out << sep << "{ " << it.first << ", " << it.second << " }";
             sep = ", ";
         }

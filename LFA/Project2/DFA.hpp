@@ -1,3 +1,6 @@
+#ifndef DFA_
+#define DFA_
+
 #include <bits/stdc++.h>
 
 /**
@@ -23,13 +26,13 @@ const std::string EPSILON = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXY
 class DFA
 {
     // edges store the transition function delta
-    std::vector <std::map <char, int>> edges;
+    std::vector <std::map <char, int>> edges_;
     // a state is rechable if it can get to end_nodes and is accesibile from start_node
-    std::vector <bool> reachable;
+    std::vector <bool> reachable_;
     // start_node = q0
-    int start_node;
+    int start_node_;
     /// end_nodes = F
-    std::set <int> end_nodes;
+    std::set <int> end_nodes_;
     
     void compute_reachability();
 
@@ -44,6 +47,12 @@ public:
     // DFA minimization
     DFA Minimize() const;
 
+    friend DFA operator~(const DFA & dfa);
+    friend DFA operator|(const DFA & a, const DFA & b);
+    friend DFA operator&(const DFA & a, const DFA & b);
+
     friend std::istream & operator>> (std::istream & in, DFA & dfa);
     friend std::ostream & operator<< (std::ostream & out, DFA & dfa);
 };
+
+#endif // DFA_
