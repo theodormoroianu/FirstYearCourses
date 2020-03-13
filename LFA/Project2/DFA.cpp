@@ -2,6 +2,8 @@
 #include "NFA.hpp"
 using namespace std;
 
+const string DFA::EPSILON = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ1234567890";
+
 namespace {
     void Assert(bool x)
     {
@@ -184,19 +186,19 @@ DFA operator~(const DFA & dfa)
 DFA operator|(const DFA & a, const DFA & b)
 {
     int sz_a = a.edges_.size(), sz_b = b.edges_.size();
-    vector <map <char, vector <int>>> new_edges(sz_a + sz_b + 1);
+    vector <map <char, set <int>>> new_edges(sz_a + sz_b + 1);
     
     /// add edges of a
     for (int i = 0; i < sz_a; i++)
         for (auto e : a.edges_[i])
-            new_edges[i + 1][e.first].push_back(e.second + 1);
+            new_edges[i + 1][e.first].insert(e.second + 1);
 
     for (int i = 0; i < sz_a; i++)
         for (auto e : a.edges_[i])
-            new_edges[i + sz_a + 1][e.first].push_back(e.second + sz_a + 1);
+            new_edges[i + sz_a + 1][e.first].insert(e.second + sz_a + 1);
     
-    new_edges[0][0].push_back(1);
-    new_edges[0][0].push_back(sz_a + 1);
+    new_edges[0][0].insert(1);
+    new_edges[0][0].insert(sz_a + 1);
 
     int new_start_node = 0;
     set <int> new_end_nodes;

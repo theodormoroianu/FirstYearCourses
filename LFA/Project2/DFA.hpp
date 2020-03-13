@@ -21,10 +21,11 @@
  *  5. Last line contains szF number  -> the ending states
 **/
 
-const std::string EPSILON = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ1234567890";
 
 class DFA
 {
+    static const std::string EPSILON;
+
     // edges store the transition function delta
     std::vector <std::map <char, int>> edges_;
     // a state is rechable if it can get to end_nodes and is accesibile from start_node

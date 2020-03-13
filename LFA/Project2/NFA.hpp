@@ -17,12 +17,14 @@
 
 class NFA
 {
-    std::vector <std::map <char, std::vector <int>>> edges_;
+    static const std::string EPSILON;
+
+    std::vector <std::map <char, std::set <int>>> edges_;
     int start_node_;
     std::set <int> end_nodes_;
 
 public:
-    NFA(std::vector <std::map <char, std::vector <int>>>, int start_node, std::set <int> end_nodes);
+    NFA(std::vector <std::map <char, std::set <int>>>, int start_node, std::set <int> end_nodes);
     
     explicit operator DFA();
 };
