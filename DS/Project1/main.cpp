@@ -9,8 +9,6 @@
 #include "HeapSort.hpp"
 using namespace std;
 
-mt19937 rnd(time(0));
-
 vector <pair <void(*)(int[], int), string>> functions = {
     { SkipListSort, "SkipListSort" },
     { CountSort,    "CountSort" },
@@ -41,7 +39,7 @@ void Benchmark()
 
     for (int l = 10; l < n_max; l += 2) {
         cout << "\n\nFor a length of " << (1 << l) << " (2 ^ " << l << "), sorting algorithms took:\n";
-        for (int i = 0; i < results.size(); i++) {
+        for (int i = 0; i < (int)results.size(); i++) {
             cout << "   " << i + 1 << ". " << functions[i].second << ":   ";
             if (l < (int)results[i].size())
                 cout << results[i][l] << " seconds" << endl;

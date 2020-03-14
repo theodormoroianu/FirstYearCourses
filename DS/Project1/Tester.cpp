@@ -2,6 +2,10 @@
 #include "Tester.hpp"
 using namespace std;
 
+namespace {
+    mt19937 rnd(time(0));
+}
+
 vector <double> Tester(void (*f)(int [], int), int vmax, double t_max)
 {
     vector <double> ans;

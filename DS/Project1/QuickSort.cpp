@@ -2,6 +2,9 @@
 #include "QuickSort.hpp"
 using namespace std;
 
+namespace {
+    mt19937 rnd(time(0));
+}
 
 void QuickSort(int v[], int n)
 {

@@ -10,8 +10,6 @@
 #include <map>
 #include <vector>
 
-extern std::mt19937 rnd;
-
 std::vector <double> Tester(void (*)(int [], int), int, double = 2.);
 
 #endif // _Tester
