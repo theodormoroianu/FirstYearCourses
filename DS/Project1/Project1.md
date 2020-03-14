@@ -9,3 +9,5 @@ I implemented:
 1. RadixSort
 1. SkipListSort (sorting with a SkipList)
 1. HeapSort
+1. TreapSort
+1. AVLSort

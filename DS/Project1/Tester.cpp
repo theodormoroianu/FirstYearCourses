@@ -26,7 +26,7 @@ vector <double> Tester(void (*f)(int [], int), int vmax, double t_max)
            throw runtime_error("Function wasn't able to properly sort vector v");
         ans.push_back(duration);
         if (duration > t_max)
-            break;
+           break;
     }
     return ans;
 }

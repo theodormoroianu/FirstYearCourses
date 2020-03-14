@@ -4,10 +4,10 @@ using namespace std;
 
 void RadixSort(int v[], int n)
 {
-    const int BASE = 100000;
+    const int BASE = (1 << 20);
     vector <vector <int>> dump(BASE);
     
-    for (int p_act = 1, need = 1; (need ^= 1) == 0; p_act *= BASE) {
+    for (long long p_act = 1, need = 1; (need ^= 1) == 0; p_act *= BASE) {
         for (int i = 0; i < n; i++) {
             dump[(v[i] / p_act) % BASE].push_back(v[i]);
             need |= (v[i] / p_act >= BASE);

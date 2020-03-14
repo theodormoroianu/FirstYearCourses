@@ -7,6 +7,8 @@
 #include "BubbleSort.hpp"
 #include "RadixSort.hpp"
 #include "HeapSort.hpp"
+#include "TreapSort.hpp"
+#include "AVLSort.hpp"
 using namespace std;
 
 vector <pair <void(*)(int[], int), string>> functions = {
@@ -16,7 +18,9 @@ vector <pair <void(*)(int[], int), string>> functions = {
     { QuickSort,    "QuickSort" },
     { BubbleSort,   "BubbleSort" },
     { RadixSort,    "RadixSort" },
-    { HeapSort,     "HeapSort" }
+    { HeapSort,     "HeapSort" },
+    { TreapSort,    "TreapSort" },
+    { AVLSort,      "AVLSort" }
 };
 
 void Benchmark()
@@ -24,7 +28,7 @@ void Benchmark()
     /// VMAX is maximal value of an element. Change it for checking functions like CountSort or RadixSort 
     int VMAX = 10000000;
     /// TMAX is maximal time allowed for a sorting function
-    double TMAX = 0.1;
+    double TMAX = 0.5;
     int n_max = 0;
 
     vector <vector <double>> results;
@@ -51,6 +55,11 @@ void Benchmark()
 
 int main()
 {
+    // auto x = Tester(AVLSort, 1000);
+
+    // for (auto i : x)
+    //     cerr << i << ' ';
+    // return 0;
     Benchmark();
 
     return 0;
