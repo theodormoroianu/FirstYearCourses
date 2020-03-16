@@ -3,7 +3,7 @@
 using namespace std;
 
 namespace {
-    mt19937 rnd(0);
+    mt19937 rnd(time(0));
 }
 
 vector <double> Tester(void (*f)(int [], int), int vmax, double t_max)
