@@ -1,5 +1,5 @@
-#ifndef _BubbleSort
-#define _BubbleSort
+#ifndef BubbleSort_
+#define BubbleSort_
 
 /**
  * Simple bubble sort algorithm
@@ -10,4 +10,4 @@
 
 void BubbleSort(int [], int);
 
-#endif // _BubbleSort
+#endif // BubbleSort_

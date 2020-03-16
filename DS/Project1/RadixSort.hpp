@@ -1,5 +1,5 @@
-#ifndef _RadixSort
-#define _RadixSort
+#ifndef RadixSort_
+#define RadixSort_
 
 /**
  * Simple radix sort algorithm
@@ -10,4 +10,4 @@
 
 void RadixSort(int [], int);
 
-#endif // _RadixSort
+#endif // RadixSort_

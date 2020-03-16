@@ -1,5 +1,5 @@
-#ifndef _CountSort
-#define _CountSort
+#ifndef CountSort_
+#define CountSort_
 
 /**
  * Simple count sort algorithm
@@ -10,4 +10,4 @@
 
 void CountSort(int [], int);
 
-#endif // _CountSort
+#endif // CountSort_

@@ -170,7 +170,7 @@ DFA DFA::Minimize() const
     return DFA(new_edges, new_start_node, new_end_nodes);
 }
 
-DFA operator~(const DFA & dfa)
+DFA operator~(const DFA& dfa)
 {
     DFA ans = dfa;
     int q = ans.edges_.size();
@@ -183,7 +183,7 @@ DFA operator~(const DFA & dfa)
     return ans;
 }
 
-DFA operator|(const DFA & a, const DFA & b)
+DFA operator|(const DFA& a, const DFA& b)
 {
     int sz_a = a.edges_.size(), sz_b = b.edges_.size();
     vector <map <char, set <int>>> new_edges(sz_a + sz_b + 1);
@@ -214,10 +214,36 @@ DFA operator|(const DFA & a, const DFA & b)
 }
 
 
-DFA operator&(const DFA & a, const DFA & b)
+DFA operator&(const DFA& a, const DFA& b)
 {
     /// a & b = ~((~a) | (~b))
     return ~((~a) | (~b));
+}
+
+bool operator==(const DFA& a, const DFA& b)
+{
+    DFA minim1 = a.Minimize(), minim2 = b.Minimize();
+    /// vreau sa vad daca starile din minim1 si minim2 sunt identice
+    /// pana la permutare
+
+    if (minim1.edges_.size() != minim2.edges_.size())
+        return 0;
+
+    map <int, int> a_to_b, b_to_a;
+
+    auto verify = [&](int va, int vb) {
+        if (a_to_b.find(va) != a_to_b.end() && a_to_b[va] != vb)
+            return false;
+        if (b_to_a.find(vb) != b_to_a.end() && b_to_a[vb] != va)
+            return false;
+        a_to_b[va] = vb;
+        b_to_a[vb] = va;
+        return true;
+    };
+
+    // TODO
+
+    return true;
 }
 
 istream & operator>> (istream & in, DFA & dfa)

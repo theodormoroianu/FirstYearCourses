@@ -1,5 +1,5 @@
-#ifndef _Tester
-#define _Tester
+#ifndef Tester_
+#define Tester_
 
 /**
  * Testing function that receives a pointer to a sorting function and returns
@@ -12,4 +12,4 @@
 
 std::vector <double> Tester(void (*)(int [], int), int, double = 2.);
 
-#endif // _Tester
+#endif // Tester_

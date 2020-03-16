@@ -1,5 +1,5 @@
-#ifndef _MergeSort
-#define _MergeSort
+#ifndef MergeSort_
+#define MergeSort_
 
 /**
  * Simple merge sort algorithm
@@ -11,4 +11,4 @@
 
 void MergeSort(int [], int);
 
-#endif // _MergeSort
+#endif // MergeSort_

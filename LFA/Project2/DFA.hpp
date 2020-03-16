@@ -51,6 +51,7 @@ public:
     friend DFA operator~(const DFA & dfa);
     friend DFA operator|(const DFA & a, const DFA & b);
     friend DFA operator&(const DFA & a, const DFA & b);
+    friend bool operator==(const DFA & a, const DFA & b);
 
     friend std::istream & operator>> (std::istream & in, DFA & dfa);
     friend std::ostream & operator<< (std::ostream & out, DFA & dfa);

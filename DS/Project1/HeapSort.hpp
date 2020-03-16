@@ -1,5 +1,5 @@
-#ifndef _HeapSort
-#define _HeapSort
+#ifndef HeapSort_
+#define HeapSort_
 
 /**
  * Simple heap sort algorithm
@@ -11,4 +11,4 @@
 
 void HeapSort(int [], int);
 
-#endif // _HeapSort
+#endif // HeapSort_

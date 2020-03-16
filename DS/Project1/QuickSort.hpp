@@ -1,5 +1,5 @@
-#ifndef _QuickSort
-#define _QuickSort
+#ifndef QuickSort_
+#define QuickSort_
 
 /**
  * Simple quick sort algorithm
@@ -10,4 +10,4 @@
 
 void QuickSort(int [], int);
 
-#endif // _QuickSort
+#endif // QuickSort_

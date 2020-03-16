@@ -1,5 +1,5 @@
-#ifndef _SkipListSort
-#define _SkipListSort
+#ifndef SkipListSort_
+#define SkipListSort_
 
 /**
  * create-a-skip-list-and-sort-a-vector-with-it sort algorithm
@@ -10,4 +10,4 @@
 
 void SkipListSort(int [], int);
 
-#endif // _SkipListSort
+#endif // SkipListSort_
