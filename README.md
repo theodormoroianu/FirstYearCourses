@@ -2,11 +2,11 @@
 
 ## Courses at Univ
 
-1. LFA - Limbaje formale si automate
+1. [LFA - Limbaje formale si automate](LFA)
 
 2. [Tehnici de Programare Web](https://github.com/WebToLearn/laborator-tehnici-web)
 
-3. DS - Structuri de Date
+3. [DS - Structuri de Date](DS)
 
 ## Online Courses
 
