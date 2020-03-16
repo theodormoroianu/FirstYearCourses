@@ -15,3 +15,4 @@
 1. RadixSort
 1. SkipListSort
 1. TreapSort 
+1. SplayTreeSort
