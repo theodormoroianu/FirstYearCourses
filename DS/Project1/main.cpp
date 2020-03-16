@@ -9,35 +9,37 @@
 #include "HeapSort.hpp"
 #include "TreapSort.hpp"
 #include "AVLSort.hpp"
+#include "SplayTreeSort.hpp"
 using namespace std;
 
+void standard_sort(int v[], int n)
+{
+    sort(v, v + n);
+}
+
 vector <pair <void(*)(int[], int), string>> functions = {
-    { SkipListSort, "SkipListSort" },
-    { CountSort,    "CountSort" },
-    { MergeSort,    "MergeSort" },
-    { QuickSort,    "QuickSort" },
-    { BubbleSort,   "BubbleSort" },
-    { RadixSort,    "RadixSort" },
-    { HeapSort,     "HeapSort" },
-    { TreapSort,    "TreapSort" },
-    { AVLSort,      "AVLSort" }
+    { SkipListSort,   "SkipListSort" },
+    { CountSort,      "CountSort" },
+    { MergeSort,      "MergeSort" },
+    { QuickSort,      "QuickSort" },
+    { BubbleSort,     "BubbleSort" },
+    { RadixSort,      "RadixSort" },
+    { HeapSort,       "HeapSort" },
+    { TreapSort,      "TreapSort" },
+    { AVLSort,        "AVLSort" },
+    { SplayTreeSort,  "SplayTreeSort" }
 };
 
-void Benchmark()
+void Benchmark(int VMAX, double TMAX)
 {
-    /// VMAX is maximal value of an element. Change it for checking functions like CountSort or RadixSort 
-    int VMAX = 10000000;
-    /// TMAX is maximal time allowed for a sorting function
-    double TMAX = 0.5;
     int n_max = 0;
 
     vector <vector <double>> results;
     for (auto it : functions) {
-        cout << "Starting benchmark for " + it.second + " ...   ";
-        cout.flush();
-
+        cerr << "Starting benchmark for " + it.second + " ...   ";
+        
         results.push_back(Tester(it.first, VMAX, TMAX));
-        cout << "Done" << endl;
+        cerr << "Done" << endl;
         n_max = max(n_max, (int)results.back().size());
     }
 
@@ -55,12 +57,76 @@ void Benchmark()
 
 int main()
 {
-    // auto x = Tester(AVLSort, 1000);
+    // auto x = Tester(RadixSort, 5, 44);
 
     // for (auto i : x)
     //     cerr << i << ' ';
     // return 0;
-    Benchmark();
+    
+    auto sleep = [](int ml) {
+        this_thread::sleep_for(chrono::milliseconds(ml));
+    };
+
+    cout << "Welcome to this super awesome project!\n\
+    Here you will see more sorting algorithms than what you ever wished for ... " << endl;
+    sleep(500);
+    cout << "Whether you like it or not ..." << endl;
+    sleep(200);
+
+    auto message = [&](string s, int t) {
+        cout << s << ' ';
+        cout.flush();
+        for (int i = 0; i < 10; i++) {
+            cout << '.';
+            cout.flush();
+            sleep(t);
+        }
+        cout << " done!\n" << endl;
+    };
+
+    message("Loading stuff", 300);
+    message("Loading other stuff", 400);
+    message("Still loading some stuff", 500);
+    message("Personalizing UI experience", 600);
+
+    cout << "Searching for available sorting algorithms ... " << endl;
+    for (auto i : functions) {
+        sleep(1000);
+        cout << "Found " << i.second << endl;
+    }
+    cout << "\n\n";
+
+    cout << "Available commands:\n\
+    1. Benchmark [Max Value] [Max Time (miliseconds)]\n\
+    2. Run [Sorting Algorithm] [Input File]\n\
+    3. Exit" << endl;
+
+    while (true) {
+        cout << " $ ";
+        cout.flush();
+        string op;
+        cin >> op;
+
+        if (op[0] == 'b' || op[0] == 'B') {
+            int vmax, tmax;
+            cin >> vmax >> tmax;
+            Benchmark(vmax, tmax / 1000.);
+        }
+        else if (op[0] == 'r' || op[0] == 'R') {
+            string algorithm, file;
+            cin >> algorithm >> file;
+
+            bool found = 0;
+            for (auto i : functions)
+                if (i.second == algorithm)
+                    ExecTime(i.first, file), found = 1;
+            
+            if (!found)
+                cout << "Unable to find requested function." << endl;
+        }
+        else
+            return 0;
+    }
 
     return 0;
 }

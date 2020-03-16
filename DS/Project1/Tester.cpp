@@ -3,7 +3,7 @@
 using namespace std;
 
 namespace {
-    mt19937 rnd(time(0));
+    mt19937 rnd(0);
 }
 
 vector <double> Tester(void (*f)(int [], int), int vmax, double t_max)
@@ -29,4 +29,25 @@ vector <double> Tester(void (*f)(int [], int), int vmax, double t_max)
            break;
     }
     return ans;
+}
+
+void ExecTime(void (*f)(int [], int), std::string file)
+{
+    try {
+        ifstream in(file);
+        int n;
+        in >> n;
+        vector <int> v(n);
+        for (auto & i : v)
+            in >> i;
+
+        auto before = chrono::high_resolution_clock::now();
+        (*f)(v.data(), n);
+        auto after = chrono::high_resolution_clock::now();
+        double duration = chrono::duration_cast <chrono::nanoseconds> (after - before).count() / 1e9;
+        cout << "Sorting took " << duration << " seconds." << endl;
+    }
+    catch (...) {
+        cout << "There was a problem testing the file.\n";
+    }
 }
