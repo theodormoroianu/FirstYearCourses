@@ -165,7 +165,7 @@ namespace {
                 j.second = perm[j.second];
 
         DFA a(dfa_edges, 0, { 0, 1, 3, 4 });
-        DFA b(cnt, 6, { 0, 1, 3, 4, 6 });
+        DFA b(cnt, perm[6], { perm[0], perm[1], perm[3], perm[4], perm[6] });
         
         ok &= (a == b);
 

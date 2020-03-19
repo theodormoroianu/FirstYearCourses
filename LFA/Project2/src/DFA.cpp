@@ -193,7 +193,7 @@ DFA operator~(const DFA& dfa)
         else
             ans.end_nodes_.insert(i);
     }
-    return ans;
+    return DFA(ans.edges_, ans.start_node_, ans.end_nodes_);
 }
 
 DFA operator|(const DFA& a, const DFA& b)
