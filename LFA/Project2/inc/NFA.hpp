@@ -1,5 +1,5 @@
-#ifndef NFA_
-#define NFA_
+#ifndef INC_NFA_
+#define INC_NFA_
 
 #include <bits/stdc++.h>
 #include "DFA.hpp"
@@ -29,4 +29,4 @@ public:
     explicit operator DFA();
 };
 
-#endif // NFA_
+#endif // INC_NFA_

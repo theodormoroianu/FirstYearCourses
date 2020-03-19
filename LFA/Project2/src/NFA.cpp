@@ -18,11 +18,9 @@ NFA::operator DFA()
         for (int node = 0; node < N; node++) {
             for (auto i : edges_[node][0]) {
                 /// propagate the ending states
-                if (end_nodes_.find(node) == end_nodes_.end() &&
-                  end_nodes_.find(i) != end_nodes_.end()) {
+                if (end_nodes_.find(node) == end_nodes_.end() && end_nodes_.find(i) != end_nodes_.end()) {
                     end_nodes_.insert(node);
                     modif = 1;
-                    break;
                 }
 
                 /// all the neigours of i should be mine too
@@ -45,7 +43,7 @@ NFA::operator DFA()
     set <int> new_end_nodes;
 
     auto GetNorm = [&](const set <int> & v) {
-        if (norm_states.find(v) != norm_states.end()) {
+        if (norm_states.find(v) == norm_states.end()) {
             int x = norm_states.size();
             norm_states[v] = x;
             new_tranz.emplace_back();
@@ -53,11 +51,11 @@ NFA::operator DFA()
         }
         return norm_states[v];
     };
-    
+
     GetNorm({ start_node_ });
 
     for (int id = 0; id < (int)to_process.size(); id++) {
-        set <int> & st = to_process[id];
+        set <int> st = to_process[id];
         
         for (auto i : st)
             if (end_nodes_.find(i) != end_nodes_.end())
@@ -68,7 +66,8 @@ NFA::operator DFA()
             for (auto i : st)
                 for (auto j : edges_[i][c])
                     new_state.insert(j);
-            new_tranz[id][c] = GetNorm(new_state);
+            if (!new_state.empty())
+                new_tranz[id][c] = GetNorm(new_state);
         }
     }
 

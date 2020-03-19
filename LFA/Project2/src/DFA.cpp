@@ -90,6 +90,11 @@ bool DFA::IsAccepted(const string & s) const
     return end_nodes_.find(state) != end_nodes_.end();
 }
 
+int DFA::CountStates() const
+{
+    return edges_.size(); 
+}
+
 DFA DFA::Minimize() const
 {
     int Q = edges_.size();
@@ -173,7 +178,15 @@ DFA DFA::Minimize() const
 DFA operator~(const DFA& dfa)
 {
     DFA ans = dfa;
+    ans.edges_.emplace_back();
+
     int q = ans.edges_.size();
+
+    for (auto c : ans.EPSILON)
+        for (int i = 0; i < q; i++)
+            if (ans.edges_[i].find(c) == ans.edges_[i].end())
+                ans.edges_[i][c] = q - 1;
+
     for (int i = 0; i < q; i++) {
         if (ans.end_nodes_.find(i) != ans.end_nodes_.end())
             ans.end_nodes_.erase(i);
@@ -193,24 +206,24 @@ DFA operator|(const DFA& a, const DFA& b)
         for (auto e : a.edges_[i])
             new_edges[i + 1][e.first].insert(e.second + 1);
 
-    for (int i = 0; i < sz_a; i++)
-        for (auto e : a.edges_[i])
+    for (int i = 0; i < sz_b; i++)
+        for (auto e : b.edges_[i])
             new_edges[i + sz_a + 1][e.first].insert(e.second + sz_a + 1);
     
-    new_edges[0][0].insert(1);
-    new_edges[0][0].insert(sz_a + 1);
+    new_edges[0][0].insert(a.start_node_ + 1);
+    new_edges[0][0].insert(b.start_node_ + sz_a + 1);
 
     int new_start_node = 0;
     set <int> new_end_nodes;
     
     for (auto i : a.end_nodes_)
-        new_end_nodes.insert(i);
+        new_end_nodes.insert(i + 1);
     for (auto i : b.end_nodes_)
-        new_end_nodes.insert(i);
+        new_end_nodes.insert(i + sz_a + 1);
 
     NFA reuniune(new_edges, new_start_node, new_end_nodes);
 
-    return static_cast <DFA> (reuniune);
+    return static_cast <DFA> (reuniune).Minimize();
 }
 
 
@@ -222,28 +235,56 @@ DFA operator&(const DFA& a, const DFA& b)
 
 bool operator==(const DFA& a, const DFA& b)
 {
-    DFA minim1 = a.Minimize(), minim2 = b.Minimize();
+    DFA x = a.Minimize(), y = b.Minimize();
     /// vreau sa vad daca starile din minim1 si minim2 sunt identice
     /// pana la permutare
 
-    if (minim1.edges_.size() != minim2.edges_.size())
+    if (x.edges_.size() != y.edges_.size())
         return 0;
 
     map <int, int> a_to_b, b_to_a;
+    vector <int> bfs;
 
     auto verify = [&](int va, int vb) {
         if (a_to_b.find(va) != a_to_b.end() && a_to_b[va] != vb)
             return false;
         if (b_to_a.find(vb) != b_to_a.end() && b_to_a[vb] != va)
             return false;
+        if (a_to_b.find(va) == a_to_b.end())
+            bfs.push_back(va);
         a_to_b[va] = vb;
         b_to_a[vb] = va;
         return true;
     };
 
-    // TODO
+    verify(x.start_node_, y.start_node_);
+
+    for (int it = 0; it < (int)bfs.size(); it++) {
+        int n1 = bfs[it];
+        int n2 = a_to_b[n1];
+
+        bool n1_is_end_node = (x.end_nodes_.find(n1) == x.end_nodes_.end());
+        bool n2_is_end_node = (y.end_nodes_.find(n2) == y.end_nodes_.end());
+
+        if (n1_is_end_node ^ n2_is_end_node)
+            return 0;
+
+        for (auto c : a.EPSILON) {
+            int x_has_c = (x.edges_[n1].find(c) != x.edges_[n1].end());
+            int y_has_c = (y.edges_[n2].find(c) != y.edges_[n2].end());
+            if (x_has_c ^ y_has_c)
+                return 0;
+            if (x_has_c && !verify(x.edges_[n1][c], y.edges_[n2][c]))
+                return 0;
+        }
+    }
 
     return true;
+}
+
+bool operator!= (const DFA & a, const DFA & b)
+{
+    return !(a == b);
 }
 
 istream & operator>> (istream & in, DFA & dfa)
@@ -293,7 +334,7 @@ istream & operator>> (istream & in, DFA & dfa)
 }
 
 
-ostream & operator<< (ostream & out, DFA & dfa)
+ostream & operator<< (ostream & out, const DFA & dfa)
 {
     out << "DFA at memory " << &dfa << ":\n";
     out << "Number of states: " << dfa.edges_.size() << endl;

@@ -1,5 +1,5 @@
-#ifndef DFA_
-#define DFA_
+#ifndef INC_DFA_
+#define INC_DFA_
 
 #include <bits/stdc++.h>
 
@@ -44,7 +44,7 @@ public:
     // checks whether a string is accepted by the automata or not
     bool IsAccepted(const std::string & s) const;
 
-
+    int CountStates() const;
     // DFA minimization
     DFA Minimize() const;
 
@@ -52,9 +52,10 @@ public:
     friend DFA operator|(const DFA & a, const DFA & b);
     friend DFA operator&(const DFA & a, const DFA & b);
     friend bool operator==(const DFA & a, const DFA & b);
-
+    friend bool operator!=(const DFA & a, const DFA & b);
+    
     friend std::istream & operator>> (std::istream & in, DFA & dfa);
-    friend std::ostream & operator<< (std::ostream & out, DFA & dfa);
+    friend std::ostream & operator<< (std::ostream & out, const DFA & dfa);
 };
 
-#endif // DFA_
+#endif // INC_DFA_
