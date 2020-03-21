@@ -9,3 +9,5 @@
 1. Citirea unui DFA
 2. Minimizarea acestuia
 3. Afisarea DFA-ului minimizat
+4. Transformarea unui lambda-NFA in DFA 
+5. Diverse operatii pe DFA (reuniune, intersectie, negatie etc)
