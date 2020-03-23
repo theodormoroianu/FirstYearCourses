@@ -48,10 +48,15 @@ public:
     // DFA minimization
     DFA Minimize() const;
 
+    /// new automaton accepts a word <=> initial DFA does not
     friend DFA operator~(const DFA & dfa);
+    /// At least one of the two DFAs accept the word
     friend DFA operator|(const DFA & a, const DFA & b);
+    /// both of the DFAs accept the word
     friend DFA operator&(const DFA & a, const DFA & b);
+    /// both DFAs accept the same language
     friend bool operator==(const DFA & a, const DFA & b);
+    /// the two DFAs don't accept the same language
     friend bool operator!=(const DFA & a, const DFA & b);
     
     friend std::istream & operator>> (std::istream & in, DFA & dfa);
