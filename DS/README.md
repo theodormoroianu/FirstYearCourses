@@ -16,3 +16,6 @@
 1. SkipListSort
 1. TreapSort 
 1. SplayTreeSort
+
+## [Proiect 2](Project2)
+* De implementat `Min-Max heaps`
