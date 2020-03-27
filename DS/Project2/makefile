@@ -8,8 +8,8 @@ CSTD = c++17
 flags_all = -std=$(CSTD) -g -O0 -Wall -Wextra -fsanitize=address,undefined,signed-integer-overflow
 flags_fast = -std=$(CSTD) -O2
 
-INC_PARAMS = -Iinc/ -Iinc/*/
-SCR_PARAMS = src/*.cpp
+INC_PARAMS = 
+SCR_PARAMS = *.cpp
 
 # make all creates sanitized binary, overflows, illegal memory accesses and undefined behaviour raise an exception
 all: $(sources)
