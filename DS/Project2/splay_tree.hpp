@@ -1,3 +1,6 @@
+#ifndef SPLAY_TREE_
+#define SPLAY_TREE_
+
 #include <bits/stdc++.h>
 using namespace std;
 
@@ -50,7 +53,8 @@ class SplayTree
             else if (nod->poz == nod->father->poz) {
                 /// zig-zig rotation
                 Node *a = nod->father, *b = nod->father->father;
-                b->father->sons[b->poz] = nod;
+                if (b->father)
+                    b->father->sons[b->poz] = nod;
                 nod->father = b->father;
 
                 int t = nod->poz;
@@ -62,12 +66,14 @@ class SplayTree
                 nod->recalc();
                 a->recalc();
                 b->recalc();
-                nod->father->recalc();
+                if (nod->father)
+                    nod->father->recalc();
             }
             else {
                 /// zig-zag rotation
                 Node *a = nod->father, *b = nod->father->father;
-                b->father->sons[b->poz] = nod;
+                if (b->father)
+                    b->father->sons[b->poz] = nod;
                 nod->father = b->father;
 
                 int t = nod->poz;
@@ -81,7 +87,8 @@ class SplayTree
                 nod->recalc();
                 a->recalc();
                 b->recalc();
-                nod->father->recalc();    
+                if (nod->father)
+                    nod->father->recalc();    
             }
         }
     }
@@ -132,7 +139,7 @@ public:
         Node *last = 0, *act = root;
         
         while (act) {
-            last = root;
+            last = act;
             if (act->val >= val)
                 act = act->sons[0];
             else
@@ -156,6 +163,11 @@ public:
         Node* left = root->sons[0];
         Node* right = root->sons[1];
 
+        if (left)
+            left->father = 0;
+        if (right)
+            right->father = 0;
+            
         root->sons[0] = root->sons[1] = 0;
         delete root;
 
@@ -171,6 +183,7 @@ public:
             throw runtime_error("Internal Error!");
         
         root->sons[1] = right;
+        root->recalc();
     }
 
     bool find(T val)
@@ -206,3 +219,5 @@ public:
         return ans->val;
     }
 };
+
+#endif // SPLAY_TREE_
