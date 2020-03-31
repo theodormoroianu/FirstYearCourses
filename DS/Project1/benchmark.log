@@ -1,0 +1,159 @@
+
+
+For a length of 1024 (2 ^ 10), sorting algorithms took:
+   1. SkipListSort:   0.00144516 seconds
+   2. CountSort:   0.021117 seconds
+   3. MergeSort:   0.000100149 seconds
+   4. QuickSort:   4.9993e-05 seconds
+   5. BubbleSort:   0.000755093 seconds
+   6. RadixSort:   0.000315927 seconds
+   7. HeapSort:   9.4023e-05 seconds
+   8. TreapSort:   0.000173042 seconds
+   9. AVLSort:   0.000171831 seconds
+   10. SplayTreeSort:   0.000175863 seconds
+
+
+For a length of 4096 (2 ^ 12), sorting algorithms took:
+   1. SkipListSort:   0.00365199 seconds
+   2. CountSort:   0.0203409 seconds
+   3. MergeSort:   0.000428256 seconds
+   4. QuickSort:   0.000226808 seconds
+   5. BubbleSort:   0.0142637 seconds
+   6. RadixSort:   0.000415373 seconds
+   7. HeapSort:   0.000245216 seconds
+   8. TreapSort:   0.000880591 seconds
+   9. AVLSort:   0.000624617 seconds
+   10. SplayTreeSort:   0.00105667 seconds
+
+
+For a length of 16384 (2 ^ 14), sorting algorithms took:
+   1. SkipListSort:   0.0125377 seconds
+   2. CountSort:   0.0210562 seconds
+   3. MergeSort:   0.00317134 seconds
+   4. QuickSort:   0.00134815 seconds
+   5. BubbleSort:   0.350732 seconds
+   6. RadixSort:   0.00066151 seconds
+   7. HeapSort:   0.00117995 seconds
+   8. TreapSort:   0.00580535 seconds
+   9. AVLSort:   0.00341974 seconds
+   10. SplayTreeSort:   0.00545199 seconds
+
+
+For a length of 65536 (2 ^ 16), sorting algorithms took:
+   1. SkipListSort:   0.0380256 seconds
+   2. CountSort:   0.0230007 seconds
+   3. MergeSort:   0.00875567 seconds
+   4. QuickSort:   0.00506747 seconds
+   5. BubbleSort:   6.56165 seconds
+   6. RadixSort:   0.00177907 seconds
+   7. HeapSort:   0.00595978 seconds
+   8. TreapSort:   0.0275812 seconds
+   9. AVLSort:   0.015806 seconds
+   10. SplayTreeSort:   0.0257051 seconds
+
+
+For a length of 262144 (2 ^ 18), sorting algorithms took:
+   1. SkipListSort:   0.248465 seconds
+   2. CountSort:   0.0265993 seconds
+   3. MergeSort:   0.0357091 seconds
+   4. QuickSort:   0.0203941 seconds
+   5. BubbleSort:   > 2 seconds
+   6. RadixSort:   0.00622131 seconds
+   7. HeapSort:   0.0260874 seconds
+   8. TreapSort:   0.20277 seconds
+   9. AVLSort:   0.0964835 seconds
+   10. SplayTreeSort:   0.164641 seconds
+
+
+For a length of 1048576 (2 ^ 20), sorting algorithms took:
+   1. SkipListSort:   1.42368 seconds
+   2. CountSort:   0.0403063 seconds
+   3. MergeSort:   0.154083 seconds
+   4. QuickSort:   0.0908038 seconds
+   5. BubbleSort:   > 2 seconds
+   6. RadixSort:   0.0523315 seconds
+   7. HeapSort:   0.12219 seconds
+   8. TreapSort:   1.34441 seconds
+   9. AVLSort:   0.751547 seconds
+   10. SplayTreeSort:   1.03768 seconds
+
+
+For a length of 4194304 (2 ^ 22), sorting algorithms took:
+   1. SkipListSort:   > 2 seconds
+   2. CountSort:   0.103244 seconds
+   3. MergeSort:   0.643617 seconds
+   4. QuickSort:   0.415463 seconds
+   5. BubbleSort:   > 2 seconds
+   6. RadixSort:   0.557105 seconds
+   7. HeapSort:   0.690665 seconds
+   8. TreapSort:   > 2 seconds
+   9. AVLSort:   4.57244 seconds
+   10. SplayTreeSort:   > 2 seconds
+
+
+For a length of 16777216 (2 ^ 24), sorting algorithms took:
+   1. SkipListSort:   > 2 seconds
+   2. CountSort:   0.296793 seconds
+   3. MergeSort:   2.70287 seconds
+   4. QuickSort:   1.94618 seconds
+   5. BubbleSort:   > 2 seconds
+   6. RadixSort:   2.46696 seconds
+   7. HeapSort:   3.95489 seconds
+   8. TreapSort:   > 2 seconds
+   9. AVLSort:   > 2 seconds
+   10. SplayTreeSort:   > 2 seconds
+
+
+For a length of 67108864 (2 ^ 26), sorting algorithms took:
+   1. SkipListSort:   > 2 seconds
+   2. CountSort:   0.985233 seconds
+   3. MergeSort:   > 2 seconds
+   4. QuickSort:   > 2 seconds
+   5. BubbleSort:   > 2 seconds
+   6. RadixSort:   > 2 seconds
+   7. HeapSort:   > 2 seconds
+   8. TreapSort:   > 2 seconds
+   9. AVLSort:   > 2 seconds
+   10. SplayTreeSort:   > 2 seconds
+
+
+For a length of 268435456 (2 ^ 28), sorting algorithms took:
+   1. SkipListSort:   > 2 seconds
+   2. CountSort:   3.2496 seconds
+   3. MergeSort:   > 2 seconds
+   4. QuickSort:   > 2 seconds
+   5. BubbleSort:   > 2 seconds
+   6. RadixSort:   > 2 seconds
+   7. HeapSort:   > 2 seconds
+   8. TreapSort:   > 2 seconds
+   9. AVLSort:   > 2 seconds
+   10. SplayTreeSort:   > 2 seconds
+Welcome to this super awesome project!
+    Here you will see more sorting algorithms than what you ever wished for ... 
+Whether you like it or not ...
+Loading stuff .......... done!
+
+Loading other stuff .......... done!
+
+Still loading some stuff .......... done!
+
+Personalizing UI experience .......... done!
+
+Searching for available sorting algorithms ... 
+Found SkipListSort
+Found CountSort
+Found MergeSort
+Found QuickSort
+Found BubbleSort
+Found RadixSort
+Found HeapSort
+Found TreapSort
+Found AVLSort
+Found SplayTreeSort
+
+
+Available commands:
+    1. Benchmark [Max Value] [Max Time (miliseconds)]
+    2. Run [Sorting Algorithm] [Input File]
+    3. Exit
+ $ 
