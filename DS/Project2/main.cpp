@@ -1,6 +1,9 @@
 #include "min_max_heap.hpp"
 #include "splay_tree.hpp"
 #include "pairing_heap.hpp"
+#include "treap.hpp"
+#include "red_black_tree.hpp"
+
 #include <iostream>
 #include <random>
 #include <chrono>
@@ -24,6 +27,7 @@ void TestMinMaxHeap()
 
     mmh.verify(1);
 
+    cerr << "OK for MinMaxHeap\n";
 }
 
 
@@ -43,7 +47,45 @@ void TestSplayTree()
         else
             s.insert(a), sp.insert(a);
     }
-    cerr << "OK\n";
+    cerr << "OK for SplayTree\n";
+}
+
+void TestTreap()
+{
+    Treap <int> sp;
+    multiset <int> s;
+
+    for (int i = 0; i < 100000; i++) {
+        int a = rnd() % 500;
+
+        if ((s.find(a) != s.end()) ^ sp.find(a))
+            throw runtime_error("set and Treap aren't eq!");
+
+        if (s.find(a) != s.end() && rnd() % 2)
+            s.erase(s.find(a)), sp.erase(a);
+        else
+            s.insert(a), sp.insert(a);
+    }
+    cerr << "OK for Treap\n";
+}
+
+void TestRedBlackTree()
+{
+    RedBlackTree <int> sp;
+    multiset <int> s;
+
+    for (int i = 0; i < 100000; i++) {
+        int a = rnd() % 500;
+
+        if ((s.find(a) != s.end()) ^ sp.find(a))
+            throw runtime_error("set and RBT aren't eq!");
+
+        if (s.find(a) != s.end() && rnd() % 2)
+            s.erase(s.find(a)), sp.erase(a);
+        else
+            s.insert(a), sp.insert(a);
+    }
+    cerr << "OK for RedBlackTree\n";
 }
 
 void TestPairingHeap()
@@ -65,13 +107,16 @@ void TestPairingHeap()
             ph.pop(), pq.pop();
     }
 
-    cerr << "OK\n";
+    cerr << "OK for PairingHeap\n";
 }
 
 int main()
 {
-    //TestSplayTree();
+    TestSplayTree();
     TestPairingHeap();
+    TestMinMaxHeap();
+    TestTreap();
+    TestRedBlackTree();
 
     return 0;
 }
