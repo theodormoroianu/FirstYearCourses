@@ -4,4 +4,6 @@
 *.csv
 *.pyc
 TehniciWeb/Test/node_modules/*
-ML/intro-to-pytorch/Cat_Dog_data/*
+*.aux
+*.gz
+*.log
