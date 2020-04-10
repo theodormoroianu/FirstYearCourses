@@ -2,3 +2,5 @@
 
 * [GitHub-ul Labului](https://github.com/WebToLearn/laborator-tehnici-web)
 * https://www.youtube.com/watch?time_continue=269&v=TlB_eWDSMt4&feature=emb_logo 
+
+* Check https://pastebin.com/8jfLgXe1

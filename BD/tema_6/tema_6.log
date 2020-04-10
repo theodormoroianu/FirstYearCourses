@@ -1,0 +1,212 @@
+This is pdfTeX, Version 3.14159265-2.6-1.40.20 (TeX Live 2019/Debian) (preloaded format=pdflatex 2020.4.7)  10 APR 2020 10:20
+entering extended mode
+ restricted \write18 enabled.
+ %&-line parsing enabled.
+**tema_6.tex
+(./tema_6.tex
+LaTeX2e <2020-02-02> patch level 2
+L3 programming layer <2020-02-14>
+(/usr/share/texlive/texmf-dist/tex/latex/base/article.cls
+Document Class: article 2019/12/20 v1.4l Standard LaTeX document class
+(/usr/share/texlive/texmf-dist/tex/latex/base/size12.clo
+File: size12.clo 2019/12/20 v1.4l Standard LaTeX file (size option)
+)
+\c@part=\count167
+\c@section=\count168
+\c@subsection=\count169
+\c@subsubsection=\count170
+\c@paragraph=\count171
+\c@subparagraph=\count172
+\c@figure=\count173
+\c@table=\count174
+\abovecaptionskip=\skip47
+\belowcaptionskip=\skip48
+\bibindent=\dimen134
+)
+(/usr/share/texlive/texmf-dist/tex/latex/a4wide/a4wide.sty
+Package: a4wide 1994/08/30
+
+(/usr/share/texlive/texmf-dist/tex/latex/ntgclass/a4.sty
+Package: a4 2004/04/15 v1.2g A4 based page layout
+))
+(/usr/share/texlive/texmf-dist/tex/latex/graphics/graphicx.sty
+Package: graphicx 2019/11/30 v1.2a Enhanced LaTeX Graphics (DPC,SPQR)
+
+(/usr/share/texlive/texmf-dist/tex/latex/graphics/keyval.sty
+Package: keyval 2014/10/28 v1.15 key=value parser (DPC)
+\KV@toks@=\toks14
+)
+(/usr/share/texlive/texmf-dist/tex/latex/graphics/graphics.sty
+Package: graphics 2019/11/30 v1.4a Standard LaTeX Graphics (DPC,SPQR)
+
+(/usr/share/texlive/texmf-dist/tex/latex/graphics/trig.sty
+Package: trig 2016/01/03 v1.10 sin cos tan (DPC)
+)
+(/usr/share/texlive/texmf-dist/tex/latex/graphics-cfg/graphics.cfg
+File: graphics.cfg 2016/06/04 v1.11 sample graphics configuration
+)
+Package graphics Info: Driver file: pdftex.def on input line 105.
+
+(/usr/share/texlive/texmf-dist/tex/latex/graphics-def/pdftex.def
+File: pdftex.def 2018/01/08 v1.0l Graphics/color driver for pdftex
+))
+\Gin@req@height=\dimen135
+\Gin@req@width=\dimen136
+)
+(/usr/share/texlive/texmf-dist/tex/latex/l3backend/l3backend-pdfmode.def
+File: l3backend-pdfmode.def 2020-02-03 L3 backend support: PDF mode
+\l__kernel_color_stack_int=\count175
+\l__pdf_internal_box=\box45
+)
+(./tema_6.aux)
+\openout1 = `tema_6.aux'.
+
+LaTeX Font Info:    Checking defaults for OML/cmm/m/it on input line 6.
+LaTeX Font Info:    ... okay on input line 6.
+LaTeX Font Info:    Checking defaults for OMS/cmsy/m/n on input line 6.
+LaTeX Font Info:    ... okay on input line 6.
+LaTeX Font Info:    Checking defaults for OT1/cmr/m/n on input line 6.
+LaTeX Font Info:    ... okay on input line 6.
+LaTeX Font Info:    Checking defaults for T1/cmr/m/n on input line 6.
+LaTeX Font Info:    ... okay on input line 6.
+LaTeX Font Info:    Checking defaults for TS1/cmr/m/n on input line 6.
+LaTeX Font Info:    ... okay on input line 6.
+LaTeX Font Info:    Checking defaults for OMX/cmex/m/n on input line 6.
+LaTeX Font Info:    ... okay on input line 6.
+LaTeX Font Info:    Checking defaults for U/cmr/m/n on input line 6.
+LaTeX Font Info:    ... okay on input line 6.
+
+(/usr/share/texlive/texmf-dist/tex/context/base/mkii/supp-pdf.mkii
+[Loading MPS to PDF converter (version 2006.09.02).]
+\scratchcounter=\count176
+\scratchdimen=\dimen137
+\scratchbox=\box46
+\nofMPsegments=\count177
+\nofMParguments=\count178
+\everyMPshowfont=\toks15
+\MPscratchCnt=\count179
+\MPscratchDim=\dimen138
+\MPnumerator=\count180
+\makeMPintoPDFobject=\count181
+\everyMPtoPDFconversion=\toks16
+) (/usr/share/texlive/texmf-dist/tex/latex/epstopdf-pkg/epstopdf-base.sty
+Package: epstopdf-base 2020-01-24 v2.11 Base part for package epstopdf
+Package epstopdf-base Info: Redefining graphics rule for `.eps' on input line 4
+85.
+
+(/usr/share/texlive/texmf-dist/tex/latex/latexconfig/epstopdf-sys.cfg
+File: epstopdf-sys.cfg 2010/07/13 v1.3 Configuration of (r)epstopdf for TeX Liv
+e
+))
+LaTeX Font Info:    External font `cmex10' loaded for size
+(Font)              <14.4> on input line 12.
+LaTeX Font Info:    External font `cmex10' loaded for size
+(Font)              <7> on input line 12.
+
+Underfull \hbox (badness 10000) in paragraph at lines 14--14
+
+ []
+
+<diagrama_tema_6_curs.png, id=1, 973.6375pt x 622.325pt>
+File: diagrama_tema_6_curs.png Graphic file (type png)
+<use diagrama_tema_6_curs.png>
+Package pdftex.def Info: diagrama_tema_6_curs.png  used on input line 16.
+(pdftex.def)             Requested size: 486.81755pt x 311.16173pt.
+
+Overfull \hbox (26.09631pt too wide) in paragraph at lines 16--17
+[] 
+ []
+
+[1
+
+{/var/lib/texmf/fonts/map/pdftex/updmap/pdftex.map} <./diagrama_tema_6_curs.png
+>]
+LaTeX Font Info:    External font `cmex10' loaded for size
+(Font)              <12> on input line 23.
+LaTeX Font Info:    External font `cmex10' loaded for size
+(Font)              <8> on input line 23.
+LaTeX Font Info:    External font `cmex10' loaded for size
+(Font)              <6> on input line 23.
+
+Overfull \hbox (10.37666pt too wide) in paragraph at lines 23--24
+[]\OT1/cmr/bx/n/12 Angajat: $[]$\OT1/cmr/m/n/12 , Data[]angajare, Man-ager[]ID,
+ Loc[]de[]munca, Job[]ID, Salariu 
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 43--47
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 48--52
+
+ []
+
+
+Overfull \hbox (95.94618pt too wide) in paragraph at lines 56--61
+\OT1/cmr/m/it/12 S^^Ua se lis-teze adresele de email ale angaja[]ilor. Aces-tea
+ au urm^^Uatoarea form^^Ua: first[]name.last[]name@ittech.com. 
+ []
+
+[2]
+Underfull \hbox (badness 10000) in paragraph at lines 66--73
+
+ []
+
+[3]
+Overfull \hbox (6.86305pt too wide) in paragraph at lines 115--117
+\OT1/cmr/m/it/12 S^^Ua se afi^^Xseze nu-mele, salariul, pozi[]ia ^^Xsi o coloan
+^^Ua etichetat^^Ua "Salariu mod-i-fi-cat" reprezent^and
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 115--117
+
+ []
+
+[4]
+Overfull \hbox (26.48683pt too wide) in paragraph at lines 125--126
+[]\OT1/cmr/bx/n/12 SELECT e.last[]name, p.salary, p.position, (CASE WHEN LOWER(
+p.position)
+ []
+
+
+Overfull \hbox (6.6603pt too wide) in paragraph at lines 125--126
+\OT1/cmr/bx/n/12 = 'mar-ket-ing' THEN 1.10 WHEN LOWER(p.position) = 'sales-man'
+ THEN
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 125--126
+
+ []
+
+
+Overfull \hbox (2.32312pt too wide) in paragraph at lines 131--132
+[]\OT1/cmr/bx/n/12 SELECT e.last[]name, p.salary, p.position, DE-CODE(LOWER(p.p
+osition),
+ []
+
+[5] (./tema_6.aux) ) 
+Here is how much of TeX's memory you used:
+ 1199 strings out of 483183
+ 17749 string characters out of 5966293
+ 248868 words of memory out of 5000000
+ 16242 multiletter control sequences out of 15000+600000
+ 538190 words of font info for 43 fonts, out of 8000000 for 9000
+ 14 hyphenation exceptions out of 8191
+ 30i,6n,25p,346b,189s stack positions out of 5000i,500n,10000p,200000b,80000s
+ </home/theodor/.texlive2019/texmf-var/fonts/pk/ljfour/jkna
+ppen/ec/tcrm1200.600pk></usr/share/texlive/texmf-dist/fonts/type1/public/amsfon
+ts/cm/cmbx12.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/
+cmr12.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmr17.p
+fb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy10.pfb></u
+sr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmti12.pfb>
+Output written on tema_6.pdf (5 pages, 117899 bytes).
+PDF statistics:
+ 48 PDF objects out of 1000 (max. 8388607)
+ 32 compressed objects within 1 object stream
+ 0 named destinations out of 1000 (max. 500000)
+ 6 words of extra memory for PDF output out of 10000 (max. 10000000)
+
