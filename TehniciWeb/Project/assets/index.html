@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Notes</title>
+    <link rel="stylesheet" href="/css/main.css"/>
+    <link rel="stylesheet" href="/css/webstyle.css"/>
+</head>
+<body>
+
+    <div id="wrapper">
+
+    </div>
+
+    <script src="javascript/sync.js"></script>
+    <script src="javascript/note.js"></script>
+    <script src="javascript/settings.js"></script>
+    <script src="javascript/menu.js"></script>
+    <script src="javascript/signup.js"></script>
+    <script src="javascript/login.js"></script>
+    <script>
+        window.onbeforeunload = function(){
+            return 'Are you sure you want to leave?';
+        };
+        LOGIN_Login();
+    </script>
+</body>
+</html>

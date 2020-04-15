@@ -68,6 +68,96 @@ The `settings` button will provide a few options like:
 * Send an alert when aproaching a deadline
 * Sort the Notes alphabetically, by the creation date or by the deadline, ascending or descending
 * Change avatar with a picture from the internet (with a link)
+* Change the password
+
+## Details
+
+When the first page is requested, the server sends an empty html with the main script.
+The script checks if there is any user / password stored in the localstorage, and if not pops up the login page.
+
+For signing in, the webapp sends:
+```javascript
+POST request to "API/login"
+var obj {
+    info: {
+        user: "username",
+        name: "User Name",
+        password: "U$3RNAM3"
+    }
+}
+```
+
+For creating a new account, the JSON is sent to:
+```javascript
+POST request to "API/signup"
+```
+
+The server will ALWAYS answer with another json, containing:
+```javascript
+var obj {
+    authentification: {
+        authentificated: True / False,
+        message: "OK" / error message
+    }
+    info: {
+        user: /// username
+        name: /// name
+        password: /// password
+    },
+    config: {
+        sort_notes_by: "deadline / creation / alphabetical",
+        sort_asc: True / False,
+        stay_signed_in: True / False,
+        avatar_url: "link to the avatar picture"
+    },
+    data: [{
+        title: "note title",
+        task: "note task",
+        creation_date: "note_creation_date",
+        deadline: "note_deadline",
+        content: "note_content",
+        asociated_picture: "link to the asociated_picture"
+    }]
+}
+```
+
+Whenever the client feels like it, he can save the changes from the client by making:
+```javascript
+POST request to "API/checkpoint"
+var obj {
+    info: {
+        user: /// username
+        name: /// name
+        password: /// password
+        new_password: /// new password, empty if not changed
+    },
+    config: {
+        sort_note_by: "deadline / creation date / alphabetical",
+        sort_asc: True / False,
+        stay_signed_in: True / False,
+        avatar_url: "link to the avatar picture"
+
+    },
+    data: [{
+        title: "note title",
+        task: "note task",
+        creation_date: "note_creation_date",
+        deadline: "note_deadline",
+        content: "note_content",
+        asociated_picture: "link to the asociated_picture"
+    }]
+}
+```
+
+The server will respond with 
+
+## Classes:
+* Work
+* Family
+* Cooking
+* Traveling
+* Having Fun
+
 
 ## Reqired packages
 
