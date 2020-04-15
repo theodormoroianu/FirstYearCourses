@@ -1,3 +1,11 @@
-var fs = require("fs")
+var f = (obj) => {
+    obj.data = 2;
+};
 
-console.log(fs.existsSync("data/portocala.sav"));
+var o = {
+    data: 1
+};
+
+f(o);
+
+console.log(o);

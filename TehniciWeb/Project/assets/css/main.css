@@ -2399,7 +2399,6 @@
 			transition: all 0.2s ease;
 			border-bottom: none;
 			display: block;
-			width: 100%;
 			margin: 0 0 2em 0;
 			text-align: center;
 			border-radius: 4px;
@@ -2426,7 +2425,7 @@
 				box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0.25), 0 0 0.5em 0 #FF6382;
 			}
 
-		.thumbnails > div {
+		.thumbnails {
 			display: -moz-flex;
 			display: -webkit-flex;
 			display: -ms-flex;
@@ -2439,7 +2438,7 @@
 			padding-left: 2em;
 		}
 
-			.thumbnails > div > :last-child {
+			.thumbnails > :last-child {
 				margin-bottom: 0;
 			}
 
@@ -2453,7 +2452,7 @@
 					margin: 0 0 1.5em 0;
 				}
 
-				.thumbnails > div {
+				.thumbnails {
 					padding-left: 1.5em;
 				}
 
@@ -2477,12 +2476,12 @@
 					margin: 0 0 2em 0 !important;
 				}
 
-				.thumbnails > div {
+				.thumbnails {
 					display: block;
 					width: 100%;
 				}
 
-					.thumbnails > div:last-child > :last-child {
+					.thumbnails:last-child > :last-child {
 						margin-bottom: 0 !important;
 					}
 

@@ -8,11 +8,8 @@
 
 SIGNUP_html_code =
 `<div id="create-user">
-    <header id="header">
-        <h1><strong>New User Page</strong></h1>
-        <p>Hello There!</p>
-        <p>We are exited to see you here!</br>
-        Just fill out this form and you will be ready to create notes in no-time!</p>
+    <header class='title'>
+        <h1>New User</h1>
     </header>
 
     <section id="main">

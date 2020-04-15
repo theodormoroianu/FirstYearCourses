@@ -7,11 +7,8 @@ function SYNC_ServerRequest(url, obj, callback) {
     xhttp.open("POST", url, true);
     xhttp.setRequestHeader("Content-type", "application/json");
     xhttp.onreadystatechange = function() {
-        if (this.readyState == 4 && this.status == 200) {
-            console.log(this.response);
-            console.log(typeof this.response);
+        if (this.readyState == 4 && this.status == 200)
             callback(JSON.parse(this.response));
-        }
     };
     xhttp.send(JSON.stringify(obj));
 }
@@ -53,7 +50,7 @@ function SYNC_CreateUser(user, name, password, callback) {
             task: "Work",
             creation_date: "2020-04-01",
             content: 'Welcome to the Notes apps!',
-            asociated_picture: "03.jpg"
+            asociated_picture: "Work/0.jpg"
         }]
     };
     SYNC_ServerRequest("API/signup", obj, callback);
@@ -68,36 +65,4 @@ function SYNC_Checkpoint(obj, callback) {
 }
 
 
-function SyncContent(){
-    // Selecting the input element and get its value 
-    var inputVal = document.getElementById("textbox").value;
-    
-    State.data = inputVal;
-
-    var xhttp = new XMLHttpRequest();
-
-    xhttp.open("POST", "api/sync_content", true);
-    xhttp.setRequestHeader("Content-type", "application/json");
-    xhttp.send(JSON.stringify(State));
-
-    setTimeout(SyncContent, 1000);
-}
-
-function RequestContent(){
-    var inputVal = document.getElementById("textbox").value;
-    
-    var xhttp = new XMLHttpRequest();
-
-    xhttp.open("POST", "api/request_content", true);
-    xhttp.setRequestHeader("Content-type", "application/json");
-    xhttp.onreadystatechange = function() {
-        if (this.readyState == 4 && this.status == 200) {
-            console.log("Here");
-            document.getElementById("textbox").value = JSON.parse(this.response).data;
-        }
-    };
-    xhttp.send('{ "user": "Marco", "password": "Polo" }');
-
-    setTimeout(SyncContent(), 0);
-}
 

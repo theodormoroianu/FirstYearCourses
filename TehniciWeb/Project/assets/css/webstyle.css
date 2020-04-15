@@ -1,4 +1,4 @@
-#textbox {
+#content-textbox {
     box-sizing: border-box;
     resize: none;
     margin-bottom: 30px;
@@ -6,7 +6,9 @@
 }
 
 .title {
+    text-align: center;
     font-size: 80px;
+    padding: 1em 0 0 0;
 }
 
 .subtitle {
@@ -29,9 +31,19 @@ input, select {
   font-size: small;
 }
 
+#list {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    vertical-align: top;
+    width: 100%;
+    justify-content: space-between;
+    align-items: center;
+}
 
-
-
+.image {
+    width: calc(30%);
+}
 
 
 
