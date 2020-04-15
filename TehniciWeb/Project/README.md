@@ -38,6 +38,37 @@ The Client app is made in pure `javascript`, and should consist of 3 different p
     * Once every few seconds it sends back the updated `JSON` to the server
 
 
+## Behaviour
+
+I will probably use the template now in `sample_website2`.
+This will be the main page, from where we can access the list of all notes (the css-grid at the bottom), the "create a new Note", "settings" and "sign out" buttons.
+
+The notes have:
+* A category (work, travel, cook, bills, groceries etc).
+* An asociated picture (most probably chosen randomly from a list on the server).
+* A title
+* A deadline
+* A content (text)
+
+The list on the main page will display:
+* All the notes in the order of the deadline
+* Each note will contain the title trimed to a certain lenght and the picture asociated with the note
+
+The `new note` option will have the same efect than clicking on an existing note:
+* It will replace the main page with a new one
+* At the top of the page there will be a text box containing the title of the note
+* Two buttons (save / discard)
+* A date chooser
+* A text box containing the actual content of the note
+
+The `sign out` button will force-clear the local storage, and send the user back to the login page.
+
+The `settings` button will provide a few options like:
+* Save creditentials (stay signed-in)
+* Send an alert when aproaching a deadline
+* Sort the Notes alphabetically, by the creation date or by the deadline, ascending or descending
+* Change avatar with a picture from the internet (with a link)
+
 ## Reqired packages
 
 Required `npm` packages are:

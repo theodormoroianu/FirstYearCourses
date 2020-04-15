@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="css/webstyle.css">
+    <link rel="stylesheet" href="css/main.css">
+
+</head>
+
+<body>
+    <div id="wrapper">
+        <h1>Welcome to the Note editor!</h1>
+        
+        <section id="main">
+            <form action="" method="post">
+                <label for="note_name"><b>Title of the Note</b></label>
+                <input type="text" placeholder="Enter Title Here" name="uname" required>
+
+
+                <label for="note_type"><b>Type of the note</b></label>
+                <select name="type">
+                    <option value ="work">Work</option>
+                    <option value ="holiday">Holiday</option>
+                    <option value ="free-time">Free Time</option>
+                    <option value ="cooking">Cooking</option>
+                </select> 
+                    
+                
+                <label for="deadline">Deadline</label>
+                <input type="date" id="deadline" name="deadline">
+                <label for="content">Content</label>       
+                <textarea name="Text1" cols="40" rows="10" id="textbox"></textarea>
+
+                <button type="submit">Save</button>
+                <button type="discard">Discard</button>
+            </form>
+        </section>
+    
+    </div>
+    <!--<script src='javascript/webscript.js'></script>-->
+
+</body>
+</html>

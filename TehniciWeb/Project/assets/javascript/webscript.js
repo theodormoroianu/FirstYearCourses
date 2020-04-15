@@ -26,13 +26,14 @@ function RequestContent(){
     xhttp.open("POST", "api/request_content", true);
     xhttp.setRequestHeader("Content-type", "application/json");
     xhttp.onreadystatechange = function() {
-        console.log(this.response);
-        State.data = JSON.parse(this.response).data;
+        if (this.readyState == 4 && this.status == 200) {
+            console.log("Here");
+            document.getElementById("textbox").value = JSON.parse(this.response).data;
+        }
     };
     xhttp.send('{ "user": "Marco", "password": "Polo" }');
 
+    setTimeout(SyncContent(), 0);
 }
 
 RequestContent();
-SyncContent();
-
