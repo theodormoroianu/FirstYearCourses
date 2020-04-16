@@ -31,6 +31,7 @@ var MENU_object = null;
 
 var MENU_SignOut = function() {
     MENU_object = null; /// distroy the object
+    window.localStorage.clear();
     MENU_callback();
 }
 
@@ -98,11 +99,11 @@ var MENU_Note = function(id) {
 var MENU_RenderNotes = function() {
     MENU_object.data.sort((a, b) => {
         var asmall = false;
-        if (MENU_object.config.sort_note_by == 'Deadline')
+        if (MENU_object.config.sort_notes_by == 'Deadline')
             asmall = (a.deadline < b.deadline);
-        else if (MENU_object.config.sort_note_by == 'Creation Date')
+        else if (MENU_object.config.sort_notes_by == 'Creation Date')
             asmall = (a.creation_date < b.creation_date);
-        else if (MENU_object.config.sort_note_by == 'Alphabetical')
+        else if (MENU_object.config.sort_notes_by == 'Alphabetical')
             asmall = (a.title < b.title);
         
         if (!MENU_object.config.sort_asc)

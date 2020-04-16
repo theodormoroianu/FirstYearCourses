@@ -5,8 +5,10 @@
  /// THIS IS THE DEFAULT HTML CODE FOR THE SETTINGS -----------------------------------------------------------------------------
 
  SETTINGS_html_code =
-`<h1 style='text-align:center;border:10px 10px;'>Welcome to the SETTINGS editor!</h1>
-        
+`
+<header id="header">
+<h1 style='text-align:center;border:10px 10px;'>Welcome to the SETTINGS editor!</h1>
+</header>        
 <form action='#' onsubmit="SETTINGS_ProcessChanges();return false">
     <label for="name"><b>Name</b></label>
     <input type="text" placeholder="Enter Your Name Here" name="name" id='name' required>

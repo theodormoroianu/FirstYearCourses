@@ -1,8 +1,9 @@
 /// THIS IS THE DEFAULT HTML CODE FOR THE CREDITS -------------------------------------------------------------------------------
 
 CREDITS_html_code =
-`<h1 style='text-align:center;border:10px 10px;'>CREDITS</h1>
-
+`<header id="header">
+<h1>CREDITS</h1>
+</header>
 <h3>We would like to begin the credits with some debug info (we all want it..)</h3>
 <p> This is all the information we know about you:</p>
 <p id='json-container'></p>
