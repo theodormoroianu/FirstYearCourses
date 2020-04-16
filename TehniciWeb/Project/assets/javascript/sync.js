@@ -40,9 +40,9 @@ function SYNC_CreateUser(user, name, password, callback) {
             password: password
         },
         config: {
-            sort_notes_by: "alphabetical",
+            sort_notes_by: "Alphabetical",
             sort_asc: true,
-            stay_signed_in: false,
+            stay_signed_in: true,
             avatar_url: "images/avatar.jpg"
         },
         data: [{

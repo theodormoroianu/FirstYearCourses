@@ -62,7 +62,7 @@ var NOTE_ProcessChanges = function() {
     document.getElementById("warning").innerHTML = "";
     document.getElementById("positive-warning").innerHTML = "<p>Saved Changes! Going back to main menu...</p>";
 
-    console.log(NOTE_object);
+    window.onbeforeunload = function() { }
     setTimeout(NOTE_callback, 1000);
 }
 
@@ -73,6 +73,7 @@ var NOTE_ProcessChanges = function() {
 var NOTE_Delete = function() {
     NOTE_object.title = "";
     /// it should self-distruct without a title
+    window.onbeforeunload = function() { }
     NOTE_callback();
 }
 
@@ -81,6 +82,7 @@ var NOTE_Delete = function() {
 /// FUNCTION DISCARDING CHANGES THE NOTE ------------------------------------------------------------------------------------------------
 
 var NOTE_Discard = function() {
+    window.onbeforeunload = function() { }
     NOTE_callback();
 }
 
@@ -89,6 +91,10 @@ var NOTE_Discard = function() {
 /// FUNCTION CREATING THE NOTE --------------------------------------------------------------------------------------------------
 
 var NOTE_Note = function(obj, callback) {
+    window.onbeforeunload = function() {
+        return 'Are you sure you want to leave?';
+    };
+
     NOTE_callback = callback;
     NOTE_object = obj;
  

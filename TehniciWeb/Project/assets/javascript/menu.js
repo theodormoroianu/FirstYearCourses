@@ -37,7 +37,7 @@ var MENU_SignOut = function() {
 /// FUNCTION CALLING THE SETTINGS PAGE ------------------------------------------------------------------------------------------
 
 var MENU_Settings = function() {
-    SETTINGS_Settings(obj, MENU_Menu);
+    SETTINGS_Settings(MENU_object, MENU_Menu);
 }
 
 
@@ -45,7 +45,7 @@ var MENU_Settings = function() {
 /// FUNCTION SHOWING THE CREDITS ------------------------------------------------------------------------------------------------
 
 var MENU_Credits = function() {
-    console.log("Hehe");
+    CREDITS_Credits(MENU_object, MENU_Menu);
 }
 
 
@@ -100,9 +100,9 @@ var MENU_RenderNotes = function() {
 /// FUNCTION CREATING THE MENU PAGE --------------------------------------------------------------------------------------------
 
 var MENU_Menu = function(obj, callback) {
-    if (MENU_callback === null)
+    if (callback !== null)
         MENU_callback = callback;
-    if (MENU_object === null)
+    if (obj !== null)
         MENU_object = obj;
 
     console.log("Entered menu. Obj = ");

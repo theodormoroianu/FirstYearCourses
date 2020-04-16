@@ -86,50 +86,52 @@ var LOGIN_VerifyData = function() {
 
 /// creates the html
 var LOGIN_Login = function() {
-    // var obj = {
-    //     info: {
-    //         user: "alex",
-    //         name: "name",
-    //         password: "123123"
-    //     },
-    //     config: {
-    //         sort_notes_by: "alphabetical",
-    //         sort_asc: true,
-    //         stay_signed_in: false,
-    //         avatar_url: "images/avatar.jpg"
-    //     },
-    //     data: [{
-    //         title: "Getting Started",
-    //         task: "Work",
-    //         creation_date: "2020-04-01",
-    //         content: 'Welcome to the Notes apps!',
-    //         asociated_picture: "Work/0.jpg"
-    //     },
-    //     {
-    //         title: "Getting Started",
-    //         task: "Work",
-    //         creation_date: "2020-04-01",
-    //         content: 'Welcome to the Notes apps!',
-    //         asociated_picture: "Work/1.jpg"
-    //     },
-    //     {
-    //         title: "Getting Started",
-    //         task: "Work",
-    //         creation_date: "2020-04-01",
-    //         content: 'Welcome to the Notes apps!',
-    //         asociated_picture: "Work/2.jpg"
-    //     },
-    //     {
-    //         title: "Getting Started",
-    //         task: "Work",
-    //         creation_date: "2020-04-01",
-    //         content: 'Welcome to the Notes apps!',
-    //         asociated_picture: "Work/3.jpg"
-    //     }
-    // ]};
+    var obj = {
+        info: {
+            user: "alex",
+            name: "name",
+            password: "123123"
+        },
+        config: {
+            sort_notes_by: "Alphabetical",
+            sort_asc: true,
+            stay_signed_in: false,
+            avatar_url: "images/avatar.jpg"
+        },
+        data: [{
+            title: "Getting Started",
+            task: "Work",
+            creation_date: "2020-04-01",
+            content: 'Welcome to the Notes apps!',
+            asociated_picture: "Work/0.jpg"
+        },
+        {
+            title: "Getting Started",
+            task: "Work",
+            creation_date: "2020-04-01",
+            content: 'Welcome to the Notes apps!',
+            asociated_picture: "Work/1.jpg"
+        },
+        {
+            title: "Getting Started",
+            task: "Work",
+            creation_date: "2020-04-01",
+            content: 'Welcome to the Notes apps!',
+            asociated_picture: "Work/2.jpg"
+        },
+        {
+            title: "Getting Started",
+            task: "Work",
+            creation_date: "2020-04-01",
+            content: 'Welcome to the Notes apps!',
+            asociated_picture: "Work/3.jpg"
+        }
+    ]};
 
     // MENU_Menu(obj, LOGIN_Login);
     // return;
+
+
     var wrapper = document.getElementById('wrapper');
     wrapper.innerHTML = LOGIN_html_code;
 }

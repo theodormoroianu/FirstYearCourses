@@ -132,7 +132,7 @@ var obj {
         new_password: /// new password, empty if not changed
     },
     config: {
-        sort_note_by: "deadline / creation date / alphabetical",
+        sort_note_by: "Deadline / Creation Date / Alphabetical",
         sort_asc: True / False,
         stay_signed_in: True / False,
         avatar_url: "link to the avatar picture"
@@ -167,3 +167,9 @@ Required `npm` packages are:
 ``` bash
 npm install express
 ```
+
+
+## ISSUES
+
+1. For some reason, the name is lost from the sign-up to the menu
+1. Unable to press 'discard' if all elements are not non-empty in forms
