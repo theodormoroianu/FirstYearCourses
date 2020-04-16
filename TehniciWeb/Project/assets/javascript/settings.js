@@ -39,7 +39,7 @@
     <div id="positive-warning">
     </div>
     <button type="submit">Save</button>
-    <button onclick="NOTE_Discard()">Discard</button>
+    <button onclick="SETTINGS_Discard()">Discard</button>
 </form>`;
  
  
@@ -51,7 +51,7 @@ var SETTINGS_object = null;
 
 
 
-/// FUNCTION PROCESSING CHANGES
+/// FUNCTION PROCESSING CHANGES -------------------------------------------------------------------------------------------------
 
 var SETTINGS_ProcessChanges = function() {
     var name = document.getElementById('name').value;
@@ -61,7 +61,7 @@ var SETTINGS_ProcessChanges = function() {
     var sort_asc = document.getElementById('sort-notes-asc').checked;
     var new_password = document.getElementById('new-password').value;
     var new_password_repeat = document.getElementById('new-password-repeat').value;
-    if (name > 20) {
+    if (name.length > 20) {
         document.getElementById("warning").innerHTML = "<p>The name is too long</p>";
         return;
     }
@@ -76,7 +76,7 @@ var SETTINGS_ProcessChanges = function() {
         }
     }
 
-    SETTINGS_object.info = name;
+    SETTINGS_object.info.name = name;
     SETTINGS_object.config.stay_signed_in = stay_signed_in;
     SETTINGS_object.config.avatar_url = avatar;
     SETTINGS_object.config.sort_notes_by = notes_order;

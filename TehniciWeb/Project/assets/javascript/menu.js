@@ -7,8 +7,8 @@
 MENU_html_code =
 `<!-- Header -->
 <header id="header">
-    <span class="avatar"><img src="images/avatar.jpg" alt="avatar"/></span>
-    <h1>Welcome to <strong>Note</strong>! We're exited to have you back. You have <a id="count-notes">idk</a> notes, out of which <a id="count-past-deadline">idk</a> are past their deadline.</h1>
+    <span class="avatar" id='avatar'></span>
+    <h1>Hi <my_tag id="name"></my_tag>! We're exited to have you back. You have <a id="count-notes">a few</a> notes, out of which <a id="count-past-deadline">a few</a> are past their deadline.</h1>
     <ul class="icons">
         <li><a href="javascript:MENU_Note(-1)"><span class="label">New Task</span></a></li>
         <li><a href="javascript:MENU_Settings()"><span class="label">Settings</span></a></li>
@@ -59,14 +59,14 @@ var MENU_Note = function(id) {
         MENU_object.data.push({
             title: "",
             task: "",
-            creation_date: "",
+            creation_date: Date.now(),
             content: '',
             asociated_picture: ""
         })
         id = MENU_object.data.length - 1;
     }
     NOTE_Note(MENU_object.data[id], function() {
-        if (MENU_object.data[id].title.length == 0) {
+        if (MENU_object.data[id].title.length == 0) { /// must delete the note
             MENU_object.data[id] =
                 MENU_object.data[MENU_object.data.length - 1];
             MENU_object.data.pop();
@@ -86,6 +86,22 @@ var MENU_Note = function(id) {
 /// RENDERS THE NOTES TO THE PAGE --------------------------------------------------------------------------------------------------
 
 var MENU_RenderNotes = function() {
+    MENU_object.data.sort((a, b) => {
+        var asmall = false;
+        if (MENU_object.config.sort_note_by == 'Deadline')
+            asmall = (a.deadline < b.deadline);
+        else if (MENU_object.config.sort_note_by == 'Creation Date')
+            asmall = (a.creation_date < b.creation_date);
+        else if (MENU_object.config.sort_note_by == 'Alphabetical')
+            asmall = (a.title < b.title);
+        
+        if (!MENU_object.config.sort_asc)
+            asmall = !asmall;
+        if (asmall)
+            return -1;
+        return 1;
+    });
+
     for (var i = 0; i < MENU_object.data.length; i++) {
         obj = MENU_object.data[i];
         var content = `<a href="javascript:MENU_Note(` + i + `)" class='image'>
@@ -100,9 +116,9 @@ var MENU_RenderNotes = function() {
 /// FUNCTION CREATING THE MENU PAGE --------------------------------------------------------------------------------------------
 
 var MENU_Menu = function(obj, callback) {
-    if (callback !== null)
+    if (callback !== null && callback !== undefined)
         MENU_callback = callback;
-    if (obj !== null)
+    if (obj !== null && obj !== undefined)
         MENU_object = obj;
 
     console.log("Entered menu. Obj = ");
@@ -112,6 +128,8 @@ var MENU_Menu = function(obj, callback) {
     wrapper.innerHTML = MENU_html_code;
 
     document.getElementById('count-notes').innerHTML = MENU_object.data.length;
+    document.getElementById('name').innerHTML = MENU_object.info.name;
+    document.getElementById('avatar').innerHTML = "<img src='" + MENU_object.config.avatar_url + "' alt='avatar'/>";
 
     MENU_RenderNotes();
 }

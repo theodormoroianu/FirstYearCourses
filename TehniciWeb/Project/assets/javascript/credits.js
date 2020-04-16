@@ -102,5 +102,5 @@ var CREDITS_Credits = function(obj, callback) {
     var wrapper = document.getElementById('wrapper');
     wrapper.innerHTML = CREDITS_html_code;
     jsonparse = document.getElementById('json-container');
-    jsonparse.innerHTML = JSON.stringify(obj);
+    jsonparse.innerHTML = JSON.stringify(obj, null, 4);
 }

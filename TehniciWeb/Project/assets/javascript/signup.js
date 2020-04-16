@@ -1,9 +1,3 @@
-/**
- * This code takes care of creating the "signup" menu, and processing the request
- */
-
-
-
 /// HTML CODE NEEDED TO RENDER THE PAGE -----------------------------------------------------------------------------------------
 
 SIGNUP_html_code =
@@ -54,7 +48,6 @@ var SIGNUP_ValidUserName = str => {
 
 /// FUNCTION THAT VERIFIES IF THE SERVER ACCEPTED THE REQUEST -------------------------------------------------------------------
 
-/// receives the message back from the server
 var SIGNUP_checker = function(obj) {
     if (obj.authentification.authentificated) {
         document.getElementById("warning").innerHTML = "";
@@ -70,7 +63,6 @@ var SIGNUP_checker = function(obj) {
 
 /// FUNCTION THAT VERIFIES IF THE DATA IS CORECT --------------------------------------------------------------------------------
 
-/// if the form is submited, this function checks it and ultimatly makes a server request
 var SIGNUP_VerifyData = function() {
     var user = document.getElementById("username").value;
     if (!SIGNUP_ValidUserName(user)) {
@@ -89,6 +81,8 @@ var SIGNUP_VerifyData = function() {
         document.getElementById("warning").innerHTML = "<p>Please enter a longer password</p>";
         return;
     }
+
+    var name = document.getElementById('name').value;
     SYNC_CreateUser(user, name, password, SIGNUP_checker);
 }
 
@@ -96,7 +90,6 @@ var SIGNUP_VerifyData = function() {
 
 /// FUNCTION THAT RENDERS THE WINDOW --------------------------------------------------------------------------------------------
 
-/// it creates the html file
 var SIGNUP_Signup = function(callback) {
     SIGNUP_callback = callback;
     var wrapper = document.getElementById('wrapper');

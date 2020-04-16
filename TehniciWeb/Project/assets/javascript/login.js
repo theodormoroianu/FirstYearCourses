@@ -1,9 +1,3 @@
-/**
- * This script takes care of the login screen and returns a JSON with the user data (using the sync.js file)
- */
-
-
-
 /// HTML CODE NEEDED TO RENDER THE PAGE -----------------------------------------------------------------------------------------
 
 LOGIN_html_code =
@@ -45,7 +39,6 @@ var LOGIN_ValidUserName = str => {
 
 /// CALLS THE SIGNUP FUNCTIONS IF THE SIGNUP BUTTON IS PRESSED ------------------------------------------------------------------
 
-/// if the "create account" button is pressed, it will call the "create acount" function
 var LOGIN_CreateAccount = function() {
     SIGNUP_Signup(LOGIN_Login);
 }
@@ -54,7 +47,6 @@ var LOGIN_CreateAccount = function() {
 
 /// RECEIVES THE MESSAGE BACK FROM THE SERVER -----------------------------------------------------------------------------------
 
-/// receives the message from the server and decides if it needs to call the callback function
 var LOGIN_checker = function(obj) {
     if (obj.authentification.authentificated) {
         document.getElementById("warning").innerHTML = "";
@@ -84,7 +76,6 @@ var LOGIN_VerifyData = function() {
 
 /// RENDERS THE HTML PAGE -------------------------------------------------------------------------------------------------------
 
-/// creates the html
 var LOGIN_Login = function() {
     var obj = {
         info: {

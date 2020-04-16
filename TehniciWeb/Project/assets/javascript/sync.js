@@ -1,7 +1,6 @@
 /// FUNCTION FOR SYNCING WITH THE SERVER ----------------------------------------------------------------------------------------
 
 function SYNC_ServerRequest(url, obj, callback) {
-    var answer = null;
     var xhttp = new XMLHttpRequest();
     
     xhttp.open("POST", url, true);
@@ -43,14 +42,15 @@ function SYNC_CreateUser(user, name, password, callback) {
             sort_notes_by: "Alphabetical",
             sort_asc: true,
             stay_signed_in: true,
-            avatar_url: "images/avatar.jpg"
+            avatar_url: "images/avatar.svg"
         },
         data: [{
             title: "Getting Started",
             task: "Work",
-            creation_date: "2020-04-01",
+            creation_date: Date.now(),
             content: 'Welcome to the Notes apps!',
-            asociated_picture: "Work/0.jpg"
+            asociated_picture: "Work/0.jpg",
+            deadline: "9999-03-23"
         }]
     };
     SYNC_ServerRequest("API/signup", obj, callback);
