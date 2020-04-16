@@ -158,6 +158,9 @@ The server will respond with
 * Traveling
 * Having Fun
 
+## LocalStorage
+* The localstorage stores the creditentials if the setting is enabled.
+* It will store strigify({ user: "username", password: "Password" })
 
 ## Reqired packages
 

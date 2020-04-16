@@ -87,6 +87,17 @@ var SETTINGS_ProcessChanges = function() {
     document.getElementById("positive-warning").innerHTML = "<p>Saved Changes! Going back to main menu...</p>";
 
     window.onbeforeunload = function() { }
+
+    /// clear localstorage
+    window.localStorage.clear();
+
+    /// if enabled, store the creditentials in storage
+    if (stay_signed_in)
+        window.localStorage.setItem('user', JSON.stringify({
+            user: SETTINGS_object.info.user,
+            password: SETTINGS_object.info.password
+        }));
+
     setTimeout(SETTINGS_callback, 1000);
 }
 

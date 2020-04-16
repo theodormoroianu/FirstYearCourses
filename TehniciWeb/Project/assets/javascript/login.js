@@ -51,10 +51,30 @@ var LOGIN_checker = function(obj) {
     if (obj.authentification.authentificated) {
         document.getElementById("warning").innerHTML = "";
         document.getElementById("positive-warning").innerHTML = "<p>Succesfully signed in. Redirecting to Login Page...</p>";
+        
+        if (obj.config.stay_signed_in) {
+            window.localStorage.setItem('user', JSON.stringify({
+                user: obj.info.user,
+                password: obj.info.password
+            }));
+        }
         setTimeout(function() { MENU_Menu(obj, LOGIN_Login); }, 1000);
     }
     else
         document.getElementById("warning").innerHTML = "<p>" + obj.authentification.message + "</p>";
+}
+
+var LOGIN_checker_localstorage = function(obj) {
+    /// same function as above, except this one doesn't print any error messages
+    if (obj.authentification.authentificated) {
+        if (obj.config.stay_signed_in) {
+            window.localStorage.setItem('user', JSON.stringify({
+                user: obj.info.user,
+                password: obj.info.password
+            }));
+        }
+        MENU_Menu(obj, LOGIN_Login);
+    }
 }
 
 
@@ -77,52 +97,18 @@ var LOGIN_VerifyData = function() {
 /// RENDERS THE HTML PAGE -------------------------------------------------------------------------------------------------------
 
 var LOGIN_Login = function() {
-    var obj = {
-        info: {
-            user: "alex",
-            name: "name",
-            password: "123123"
-        },
-        config: {
-            sort_notes_by: "Alphabetical",
-            sort_asc: true,
-            stay_signed_in: false,
-            avatar_url: "images/avatar.jpg"
-        },
-        data: [{
-            title: "Getting Started",
-            task: "Work",
-            creation_date: "2020-04-01",
-            content: 'Welcome to the Notes apps!',
-            asociated_picture: "Work/0.jpg"
-        },
-        {
-            title: "Getting Started",
-            task: "Work",
-            creation_date: "2020-04-01",
-            content: 'Welcome to the Notes apps!',
-            asociated_picture: "Work/1.jpg"
-        },
-        {
-            title: "Getting Started",
-            task: "Work",
-            creation_date: "2020-04-01",
-            content: 'Welcome to the Notes apps!',
-            asociated_picture: "Work/2.jpg"
-        },
-        {
-            title: "Getting Started",
-            task: "Work",
-            creation_date: "2020-04-01",
-            content: 'Welcome to the Notes apps!',
-            asociated_picture: "Work/3.jpg"
-        }
-    ]};
-
-    // MENU_Menu(obj, LOGIN_Login);
-    // return;
-
-
     var wrapper = document.getElementById('wrapper');
     wrapper.innerHTML = LOGIN_html_code;
+
+    /// checks if the localstorage stores the username and password
+    var x = window.localStorage.getItem('user');
+    if (x !== null) {
+        x = JSON.parse(x);
+        console.log(x);
+        var user = x.user;
+        var password = x.password;
+        window.localStorage.clear();
+
+        SYNC_SignIn(user, password, LOGIN_checker_localstorage);
+    }
 }
