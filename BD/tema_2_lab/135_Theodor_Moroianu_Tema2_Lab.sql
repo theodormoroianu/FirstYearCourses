@@ -1,15 +1,21 @@
+-- TEMA 2 LAB
+-- MOROIANU THEODOR
+
 -- 1
+
 SELECT *
 FROM employees
 where UPPER(last_name) LIKE 'K%';
 
 -- 2
+
 select last_name, first_name, employee_id, salary
 from employees
 where salary = (SELECT MIN(salary)
                   FROM employees);
 
 -- 3
+
 SELECT DISTINCT employee_id, last_name, first_name
 FROM employees
 WHERE employee_id IN (SELECT manager_id
@@ -17,12 +23,14 @@ WHERE employee_id IN (SELECT manager_id
                       WHERE department_id = 30);
                       
 -- 4
+
 SELECT employee_id, last_name, first_name, (SELECT COUNT(1)
                                             FROM employees
                                             WHERE manager_id = e.employee_id) as "nr_subalterns"
 from employees e;
 
 -- 5
+
 SELECT employee_id, last_name, first_name
 FROM employees e
 WHERE (SELECT COUNT(1)
@@ -30,6 +38,7 @@ WHERE (SELECT COUNT(1)
        WHERE last_name = e.last_name) = 2;
        
 -- 6
+
 SELECT department_id, department_name
 FROM departments d
 WHERE (SELECT COUNT(DISTINCT job_id)
@@ -37,12 +46,14 @@ WHERE (SELECT COUNT(DISTINCT job_id)
        WHERE department_id = d.department_id) >= 2;
 
 -- 7
+
 SELECT qty, o.prod_id, prod_desc
 FROM orders_tbl o, products_tbl p
 WHERE o.prod_id = p.prod_id
       AND LOWER(p.prod_desc) like '%plastic%';
 
 -- 8
+
 SELECT cust_name, 'client'
 FROM customer_tbl
 UNION
@@ -50,6 +61,7 @@ SELECT last_name || ' ' || first_name, 'angajat'
 FROM employee_tbl;
 
 -- 9
+
 SELECT DISTINCT prod_desc
 FROM products_tbl p, orders_tbl o
 WHERE p.prod_id = o.prod_id
@@ -61,6 +73,7 @@ WHERE p.prod_id = o.prod_id
                          WHERE prod_id = oo.prod_id) like '% p%');
                          
 -- 10
+
 SELECT cust_name
 FROM customer_tbl c
 WHERE EXISTS (SELECT 1
@@ -76,6 +89,7 @@ WHERE e.emp_id = p.emp_id
     AND salary < 32000 AND bonus * 17 < 32000;
  
 -- 12
+
 SELECT last_name, first_name, NVL(SUM(o.qty), 0)
 FROM employee_tbl e LEFT JOIN orders_tbl o
 ON o.sales_rep = e.emp_id
@@ -83,24 +97,28 @@ GROUP BY e.emp_id, e.last_name, e.first_name
 HAVING SUM(o.qty) > 50 OR nvl(SUM(o.qty), 0) = 0;
 
 -- 13
+
 SELECT last_name, first_name, salary, MAX(ord_date)
 FROM (employee_tbl e JOIN employee_pay_tbl p ON e.emp_id = p.emp_id) JOIN orders_tbl o
 ON e.emp_id = o.sales_rep
 GROUP BY last_name, first_name, salary, o.sales_rep;
 
 -- 14
+
 SELECT prod_desc
 FROM products_tbl
 WHERE cost > (SELECT AVG(cost)
               FROM products_tbl);
               
 -- 15
+
 SELECT last_name, first_name, salary, bonus, (SELECT SUM(salary) FROM employee_pay_tbl),
         (SELECT SUM(bonus) FROM employee_pay_tbl)
 FROM employee_tbl e, employee_pay_tbl p
 WHERE e.emp_id = p.emp_id;
 
 -- 16
+
 SELECT DISTINCT city
 FROM employee_Tbl e
 WHERE (SELECT COUNT(1)

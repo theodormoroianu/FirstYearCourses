@@ -1,14 +1,10 @@
-#ifndef TREAP_
-#define TREAP_
-
-#include <random>
-#include <time.h>
-#include <functional>
+#include <bits/stdc++.h>
+using namespace std;
 
 template <class T>
 class Treap
 {
-    std::mt19937 rnd;
+    mt19937 rnd;
 
     struct Node 
     {
@@ -21,26 +17,27 @@ class Treap
             g = 1 + st->g + dr->g;
         }
 
-        Node(T val) : val(val), g(1) { }
-    } *NIL, *root;
+        Node(T val) : val(val), g(1), st(0), dr(0)
+        {
+            prio = rnd();
+        }
+        ~Node()
+        {
+            if (st)
+                delete st;
+            if (dr)
+                delete dr;
+        }
+    } *root;
 
     using Arbore = Node*;
     using Paa = std::pair <Arbore, Arbore>;
 
-    Arbore new_node(T val)
-    {
-        Arbore ans = new Node(val);
-        ans->st = ans->dr = NIL;
-        ans->prio = rnd();
-
-        return ans;
-    }
-
     Arbore join(Arbore a, Arbore b)
     {
-        if (a == NIL)
+        if (!a)
             return b;
-        if (b == NIL)
+        if (!b)
             return a;
         if (a->prio > b->prio) {
             a->dr = join(a->dr, b);
@@ -56,8 +53,8 @@ class Treap
     /// in stanga tot ce e <= (strict = 0) / tot ce e < (strict = 1) 
     Paa split(Arbore a, T val, bool strict)
     {
-        if (a == NIL)
-            return { NIL, NIL };
+        if (!a)
+            return { 0, 0 };
         if (a->val < val || (a->val == val && !strict)) {
             Paa dr = split(a->dr, val, strict);
             a->dr = dr.first;
@@ -71,12 +68,21 @@ class Treap
         return { st.first, a };
     }
 
+    void dfs(Arbore a, vector <T> & acc)
+    {
+        if (!a)
+            return;
+        dfs(a->st);
+        acc.push_back(a->val);
+        dfs(a->dr);
+    }
+
 public:
 
     void insert(T val)
     {
         Paa s = split(root, val, 0);
-        Arbore node = new_node(val);
+        Arbore node = new Node(val);
 
         root = join(s.first, join(node, s.second));
     }
@@ -97,35 +103,23 @@ public:
         Paa s1 = split(root, val, 0);
         Paa s2 = split(s1.first, val, 1);
 
+        assert(s2.second);
+
         root = join(join(s2.first, join(s2.second->st, s2.second->dr)), s1.second);
-        if (s2.second != NIL)
-            delete s2.second;
+        s2.second->st = s2.second->dr = 0;
+        delete s2.second;    
     }
 
     Treap()
     {
         rnd = std::mt19937(time(0));
-        NIL = new Node(T());
-        NIL->g = 0;
-        NIL->st = NIL->dr = NIL;
-        root = NIL;
+        root = 0;
     }
 
     ~Treap()
     {
-        std::function<void(Arbore)> remover = [&](Arbore x)
-        {
-            if (x == NIL)
-                return;
-            remover(x->st);
-            remover(x->dr);
-            delete x;
-        };
-        if (root != NIL)
-            remover(root);
-        delete NIL;
+        if (root)
+            delete root;
     }
 
 };
-
-#endif // TREAP_
