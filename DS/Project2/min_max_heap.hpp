@@ -11,8 +11,6 @@
  * 
  * first, third etc levels are min levels, rest are max levels
  */
-
-
 template <class T>
 class MinMaxHeap
 {
