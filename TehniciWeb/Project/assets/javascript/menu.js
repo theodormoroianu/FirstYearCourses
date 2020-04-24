@@ -113,13 +113,25 @@ var MENU_RenderNotes = function() {
         return 1;
     });
 
+    const list = document.getElementById('list');
+
     for (var i = 0; i < MENU_object.data.length; i++) {
         obj = MENU_object.data[i];
-        var content = `<a href="javascript:MENU_Note(` + i + `)" class='image'>
-            <img src="images/` + obj.asociated_picture + `" alt="image"/>
-            <h3>` + obj.title + `</h3>
-            </a>`;
-        document.getElementById('list').innerHTML += content;
+        
+        var a = document.createElement('a');
+        a.setAttribute('href', 'javascript:MENU_Note(' + i + ')');
+        a.setAttribute('class', 'image');
+
+        var image = document.createElement('img');
+        image.setAttribute('src', 'images/' + obj.asociated_picture);
+
+        var title = document.createElement('h3');
+        title.textContent = obj.title;
+
+        a.appendChild(image);
+        a.appendChild(title);
+
+        list.appendChild(a);
     }
 }
 

@@ -12,11 +12,11 @@
 
     <label for="note_type"><b>Type of the note</b></label>
     <select class="custom-select" name="note_type" id="note_type" required>
-        <option value="Work">Work</option>
-        <option value="Family">Family</option>
-        <option value="Cooking">Cooking</option>
-        <option value="Traveling">Traveling</option>
-        <option value="Having Fun">Having Fun</option>
+        <option value="Work" class="dropdown-menu">Work</option>
+        <option value="Family" class="dropdown-menu">Family</option>
+        <option value="Cooking" class="dropdown-menu">Cooking</option>
+        <option value="Traveling" class="dropdown-menu">Traveling</option>
+        <option value="Having Fun" class="dropdown-menu">Having Fun</option>
     </select> 
 
     <label for="deadline">Deadline</label>

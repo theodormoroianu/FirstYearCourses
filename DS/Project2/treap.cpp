@@ -1,10 +1,13 @@
 #include <bits/stdc++.h>
 using namespace std;
 
+/**
+ * Treap DS
+ */
 template <class T>
 class Treap
 {
-    mt19937 rnd;
+    static mt19937 rnd;
 
     struct Node 
     {
@@ -14,7 +17,11 @@ class Treap
         
         void recalc()
         {
-            g = 1 + st->g + dr->g;
+            g = 1;
+            if (st)
+                g += st->g
+            if (dr)
+                g += dr->g;
         }
 
         Node(T val) : val(val), g(1), st(0), dr(0)
@@ -68,6 +75,7 @@ class Treap
         return { st.first, a };
     }
 
+    /// pune tot ce e in dfs in acc
     void dfs(Arbore a, vector <T> & acc)
     {
         if (!a)
@@ -79,7 +87,8 @@ class Treap
 
 public:
 
-    void insert(T val)
+    /// inserts val into the treap
+    void Insert(T val)
     {
         Paa s = split(root, val, 0);
         Arbore node = new Node(val);
@@ -87,6 +96,7 @@ public:
         root = join(s.first, join(node, s.second));
     }
 
+    /// returns true if val is inside the treap
     bool find(T val)
     {
         Paa s1 = split(root, val, 0);
@@ -98,22 +108,24 @@ public:
         return ans;
     }
 
+    /// removes ONE occurence of val from the treap
     void erase(T val)
     {
         Paa s1 = split(root, val, 0);
         Paa s2 = split(s1.first, val, 1);
 
-        assert(s2.second);
+        if (!s2.second)
+            throw runtime_error("Tried to remove a non-existing value from the treap!");
 
         root = join(join(s2.first, join(s2.second->st, s2.second->dr)), s1.second);
         s2.second->st = s2.second->dr = 0;
         delete s2.second;    
     }
 
-    Treap()
+    Treap(vector <T> v = { }) : rnd(time(0)), root(0)
     {
-        rnd = std::mt19937(time(0));
-        root = 0;
+        for (auto i : v)
+            Insert(i);
     }
 
     ~Treap()
@@ -121,5 +133,4 @@ public:
         if (root)
             delete root;
     }
-
 };

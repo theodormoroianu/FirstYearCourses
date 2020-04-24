@@ -27,9 +27,9 @@
 
     <label for="notes-order"><b>Sort Notes By</b></label>
     <select class="custom-select" name="notes-order" id='notes-order' required>
-        <option value ="Deadline">Deadline</option>
-        <option value ="Creation Date">Creation Date</option>
-        <option value ="Alphabetical">Alphabetical</option>
+        <option value ="Deadline" class="dropdown-menu">Deadline</option>
+        <option value ="Creation Date" class="dropdown-menu">Creation Date</option>
+        <option value ="Alphabetical" class="dropdown-menu">Alphabetical</option>
     </select> 
         
     <input type='checkbox' id='sort-notes-asc'

@@ -63,7 +63,6 @@ input, select {
   }
 }
 
-
-select.custom-select {
-  color: red;
+.dropdown-menu {
+  background-color: rgb(45, 45, 45);
 }
