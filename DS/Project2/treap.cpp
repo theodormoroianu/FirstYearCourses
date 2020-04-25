@@ -19,7 +19,7 @@ class Treap
         {
             g = 1;
             if (st)
-                g += st->g
+                g += st->g;
             if (dr)
                 g += dr->g;
         }
@@ -97,19 +97,19 @@ public:
     }
 
     /// returns true if val is inside the treap
-    bool find(T val)
+    bool Find(T val)
     {
         Paa s1 = split(root, val, 0);
         Paa s2 = split(s1.first, val, 1);
 
-        bool ans = (s2.second != NIL);
+        bool ans = s2.second;
         
         root = join(join(s2.first, s2.second), s1.second);
         return ans;
     }
 
     /// removes ONE occurence of val from the treap
-    void erase(T val)
+    void Erase(T val)
     {
         Paa s1 = split(root, val, 0);
         Paa s2 = split(s1.first, val, 1);
@@ -122,7 +122,7 @@ public:
         delete s2.second;    
     }
 
-    Treap(vector <T> v = { }) : rnd(time(0)), root(0)
+    Treap(vector <T> v = { }) : root(0)
     {
         for (auto i : v)
             Insert(i);
@@ -134,3 +134,23 @@ public:
             delete root;
     }
 };
+
+template <class T>
+mt19937 Treap<T>::rnd = mt19937(time(0));
+
+
+
+
+int main()
+{
+    Treap <int> tr;
+    tr.Insert(10);
+    tr.Insert(12);
+    tr.Insert(14);
+    tr.Insert(16);
+    tr.Erase(14);
+
+    cout << tr.Find(12) << ' ' << tr.Find(13) << ' ' << tr.Find(14) << '\n';
+
+    return 0;
+}
