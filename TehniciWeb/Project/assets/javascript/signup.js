@@ -53,6 +53,10 @@ var SIGNUP_checker = function(obj) {
         document.getElementById("warning").innerHTML = "";
         document.getElementById("positive-warning").innerHTML =
             "<p>Account Sucessfully Created. Redirecting to Login Page...</p>";
+        window.localStorage.setItem('user', JSON.stringify({
+            user: obj.info.user,
+            password: obj.info.password
+        }));
         setTimeout(SIGNUP_callback, 1500);
     }
     else

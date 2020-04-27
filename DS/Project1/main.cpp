@@ -57,8 +57,6 @@ void Benchmark(int VMAX, double TMAX)
 
 int main()
 {
-    Benchmark(10000000, 2.);
-    
     auto sleep = [](int ml) {
         this_thread::sleep_for(chrono::milliseconds(ml));
     };

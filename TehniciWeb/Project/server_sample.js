@@ -1,12 +1,10 @@
 /// IMPORTING NECESSARY STUFF ---------------------------------------------------------------------------------------------------
 
 var express = require("express")
-var morgan  = require('morgan')
-
 var fs = require('fs');
 app = express()
 app.use(express.json())
-app.use(morgan())
+
 
 
 /// DECLARING USEFULL FUNCTIONS AND ERROR JSONS ---------------------------------------------------------------------------------
@@ -68,6 +66,14 @@ var Authentificate = info => {
     /// got this far it means all is ok
     return user_data;
 };
+
+/// TRYING TO UNDERSTAND WHATEVER IS HAPPENING HERE -----------------------------------------------------------------------------
+
+
+app.get('/', (req, res) => {
+    res.send({data:"Hello"});
+  });
+
 
 /// HANDLING AUTHENTIFICATION REQUEST -------------------------------------------------------------------------------------------
 

@@ -128,32 +128,3 @@ For a length of 268435456 (2 ^ 28), sorting algorithms took:
    8. TreapSort:   > 2 seconds
    9. AVLSort:   > 2 seconds
    10. SplayTreeSort:   > 2 seconds
-Welcome to this super awesome project!
-    Here you will see more sorting algorithms than what you ever wished for ... 
-Whether you like it or not ...
-Loading stuff .......... done!
-
-Loading other stuff .......... done!
-
-Still loading some stuff .......... done!
-
-Personalizing UI experience .......... done!
-
-Searching for available sorting algorithms ... 
-Found SkipListSort
-Found CountSort
-Found MergeSort
-Found QuickSort
-Found BubbleSort
-Found RadixSort
-Found HeapSort
-Found TreapSort
-Found AVLSort
-Found SplayTreeSort
-
-
-Available commands:
-    1. Benchmark [Max Value] [Max Time (miliseconds)]
-    2. Run [Sorting Algorithm] [Input File]
-    3. Exit
- $ 
