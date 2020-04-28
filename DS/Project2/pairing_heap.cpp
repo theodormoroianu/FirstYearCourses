@@ -92,6 +92,14 @@ public:
         Node *nou = new Node(val);
         root2 = join(root2, nou);
     }
+    
+    /// joins the curent paring heap with oth. THIS WILL DESTROY OTH
+    void Unite(PairingHeap & oth)
+    { 
+        root1 = join(root1, oth.root1);
+        root2 = join(root2, oth.root2);
+        oth.root1 = oth.root2 = 0;
+    }
 
     /// creates a paring heap from a vector
     PairingHeap(vector <T> a = { }) : root1(nullptr), root2(nullptr)
