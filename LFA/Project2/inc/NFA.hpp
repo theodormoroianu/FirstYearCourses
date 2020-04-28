@@ -12,21 +12,30 @@
  *  4. q0 is the starting point
  *  5. F is the set of ending points
 **/
-
-/// Only purpuse of this automaton is to be able to convert a lambda-NFA to a DFA
-
 class NFA
 {
+    /// accepted characters
     static const std::string EPSILON;
-
+    /// edges
     std::vector <std::map <char, std::set <int>>> edges_;
+    /// start node
     int start_node_;
+    /// end nodes
     std::set <int> end_nodes_;
 
 public:
-    NFA(std::vector <std::map <char, std::set <int>>>, int start_node, std::set <int> end_nodes);
+    /// constructor with transitions, start node and end nodes
+    NFA(std::vector <std::map <char, std::set <int>>> edges, int start_node, std::set <int> end_nodes);
     
+    /// empty constructor
+    NFA();
+
+    /// explicit conversion to DFA
     explicit operator DFA();
+
+    /// I/O operators
+    friend std::istream & operator>> (std::istream & in, NFA & nfa);
+    friend std::ostream & operator<< (std::ostream & out, const NFA & nfa);
 };
 
 #endif // INC_NFA_

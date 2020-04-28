@@ -4,14 +4,6 @@ using namespace std;
 
 const string DFA::EPSILON = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ1234567890";
 
-namespace {
-    void Assert(bool x)
-    {
-        if (!x)
-            throw exception();
-    }
-}
-
 void DFA::compute_reachability() 
 {
     // if there are no nodes (I have an empty DFA)
@@ -24,12 +16,15 @@ void DFA::compute_reachability()
     int Q = edges_.size();
     vector <bool> reachable_from_start(Q, 0);
     vector <bool> reachable_from_end(Q, 0);
+    /// edges in reverse direction
     vector <vector <int>> rev_edges(Q);
 
+    /// computes the reverse edges
     for (int i = 0; i < Q; i++)
         for (auto it : edges_[i])
             rev_edges[it.second].push_back(i);
 
+    /// bfs for reachable from start nodes
     vector <int> bfs = { start_node_ };
     reachable_from_start[start_node_] = 1;
 
@@ -101,9 +96,12 @@ DFA DFA::Minimize() const
     int cnt_states = 0;
     int id_end_nodes = -1, not_end_nodes = -1;
 
+    /// for each new state what initial states it contained
     map <int, vector <int>> states;
+    /// the state a node belongs to
     vector <int> node_state(Q);
 
+    /// initial states are divided in end nodes / not end nodes
     for (int i = 0; i < Q; i++) {
         if (!reachable_[i])
             continue;
@@ -121,32 +119,39 @@ DFA DFA::Minimize() const
         }
     }
 
-    // while there is at least one class for which a caracter of epsilon does not send all 
-    // nodes in the same class, I have to break it in half
+    /// while there is at least one class for which a caracter of epsilon does not send all 
+    /// nodes in the same class, I have to break it in half
 
-    // which state a node with an edge is going to (-1 if none)
+    /// which state a node with an edge is going to (-1 if none)
     auto delta = [&](int nod, char c) {
         if (edges_[nod].find(c) == edges_[nod].end() || !reachable_[edges_[nod].at(c)])
             return -1;
         return node_state[edges_[nod].at(c)];
     };
 
+    /// while there is a class to break I have to break it
     for (bool ok = 1; (ok ^= 1) == 0; ) {
         for (int st = 0; st < cnt_states; st++) {
             for (auto c : EPSILON) {
                 /// vreau sa vad daca se splituieste cv
 
+                /// in ce se duce fiecare nod
                 map <int, vector <int>> tranz;
 
+                /// duc fiecare nod in noul lui state
+                /// (vreau sa vad daca apar cel putin doua clase in tranz)
                 for (auto i : states[st])
                     tranz[delta(i, c)].push_back(i);
 
                 if (tranz.size() > 1) {
                     /// se splituieste in >= 2 stari
+                    /// trebuie sa setez ok=true ca sa nu ies din for-ul principal
                     ok = 1;
 
+                    /// given spune daca am asignat sau nu deja id-ul 'st'
                     bool given = 0;
                     for (auto & i : tranz) {
+                        /// where este id-ul noii componente
                         int where = (given ? cnt_states++ : st);
                         given = 1;
                         states[where] = i.second;
@@ -164,66 +169,93 @@ DFA DFA::Minimize() const
     int new_start_node = node_state[start_node_];
 
     for (int i = 0; i < cnt_states; i++) {
+        /// imi aleg un element random din state care ar trebui
+        /// sa fie identic cu toti ceilalti
         int x = states[i][0];
         if (end_nodes_.find(x) != end_nodes_.end())
             new_end_nodes.insert(i);
+        
+        /// adaug muchiile din x la alte state-uri
         for (auto tr : edges_[x])
             if (reachable_[tr.second])
                 new_edges[i][tr.first] = node_state[tr.second];
     }
 
+    /// returnez DFA-ul
     return DFA(new_edges, new_start_node, new_end_nodes);
 }
 
 DFA operator~(const DFA& dfa)
 {
+    /**
+     * ca sa iau negatia adaug un nod (sink node)
+     * in care vars toate muchiile din epsilon care nu exista
+     * si inversez starile finale cu cele nefinale
+     */
+
     DFA ans = dfa;
     ans.edges_.emplace_back();
 
     int q = ans.edges_.size();
 
+    /// daca nu exista o muchie atunci o creeze si o duc in (q - 1)
     for (auto c : ans.EPSILON)
         for (int i = 0; i < q; i++)
             if (ans.edges_[i].find(c) == ans.edges_[i].end())
                 ans.edges_[i][c] = q - 1;
 
+    /// inversez nodurile finale cu cele nefinale
     for (int i = 0; i < q; i++) {
         if (ans.end_nodes_.find(i) != ans.end_nodes_.end())
             ans.end_nodes_.erase(i);
         else
             ans.end_nodes_.insert(i);
     }
+    
+    /// returnez noul DFA
     return DFA(ans.edges_, ans.start_node_, ans.end_nodes_);
 }
 
 DFA operator|(const DFA& a, const DFA& b)
 {
+    /**
+     * ca sa calculez reuniunea a doua DFA-uri
+     * creeze un NFA cu o sursa noua si o muchie
+     * de lambda de la sursa noua la cele doua surse intiale
+     */
+
+    /// creez noile muchii
     int sz_a = a.edges_.size(), sz_b = b.edges_.size();
     vector <map <char, set <int>>> new_edges(sz_a + sz_b + 1);
     
-    /// add edges of a
+    /// add edges of a - add 1 to all of the nodes
     for (int i = 0; i < sz_a; i++)
         for (auto e : a.edges_[i])
             new_edges[i + 1][e.first].insert(e.second + 1);
 
+    /// add edges of b - add (sz_a + 1) to all nodes
     for (int i = 0; i < sz_b; i++)
         for (auto e : b.edges_[i])
             new_edges[i + sz_a + 1][e.first].insert(e.second + sz_a + 1);
     
+    /// creez tranzitiile lambda din 0
     new_edges[0][0].insert(a.start_node_ + 1);
     new_edges[0][0].insert(b.start_node_ + sz_a + 1);
 
     int new_start_node = 0;
     set <int> new_end_nodes;
     
+    /// adaug end_nodes-urile
     for (auto i : a.end_nodes_)
         new_end_nodes.insert(i + 1);
     for (auto i : b.end_nodes_)
         new_end_nodes.insert(i + sz_a + 1);
 
+    /// creez NFA-ul
     NFA reuniune(new_edges, new_start_node, new_end_nodes);
 
-    return static_cast <DFA> (reuniune).Minimize();
+    /// returnez cast-ul NFA-ului la DFA
+    return static_cast <DFA> (reuniune);
 }
 
 
@@ -235,16 +267,23 @@ DFA operator&(const DFA& a, const DFA& b)
 
 bool operator==(const DFA& a, const DFA& b)
 {
+    /**
+     * vreau sa vad daca starile din minim1 si minim2 sunt identice
+     * pana la permutare. Nu stiu daca e corect dar pare ok-ish
+     */
+    
+    /// automatele minimizate
     DFA x = a.Minimize(), y = b.Minimize();
-    /// vreau sa vad daca starile din minim1 si minim2 sunt identice
-    /// pana la permutare
 
+    /// daca nu au acelasi numar de stari atunci clar nu sunt egale
     if (x.edges_.size() != y.edges_.size())
         return 0;
 
+    /// corespondenta de la a la b respectiv de la b la a
     map <int, int> a_to_b, b_to_a;
     vector <int> bfs;
 
+    /// creeaza corespondenta (va == vb)
     auto verify = [&](int va, int vb) {
         if (a_to_b.find(va) != a_to_b.end() && a_to_b[va] != vb)
             return false;
@@ -259,6 +298,7 @@ bool operator==(const DFA& a, const DFA& b)
 
     verify(x.start_node_, y.start_node_);
 
+    /// trece prin toate starile din BFS si se asigura ca sunt egale
     for (int it = 0; it < (int)bfs.size(); it++) {
         int n1 = bfs[it];
         int n2 = a_to_b[n1];
@@ -284,6 +324,7 @@ bool operator==(const DFA& a, const DFA& b)
 
 bool operator!= (const DFA & a, const DFA & b)
 {
+    /// a != b <=> !(a = b)     DUH!
     return !(a == b);
 }
 
@@ -293,8 +334,8 @@ istream & operator>> (istream & in, DFA & dfa)
         int Q, szTranz;
         in >> Q >> szTranz;
 
-        Assert(Q >= 1);
-        Assert(szTranz >= 0);
+        if (Q < 1 || szTranz < 0)
+            throw runtime_error("Invalid input");
 
         dfa.edges_ = vector <map <char, int>> (Q);
         
@@ -303,22 +344,30 @@ istream & operator>> (istream & in, DFA & dfa)
             char c;
             in >> X >> Y >> c;
 
-            Assert(min(X, Y) >= 0 && max(X, Y) < Q);
-            Assert(dfa.edges_[X].find(c) == dfa.edges_[X].end());
+            if (min(X, Y) < 0 || max(X, Y) >= Q)
+                throw runtime_error("Invalid input");
+
             dfa.edges_[X][c] = Y;
         }
 
         in >> dfa.start_node_;
-        Assert(dfa.start_node_ >= 0 && dfa.start_node_ < Q);
+
+        if (dfa.start_node_ < 0 || dfa.start_node_ >= Q)
+            throw runtime_error("Invalid input");
 
         int szF;
         in >> szF;
-        Assert(szF >= 0);
+
+        if (szF < 0)
+            throw runtime_error("Invalid input");
 
         while (szF--) {
             int X;
             in >> X;
-            Assert(X >= 0 && X < Q && dfa.end_nodes_.find(X) == dfa.end_nodes_.end());
+
+            if (X < 0 || X >= Q)
+                throw runtime_error("Invalid input");
+
             dfa.end_nodes_.insert(X);
         }
     }
