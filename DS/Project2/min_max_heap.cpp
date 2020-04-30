@@ -169,14 +169,90 @@ public:
 };
 
 
+void tester()
+{
+    mt19937 rnd(time(0));
+    while (true) {
+        multiset <int> s;
+        MinMaxHeap <int> mmh;
+        for (int _ = 0; _ < 10000; _++) {
+            int op = rnd() % 3;
+            if (op == 0) {
+                if (rnd() % 10)
+                    cerr << "?";
+                /// find min
+                if (rnd() % 2) {
+                    if (!s.empty() && *s.begin() != mmh.GetMinim()) {
+                        cerr << "WA\n";
+                        exit(0);
+                    }
+                }
+                else {
+                    if (!s.empty() && *prev(s.end()) != mmh.GetMaxim()) {
+                        cerr << "WA\n";
+                        exit(0);
+                    }
+                }
+            }
+            else if (op == 1) {
+                if (rnd() % 10)
+                    cerr << "+";
+                int v = rnd() % 100;
+                s.insert(v);
+                mmh.Insert(v);
+            }
+            else {
+                if (rnd() % 10)
+                    cerr << "-";
+                if (s.empty())
+                    continue;
+
+                if (rnd() % 2) {
+                    s.erase(s.begin());
+                    mmh.PopMinim();
+                }
+                else {
+                    s.erase(prev(s.end()));
+                    mmh.PopMaxim();
+                }
+            }
+        }
+        cerr << "\nOK\n\n\n";
+    }
+}
+
 int main()
 {
+    // tester();
     MinMaxHeap <int> mmh;
-    mmh.Insert(10);
-    mmh.Insert(20);
-    mmh.Insert(30);
+    int N;
+    cin >> N;
 
-    cout << mmh.GetMaxim() << ' ' << mmh.GetMinim() << '\n';
+    while (N--) {
+        int op;
+        cin >> op;
+        if (op == 1) {
+            int x;
+            cin >> x;
+            mmh.Insert(x);
+        }
+        else if (op == 2)
+            mmh.PopMinim();
+        else if (op == 3)
+            mmh.PopMaxim();
+        else if (op == 4)
+            cout << mmh.GetMinim() << '\n';
+        else if (op == 5)
+            cout << mmh.GetMaxim() << '\n';
+        else if (op == 6) {
+            int n;
+            cin >> n;
+            vector <int> v(n);
+            for (auto & i : v)
+                cin >> i;
+            mmh = MinMaxHeap<int>(v);
+        }
+    }
 
     return 0;
 }

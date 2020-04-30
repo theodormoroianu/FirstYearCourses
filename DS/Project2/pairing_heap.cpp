@@ -3,7 +3,7 @@ using namespace std;
 
 
 /**
- * Max-Heap DS
+ * Min-Heap DS
  */
 template <class T>
 class PairingHeap {
@@ -26,7 +26,7 @@ class PairingHeap {
             return b;
         if (!b)
             return a;
-        if (a->val < b->val)
+        if (a->val > b->val)
             swap(a, b);
         a->fii.push_back(b);
         return a;
@@ -117,9 +117,8 @@ public:
     }
 };
 
-int main()
+void manual_test()
 {
-    vector <int> v = { 1, 2, 3 };
     PairingHeap <int> ph;
 
     int op;
@@ -143,6 +142,78 @@ int main()
             cin >> val;
             ph.Erase(val);
         }
+    }
+}
+
+
+void tester()
+{
+    mt19937 rnd(time(0));
+    while (true) {
+        multiset <int> s;
+        PairingHeap <int> ph;
+        for (int _ = 0; _ < 1000; _++) {
+            int op = rnd() % 3;
+            if (op == 0) {
+                if (rnd() % 10)
+                    cerr << "?";
+                /// find min
+                if (!s.empty() && *s.begin() != ph.Top()) {
+                    cerr << "WA\n";
+                    exit(0);
+                }
+            }
+            else if (op == 1) {
+                if (rnd() % 10)
+                    cerr << "+";
+                int v = rnd() % 100;
+                s.insert(v);
+                ph.Insert(v);
+            }
+            else {
+                if (rnd() % 10)
+                    cerr << "-";
+                if (s.empty())
+                    continue;
+
+                while (true) {
+                    int x = rnd() % 100;
+                    if (s.find(x) != s.end()) {
+                        s.erase(s.find(x));
+                        ph.Erase(x);
+                        break;
+                    }
+                }
+            }
+        }
+        cerr << "\nOK\n\n\n";
+    }
+}
+
+int main()
+{
+    // tester();
+    PairingHeap <int> ph;
+    int N;
+    cin >> N;
+
+    while (N--) {
+        int op;
+        cin >> op;
+        if (op == 1) {
+            int x;
+            cin >> x;
+            ph.Insert(x);
+        }
+        else if (op == 2) {
+            int x;
+            cin >> x;
+            ph.Erase(x);
+        }
+        else if (op == 3)
+            cout << ph.Top() << '\n';
+        else
+            ph.Pop();
     }
 
     return 0;

@@ -1,3 +1,10 @@
+/**
+ * DOES NOT WORK YET
+ * THERE'S MAINLY ONLY THE SPLAY FUNCTION
+ * BUT THE REMAINING STUFF IS TOO CANCER
+ */
+
+
 #include <bits/stdc++.h>
 using namespace std;
 

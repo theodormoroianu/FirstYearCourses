@@ -203,6 +203,14 @@ var MENU_Menu = (obj, callback) => {
 
     notes = []
     MENU_GetNotes().then(() => {
+
+        var wrapper = document.getElementById('wrapper');
+        wrapper.innerHTML = MENU_html_code;
+
+        var date_now = (new Date()).toISOString().slice(0,10);
+        var deadline_today = 0;
+        var deadline_passed = 0;
+
         for (var i = 0; i < notes.length; i++) {
             if (notes[i].deadline.length == 10) {
                 if (notes[i].deadline == date_now)

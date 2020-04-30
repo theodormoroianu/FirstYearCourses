@@ -1,3 +1,8 @@
+/**
+ * NOT TESTED
+ * IDK about the predecesor and succesor functions
+ */
+
 #include <bits/stdc++.h>
 using namespace std;
 
@@ -11,17 +16,18 @@ class Treap
 
     struct Node 
     {
-        T val;
+        T val, minim, maxim;
         int prio, g;
         Node *st, *dr;
         
         void recalc()
         {
             g = 1;
+            minim = maxim = val;
             if (st)
-                g += st->g;
+                g += st->g, minim = st->minim;
             if (dr)
-                g += dr->g;
+                g += dr->g, maxim = dr->maxim;
         }
 
         Node(T val) : val(val), g(1), st(0), dr(0)
@@ -120,6 +126,24 @@ public:
         root = join(join(s2.first, join(s2.second->st, s2.second->dr)), s1.second);
         s2.second->st = s2.second->dr = 0;
         delete s2.second;    
+    }
+
+    /// returns first value smaller than x
+    T Predecesor(T val)
+    {
+        Paa s = split(root, val, 0);
+        T ans = s.first->maxim;
+        root = join(s.first, s.second);
+        return ans;
+    }
+
+    /// returns first value bigger than x
+    T Succesor(T val)
+    {
+        Paa s = split(root, val, 1);
+        T ans = s.second->minim;
+        root = join(s.first, s.second);
+        return ans;
     }
 
     Treap(vector <T> v = { }) : root(0)
