@@ -250,7 +250,7 @@ The script checks if there is any token stored in the localstorage, and if not p
             sort_asc: True / False,
             stay_signed_in: True / False,
             avatar_url: "link to the avatar picture"
-        },
+        }
     }
 ```
 

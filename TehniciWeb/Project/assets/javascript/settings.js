@@ -83,7 +83,9 @@ var SETTINGS_ProcessChanges = function() {
     SETTINGS_object.config.avatar_url = avatar;
     SETTINGS_object.config.sort_notes_by = notes_order;
     SETTINGS_object.config.sort_asc = sort_asc;
-    SETTINGS_object.info.new_password = new_password;
+
+    if (new_password.length > 0)
+        SETTINGS_object.info['password'] = new_password;
 
     document.getElementById("warning").innerHTML = "";
     document.getElementById("positive-warning").innerHTML = "<p>Saved Changes! Going back to main menu...</p>";
@@ -95,10 +97,7 @@ var SETTINGS_ProcessChanges = function() {
 
     /// if enabled, store the creditentials in storage
     if (stay_signed_in)
-        window.localStorage.setItem('user', JSON.stringify({
-            user: SETTINGS_object.info.user,
-            password: SETTINGS_object.info.password
-        }));
+        window.localStorage.setItem('token', SETTINGS_object.info.token);
 
     setTimeout(SETTINGS_callback, 1000);
 }

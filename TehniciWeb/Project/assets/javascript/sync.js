@@ -1,68 +1,128 @@
-/// FUNCTION FOR SYNCING WITH THE SERVER ----------------------------------------------------------------------------------------
+/// AUTHENTIFICATION CRUD -----------------------------------------------------------------------------------------------
 
-function SYNC_ServerRequest(url, obj, callback) {
-    var xhttp = new XMLHttpRequest();
-    
-    xhttp.open("POST", url, true);
-    xhttp.setRequestHeader("Content-type", "application/json");
-    xhttp.onreadystatechange = function() {
-        if (this.readyState == 4 && this.status == 200)
-            callback(JSON.parse(this.response));
-    };
-    xhttp.send(JSON.stringify(obj));
-}
-
-
-
-/// FUNCTION FOR AUTHENTIFICATION -----------------------------------------------------------------------------------------------
-
-function SYNC_SignIn(user, password, callback) {
-    var obj = {
-        info: {
-            user: user,
-            password: password 
-        }
-    };
-
-    SYNC_ServerRequest("API/login", obj, callback);
-}
-
-
-
-/// FUNCTION FOR CREATING USER --------------------------------------------------------------------------------------------------
-
-function SYNC_CreateUser(user, name, password, callback) {
-    var obj = {
-        info: {
-            user: user,
-            name: name,
-            password: password
+var SYNC_SignIn = (obj, callback) => {
+    fetch('API/login', {
+        method: 'POST',
+        headers: {
+            "Content-type": "application/json"
         },
-        config: {
-            sort_notes_by: "Alphabetical",
-            sort_asc: true,
-            stay_signed_in: true,
-            avatar_url: "images/avatar.svg"
+        body: JSON.stringify(obj)
+    }).then(function (response) {
+        response.json().then((resp) => {
+            console.log("Received from login:");
+            console.log(resp);
+            callback(resp);
+        });
+    });
+}
+
+var SYNC_SignUp = (obj, callback) => {
+    fetch('API/signup', {
+        method: 'POST',
+        headers: {
+            "Content-type": "application/json"
         },
-        data: [{
-            title: "Getting Started",
-            task: "Work",
-            creation_date: Date.now(),
-            content: 'Welcome to the Notes apps!',
-            asociated_picture: "Work/0.jpg",
-            deadline: "9999-03-23"
-        }]
-    };
-    SYNC_ServerRequest("API/signup", obj, callback);
+        body: JSON.stringify(obj)
+    }).then(function (response) {
+        response.json().then((resp) => {
+            console.log("Received from signup:");
+            console.log(resp);
+            callback(resp);
+        });
+    });
+}
+
+var SYNC_SignOut = (obj, callback) => {
+    fetch('API/signout', {
+        method: 'DELETE',
+        headers: {
+            "Content-type": "application/json"
+        },
+        body: JSON.stringify(obj)
+    }).then(function (response) {
+        response.json().then((resp) => {
+            console.log("Received from signout:");
+            console.log(resp);
+            callback(resp);
+        });
+    });
 }
 
 
 
-/// FUNCTION FOR SAVING STATE ---------------------------------------------------------------------------------------------------
+/// NOTES CRUD ------------------------------------------------------------------------------------------------------------------
 
-function SYNC_Checkpoint(obj, callback) {
-    SYNC_ServerRequest("API/checkpoint", obj, callback);
+var SYNC_CreateNote = (obj, callback) => {
+    fetch('API/notes', {
+        method: 'POST',
+        headers: {
+            "Content-type": "application/json"
+        },
+        body: JSON.stringify(obj)
+    }).then(function (response) {
+        response.json().then((resp) => {
+            console.log("Received from createnote:");
+            console.log(resp);
+            callback(resp);
+        });
+    });
+}
+
+var SYNC_DeleteNote = (obj, callback) => {
+    fetch('API/notes', {
+        method: 'DELETE',
+        headers: {
+            "Content-type": "application/json"
+        },
+        body: JSON.stringify(obj)
+    }).then(function (response) {
+        response.json().then((resp) => {
+            console.log("Received from deletenote:");
+            console.log(resp);
+            callback(resp);
+        });
+    });
+}
+
+var SYNC_GetNote = async (obj) => {
+    var response = await fetch('API/notes?token=' + obj.token + '&note_id=' + obj.note_id);
+    var response_json = await response.json();
+    return response_json;
+}
+
+var SYNC_UpdateNote = (obj, callback) => {
+    fetch('API/notes', {
+        method: 'PUT',
+        headers: {
+            "Content-type": "application/json"
+        },
+        body: JSON.stringify(obj)
+    }).then(function (response) {
+        response.json().then((resp) => {
+            console.log("Received from updatenote:");
+            console.log(resp);
+            callback(resp);
+        });
+    });
 }
 
 
+
+/// FUNCTION FOR UPDATING SETTINGS --------------------------------------------------------------------------------------------------
+
+var SYNC_UpdateSettings = (obj, callback) => {
+    fetch('API/settings', {
+        method: 'PUT',
+        headers: {
+            "Content-type": "application/json"
+        },
+        body: JSON.stringify(obj)
+    }).then(function (response) {
+        response.json().then((resp) => {
+            console.log("Received from updatesettings:");
+            console.log(resp);
+            callback(resp);
+        });
+    });
+}
 

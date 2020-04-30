@@ -39,3 +39,23 @@ function opDog(type) {
         });
     });
 }
+
+// op can be put post delete
+var op2Dog = async () => {
+    // creat post object
+    const postObject = {
+        name: "post object",
+        attrib: "random stuff"
+    }
+    // post dog
+    var obj = await fetch('dogs', {
+        method: "POST",
+        headers: {
+            "Content-type": "application/json"
+        },
+        body: JSON.stringify(postObject)
+    });
+    var objj = await obj.json();
+    console.log(objj);
+    return objj;
+}

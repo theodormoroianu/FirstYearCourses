@@ -13,7 +13,9 @@ var assert = (condition) => {
         throw "Assertion failed";
 }
 
-/// DECLARING USEFULL FUNCTIONS AND ERROR JSONS ---------------------------------------------------------------------------------
+
+
+/// DECLARING USEFULL JSONS AND ERROR JSONS ---------------------------------------------------------------------------------
 
 var invalid_authentification_json = {
     authentification: {
@@ -50,13 +52,15 @@ var forbidden_resource_json = {
         authentificated: false,
         message: "The resource you are trying to access is private"
     }
-}
+};
 var authentification_ok_json = {
     authentification: {
         authentificated: true,
         message: "OK"
     }
-}
+};
+
+/// DECLARING I/O FUNCTIONS -----------------------------------------------------------------------------------------------------
 
 /// verifies if a username is valid
 var ValidUserName = str => {
@@ -68,20 +72,23 @@ var ValidUserName = str => {
     return true;    
 };
 
+/// checks if a username exists
 var ExistsUser = user => {
     if (fs.existsSync("data/users/" + user))
         return true;
     return false;
 }
 
+/// reads the user_json from user
 var ReadUser = user => {
     var str = fs.readFileSync("data/users/" + user).toString();
     user_data = JSON.parse(str);
     return user_data;
 }
 
+/// writes a user_json to memory
 var WriteUser = user => {
-    fs.writeFile("data/users/" + user.info.user, JSON.stringify(user), function (err) {
+    fs.writeFileSync("data/users/" + user.info.user, JSON.stringify(user), function (err) {
         if (err) {
             console.log("ERROR while tring to save data.");
             console.log(err);
@@ -89,14 +96,16 @@ var WriteUser = user => {
     });
 }
 
+/// reads a note from node_id
 var ReadNote = note => {
     var str = fs.readFileSync("data/notes/" + note).toString();
     note_data = JSON.parse(str);
     return note_data;
 }
 
+/// writes a note to memory
 var WriteNote = note => {
-    fs.writeFile("data/notes/" + note.note_id, JSON.stringify(note), function (err) {
+    fs.writeFileSync("data/notes/" + note.note_id, JSON.stringify(note), function (err) {
         if (err) {
             console.log("ERROR while tring to save data.");
             console.log(err);
@@ -104,6 +113,7 @@ var WriteNote = note => {
     });
 }
 
+/// generates random tokens, for both notes and user tokens
 var CreateUniqueID = () => {
     var length = 20;
     var result           = '';
@@ -119,12 +129,14 @@ var CreateUniqueID = () => {
 // the user and the creation_date
 active_tokens = { }
 
+
+
 /// HANDLING AUTHENTIFICATION REQUEST -------------------------------------------------------------------------------------------
 
 /// returns a new token for user or throws an error
 var CreateToken = (user, password) => {
     var user_json = ReadUser(user);
-    assert(user_json.password === password);
+    assert(user_json.info.password === password);
     var token = CreateUniqueID();
 
     active_tokens[token] = {
@@ -140,16 +152,22 @@ var Authentificate = (token) => {
     return active_tokens[token].user;
 }
 
+
+
+/// USER AUTHENTIFICATION CRUD --------------------------------------------------------------------------------------------------
+
 app.post('/API/login', function(req, res) {
     var obj = req.body;
     try {
         if (!obj.hasOwnProperty('token'))
-            obj[token] = CreateToken(obj.user, obj.passord);
+            obj['token'] = CreateToken(obj.user, obj.password);
         
         var user = Authentificate(obj.token);
         var user_json = ReadUser(user);
-        
-        user_json.authentification = {
+        delete user_json.info.password;
+        user_json.info['token'] = obj.token;
+
+        user_json['authentification'] = {
             authentificated: true,
             message: "OK"
         };
@@ -160,23 +178,17 @@ app.post('/API/login', function(req, res) {
     }
 });
 
-/// HANDLING USER CREATION ------------------------------------------------------------------------------------------------------
-
 app.post('/API/signup', function(req, res) {
     var obj = req.body;
     try {
         if (!ValidUserName(obj.user))
-            res.end(invalid_username_json);
-        else if (!obj.password.length < 6)
-            res.end(invalid_password_json);
+            res.end(JSON.stringify(invalid_username_json));
+        else if (obj.password.length < 6)
+            res.end(JSON.stringify(invalid_password_json));
         else if (ExistsUser(obj.user))
-            res.end(user_already_exists_json);
+            res.end(JSON.stringify(user_already_exists_json));
         else {
             var user_json = {
-                authentification: {
-                    authentificated: true,
-                    message: "OK"
-                },
                 info: {
                     user: obj.user,
                     name: obj.name,
@@ -188,11 +200,26 @@ app.post('/API/signup', function(req, res) {
                     stay_signed_in: true,
                     avatar_url: "images/avatar.svg"
                 },
-                notes: []
-            }
+                notes: [CreateUniqueID()]
+            };
+            var welcome_note = {
+                title: "Getting Started",
+                task: "Work",
+                creation_date: Date.now(),
+                content: `Welcome to the note manager!`,
+                asociated_picture: "Work/0.jpg",
+                note_id: user_json.notes[0],
+                deadline: ''
+            };
 
+            WriteNote(welcome_note);
             WriteUser(user_json);
-            user_json.info[token] = CreateToken(obj.user, obj.password);
+
+            user_json['authentification'] = {
+                authentificated: true,
+                message: "OK"
+            };
+            user_json.info['token'] = CreateToken(obj.user, obj.password);
             delete user_json.info.password;
 
             res.end(JSON.stringify(user_json));
@@ -237,7 +264,7 @@ app.post('/API/notes', (req, res) => {
         WriteUser(user_json);
 
     } catch (e) {
-        res.end(invalid_authentification_json);
+        res.end(JSON.stringify(invalid_authentification_json));
     }
 });
 
@@ -258,7 +285,7 @@ app.delete('/API/notes', (req, res) => {
         WriteUser(user_json);
 
     } catch (e) {
-        res.end(invalid_authentification_json);
+        res.end(JSON.stringify(invalid_authentification_json));
     }
 });
 
@@ -273,7 +300,7 @@ app.get('/API/notes', (req, res) => {
         if (!user_json.notes.includes(note_id))
             res.end(JSON.stringify(forbidden_resource_json));
         else {
-            var note = ReadNote(node_id);
+            var note = ReadNote(note_id);
             res.end(JSON.stringify({
                 authentification: {
                     authentificated: true,
@@ -283,7 +310,7 @@ app.get('/API/notes', (req, res) => {
             }));
         }
     } catch (e) {
-        res.end(invalid_authentification_json);
+        res.end(JSON.stringify(invalid_authentification_json));
     }
 });
 
@@ -306,9 +333,11 @@ app.put('/API/notes', (req, res) => {
             }));
         }
     } catch (e) {
-        res.end(invalid_authentification_json);
+        res.end(JSON.stringify(invalid_authentification_json));
     }
 });
+
+
 
 /// HANDELING SETTINGS CRUD SYNC ------------------------------------------------------------------------------------------------ 
 
@@ -326,12 +355,12 @@ app.put('/API/settings', function(req, res) {
                 user_json.info.passord = obj.info.passord;
         }
 
-        res.end({
+        res.end(JSON.stringify({
             authentification: {
                 authentificated: true,
                 message: "OK"
             }
-        });
+        }));
     } catch (e) {
         res.end(JSON.stringify(invalid_authentification_json));
     }
@@ -342,12 +371,6 @@ app.put('/API/settings', function(req, res) {
 /// HANDLING SCRIPT / HTML REQUESTS ---------------------------------------------------------------------------------------------
 
 app.use(express.static('assets'));
-
-// app.use('/index.html', function(req, res) {
-//     fs.readFile("resources/index.html", function(err, text) {
-//         res.end(text);
-//     });
-// });
 
 
 

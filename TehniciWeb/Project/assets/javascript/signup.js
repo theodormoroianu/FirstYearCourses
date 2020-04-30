@@ -31,7 +31,7 @@ SIGNUP_html_code =
 
 var SIGNUP_callback = null;
 
-var SIGNUP_Cancel = function() {
+var SIGNUP_Cancel = () => {
     SIGNUP_callback();
 }
 
@@ -48,15 +48,12 @@ var SIGNUP_ValidUserName = str => {
 
 /// FUNCTION THAT VERIFIES IF THE SERVER ACCEPTED THE REQUEST -------------------------------------------------------------------
 
-var SIGNUP_checker = function(obj) {
+var SIGNUP_checker = (obj) => {
     if (obj.authentification.authentificated) {
         document.getElementById("warning").innerHTML = "";
         document.getElementById("positive-warning").innerHTML =
             "<p>Account Sucessfully Created. Redirecting to Login Page...</p>";
-        window.localStorage.setItem('user', JSON.stringify({
-            user: obj.info.user,
-            password: obj.info.password
-        }));
+        window.localStorage.setItem('token', obj.info.token);
         setTimeout(SIGNUP_callback, 1500);
     }
     else
@@ -67,7 +64,7 @@ var SIGNUP_checker = function(obj) {
 
 /// FUNCTION THAT VERIFIES IF THE DATA IS CORECT --------------------------------------------------------------------------------
 
-var SIGNUP_VerifyData = function() {
+var SIGNUP_VerifyData = () => {
     var user = document.getElementById("username").value;
     if (!SIGNUP_ValidUserName(user)) {
         document.getElementById("warning").innerHTML = "<p>Please enter a valid username</p>";
@@ -87,14 +84,18 @@ var SIGNUP_VerifyData = function() {
     }
 
     var name = document.getElementById('name').value;
-    SYNC_CreateUser(user, name, password, SIGNUP_checker);
+    SYNC_SignUp({
+        user: user,
+        name: name,
+        password: password
+    }, SIGNUP_checker);
 }
 
 
 
 /// FUNCTION THAT RENDERS THE WINDOW --------------------------------------------------------------------------------------------
 
-var SIGNUP_Signup = function(callback) {
+var SIGNUP_Signup = (callback) => {
     SIGNUP_callback = callback;
     var wrapper = document.getElementById('wrapper');
     wrapper.innerHTML = SIGNUP_html_code;

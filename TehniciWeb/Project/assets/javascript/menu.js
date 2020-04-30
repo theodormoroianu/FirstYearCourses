@@ -28,9 +28,14 @@ MENU_html_code =
 
 var MENU_callback = null;
 var MENU_object = null;
+var notes = [];
 
 var MENU_SignOut = function() {
-    MENU_object = null; /// distroy the object
+    SYNC_SignOut({
+        token: MENU_object.info.token
+    }, () => { });
+
+    delete MENU_object;
     window.localStorage.clear();
     MENU_callback();
 }
@@ -39,13 +44,25 @@ var MENU_SignOut = function() {
 
 /// FUNCTION CALLING THE SETTINGS PAGE ------------------------------------------------------------------------------------------
 
-var MENU_Settings = function() {
-    SETTINGS_Settings(MENU_object, function() {
-        SYNC_Checkpoint(MENU_object, (obj) => {
+var MENU_Settings = () => {
+    SETTINGS_Settings(MENU_object, () => {
+        var new_settings = {
+            token: MENU_object.info.token,
+            info: {
+                name: MENU_object.info.name,
+            },
+            config: MENU_object.config
+        };
+        if (MENU_object.info.hasOwnProperty('password')) {
+            new_settings.info['password'] = MENU_object.info.password;
+            delete MENU_object.info.password;
+        }
+
+        SYNC_UpdateSettings(new_settings, (obj) => {
             if (obj.authentification.authentificated)
-                console.log("Created checkpoint");
+                console.log("saved settings");
             else
-                console.log("Error while creating checkpoint");
+                console.log("Error while saving settings");
         });
         MENU_Menu();
     });
@@ -55,7 +72,7 @@ var MENU_Settings = function() {
 
 /// FUNCTION SHOWING THE CREDITS ------------------------------------------------------------------------------------------------
 
-var MENU_Credits = function() {
+var MENU_Credits = () => {
     CREDITS_Credits(MENU_object, MENU_Menu);
 }
 
@@ -63,32 +80,49 @@ var MENU_Credits = function() {
 
 /// FUNCTION CALLING THE NOTES PAGE ---------------------------------------------------------------------------------------------
 
-var MENU_Note = function(id) {
+var MENU_Note = (id) => {
     /// must show the id-th note
     if (id == -1) {
         /// I must create a new note
-        MENU_object.data.push({
+        notes.push({
             title: "",
             task: "",
             creation_date: Date.now(),
             content: '',
             asociated_picture: ""
         })
-        id = MENU_object.data.length - 1;
+        id = notes.length - 1;
     }
-    NOTE_Note(MENU_object.data[id], function() {
-        if (MENU_object.data[id].title.length == 0) { /// must delete the note
-            MENU_object.data[id] =
-                MENU_object.data[MENU_object.data.length - 1];
-            MENU_object.data.pop();
+    NOTE_Note(notes[id], function() {
+        if (notes[id].title.length == 0) { /// must delete the note
+            if (notes[id].hasOwnProperty('note_id')) {
+                SYNC_DeleteNote({
+                    token: MENU_object.info.token,
+                    note_id: notes[id].note_id
+                }, () => { });
+                MENU_object.notes = MENU_object.notes.filter(note => {
+                    return note.note_id !== notes[id].note_id;
+                });
+                MENU_Menu();
+            }
         }
-        SYNC_Checkpoint(MENU_object, (obj) => {
-            if (obj.authentification.authentificated)
-                console.log("Created checkpoint");
-            else
-                console.log("Error while creating checkpoint");
-        });
-        MENU_Menu();
+        else if (!notes[id].hasOwnProperty('note_id')) {
+            SYNC_CreateNote({
+                token: MENU_object.info.token,
+                data: notes[id]
+            }, (obj) => {
+                MENU_object.notes.push(obj.note_id);
+                MENU_Menu();
+            });
+        }
+        else {
+            SYNC_UpdateNote({
+                token: MENU_object.info.token,
+                data: notes[id]
+            }, () => {
+                MENU_Menu();
+            })
+        }
     });
 }
 
@@ -97,7 +131,7 @@ var MENU_Note = function(id) {
 /// RENDERS THE NOTES TO THE PAGE --------------------------------------------------------------------------------------------------
 
 var MENU_RenderNotes = function() {
-    MENU_object.data.sort((a, b) => {
+    notes.sort((a, b) => {
         var asmall = false;
         if (MENU_object.config.sort_notes_by == 'Deadline')
             asmall = (a.deadline < b.deadline);
@@ -115,8 +149,8 @@ var MENU_RenderNotes = function() {
 
     const list = document.getElementById('list');
 
-    for (var i = 0; i < MENU_object.data.length; i++) {
-        obj = MENU_object.data[i];
+    for (var i = 0; i < notes.length; i++) {
+        obj = notes[i];
         
         var a = document.createElement('a');
         a.setAttribute('href', 'javascript:MENU_Note(' + i + ')');
@@ -136,9 +170,22 @@ var MENU_RenderNotes = function() {
 }
 
 
+
+/// GET NOTES
+
+var MENU_GetNotes = async () => {
+    for (var i = 0; i < MENU_object.notes.length; i++) {
+        var act = await SYNC_GetNote({
+            token: MENU_object.info.token,
+            note_id: MENU_object.notes[i]
+        });
+        notes.push(act.data);
+    };
+}
+
 /// FUNCTION CREATING THE MENU PAGE --------------------------------------------------------------------------------------------
 
-var MENU_Menu = function(obj, callback) {
+var MENU_Menu = (obj, callback) => {
     if (callback !== null && callback !== undefined)
         MENU_callback = callback;
     if (obj !== null && obj !== undefined)
@@ -154,20 +201,23 @@ var MENU_Menu = function(obj, callback) {
     var deadline_today = 0;
     var deadline_passed = 0;
 
-    for (var i = 0; i < MENU_object.data.length; i++) {
-        if (MENU_object.data[i].deadline.length == 10) {
-            if (MENU_object.data[i].deadline == date_now)
-                deadline_today++;
-            if (MENU_object.data[i].deadline < date_now)
-                deadline_passed++;
+    notes = []
+    MENU_GetNotes().then(() => {
+        for (var i = 0; i < notes.length; i++) {
+            if (notes[i].deadline.length == 10) {
+                if (notes[i].deadline == date_now)
+                    deadline_today++;
+                if (notes[i].deadline < date_now)
+                    deadline_passed++;
+            }
         }
-    }
 
-    document.getElementById('count-notes').innerHTML = MENU_object.data.length;
-    document.getElementById('count-exact-deadline').innerHTML = deadline_today;
-    document.getElementById('count-passed-deadline').innerHTML = deadline_passed;
-    document.getElementById('name').innerHTML = MENU_object.info.name;
-    document.getElementById('avatar').innerHTML = "<img src='" + MENU_object.config.avatar_url + "' alt='avatar'/>";
+        document.getElementById('count-notes').innerHTML = MENU_object.notes.length;
+        document.getElementById('count-exact-deadline').innerHTML = deadline_today;
+        document.getElementById('count-passed-deadline').innerHTML = deadline_passed;
+        document.getElementById('name').innerHTML = MENU_object.info.name;
+        document.getElementById('avatar').innerHTML = "<img src='" + MENU_object.config.avatar_url + "' alt='avatar'/>";
 
-    MENU_RenderNotes();
+        MENU_RenderNotes();
+    });
 }
