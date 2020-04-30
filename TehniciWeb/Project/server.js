@@ -6,7 +6,7 @@ var morgan  = require('morgan')
 var fs = require('fs');
 app = express()
 app.use(express.json())
-app.use(morgan())
+app.use(morgan('tiny'))
 
 var assert = (condition) => {
     if (!condition)
@@ -195,7 +195,7 @@ app.post('/API/signup', function(req, res) {
                     password: obj.password
                 },
                 config: {
-                    sort_notes_by: "alphabetical",
+                    sort_notes_by: "Alphabetical",
                     sort_asc: true,
                     stay_signed_in: true,
                     avatar_url: "images/avatar.svg"
@@ -348,13 +348,14 @@ app.put('/API/settings', function(req, res) {
         user_json = ReadUser(active_tokens[obj.token].user);
 
         user_json.config = obj.config;
-        if (obj.hasOwnProperty(info)) {
-            if (obj.info.hasOwnProperty(name))
+        if (obj.hasOwnProperty('info')) {
+            if (obj.info.hasOwnProperty('name'))
                 user_json.info.name = obj.info.name;
-            if (obj.info.hasOwnProperty(password))
-                user_json.info.passord = obj.info.passord;
+            if (obj.info.hasOwnProperty('password'))
+                user_json.info.password = obj.info.password;
         }
 
+        WriteUser(user_json);
         res.end(JSON.stringify({
             authentification: {
                 authentificated: true,

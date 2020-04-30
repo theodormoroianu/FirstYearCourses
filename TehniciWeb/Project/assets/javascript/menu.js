@@ -101,7 +101,7 @@ var MENU_Note = (id) => {
                     note_id: notes[id].note_id
                 }, () => { });
                 MENU_object.notes = MENU_object.notes.filter(note => {
-                    return note.note_id !== notes[id].note_id;
+                    return note !== notes[id].note_id;
                 });
                 MENU_Menu();
             }
@@ -182,6 +182,23 @@ var MENU_GetNotes = async () => {
         notes.push(act.data);
     };
 }
+
+// var MENU_GetNotes = async () => {
+//     var promises = [];
+//     notes = [];
+//     for (var i = 0; i < MENU_object.notes.length; i++) {
+//         console.log("Requesting image #" + i);
+//         promises.push(SYNC_GetNote({
+//             token: MENU_object.info.token,
+//             note_id: MENU_object.notes[i]
+//         }));
+//     }
+
+//     var result = await Promise.all(promises);
+//     result.forEach(elem => {
+//         notes.push(elem.data);
+//     });
+// }
 
 /// FUNCTION CREATING THE MENU PAGE --------------------------------------------------------------------------------------------
 

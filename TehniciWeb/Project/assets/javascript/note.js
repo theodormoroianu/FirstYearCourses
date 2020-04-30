@@ -6,12 +6,12 @@
 
  NOTE_html_code =
 `<h1 style='text-align:center;border:10px 10px;'>Welcome to the Note editor!</h1>
-    <form action='#' onsubmit="NOTE_ProcessChanges();return false">
+    <form action='#' onsubmit="return false">
     <label for="note_name"><b>Title of the Note</b></label>
-    <input type="text" placeholder="Enter Title Here" name="note_name" id="note_name" required>
+    <input type="text" placeholder="Enter Title Here" name="note_name" id="note_name">
 
     <label for="note_type"><b>Type of the note</b></label>
-    <select class="custom-select" name="note_type" id="note_type" required>
+    <select class="custom-select" name="note_type" id="note_type">
         <option value="Work" class="dropdown-menu">Work</option>
         <option value="Family" class="dropdown-menu">Family</option>
         <option value="Cooking" class="dropdown-menu">Cooking</option>
@@ -27,7 +27,7 @@
     </div>
     <div id="positive-warning">
     </div>
-    <button type="submit">Save</button>
+    <button type="NOTE_ProcessChanges()">Save</button>
     <button onclick="NOTE_Discard()">Discard Changes</button>
 <button onclick="NOTE_Delete()">Delete Note</button>
 </form>`;
@@ -46,12 +46,21 @@ var NOTE_object = null;
 var NOTE_ProcessChanges = function() {
     var title = document.getElementById("note_name").value;
     if (title.length > 20) {
-        document.getElementById("warning").innerHTML = "<p>The title is too long</p>";
+        document.getElementById("warning").innerHTML = "<p>The title is too long!</p>";
+        return;
+    }
+    if (title.length == 0) {
+        document.getElementById("warning").innerHTML = "<p>The note must have a title!</p>";
         return;
     }
     var deadline = document.getElementById("deadline").value;
     var content = document.getElementById("content-textbox").value;
     var note_type = document.getElementById("note_type").value;
+
+    if (note_type.length == 0) {
+        document.getElementById("warning").innerHTML = "<p>The note must have a type!</p>";
+        return;
+    }
 
     NOTE_object.title = title;
     NOTE_object.deadline = deadline;
@@ -74,7 +83,11 @@ var NOTE_Delete = function() {
     NOTE_object.title = "";
     /// it should self-distruct without a title
     window.onbeforeunload = function() { }
-    NOTE_callback();
+    document.getElementById("warning").innerHTML = "";
+    document.getElementById("positive-warning").innerHTML = "<p>Note Deleted! Going back to main menu...</p>";
+
+    window.onbeforeunload = function() { }
+    setTimeout(NOTE_callback, 1000);
 }
 
 
@@ -83,7 +96,11 @@ var NOTE_Delete = function() {
 
 var NOTE_Discard = function() {
     window.onbeforeunload = function() { }
-    NOTE_callback();
+    document.getElementById("warning").innerHTML = "";
+    document.getElementById("positive-warning").innerHTML = "<p>Changes Discarded! Going back to main menu...</p>";
+
+    window.onbeforeunload = function() { }
+    setTimeout(NOTE_callback, 1000);
 }
 
 
