@@ -11,15 +11,15 @@ NFA::NFA(vector <map <char, set <int>>> edges, int start_node, set <int> end_nod
 }
 
 NFA::NFA() { }
-    
-NFA::operator DFA()
+
+void NFA::RemoveLambdaEdges()
 {
     /// first, need to get rid of lambda-transitions
     int N = edges_.size();
 
     /// if NFA is empty there is nothing to do
     if (N == 0)
-        return DFA();
+        return;
 
     for (bool modif = 1; (modif ^= 1) == 0; ) {
 
@@ -44,6 +44,15 @@ NFA::operator DFA()
         }
     }
 
+    /// lamba edges still exist but they are now obsolete
+}
+
+NFA::operator DFA()
+{
+    RemoveLambdaEdges();
+
+    if (edges_.size() == 0)
+        return DFA();
     /// creating echivalent DFA
 
     /// mapping from the subsets of nodes of the NFA to nodes of the DFA

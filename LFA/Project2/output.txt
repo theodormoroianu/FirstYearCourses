@@ -1,0 +1,12 @@
+DFA at memory 0x7ffc05c73260:
+Number of states: 6
+Starting state: 5
+Ending states: { 1 }
+Reachable nodes:  { 0 1 2 3 4 5 }
+Edges from 0: { c, 1 }
+Edges from 1: 
+Edges from 2: { a, 3 }, { c, 1 }
+Edges from 3: { b, 0 }
+Edges from 4: { b, 2 }
+Edges from 5: { a, 4 }, { b, 2 }, { c, 1 }
+

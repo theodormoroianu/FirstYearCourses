@@ -30,6 +30,9 @@ public:
     /// empty constructor
     NFA();
 
+    /// converts a lambda-NFA to a NFA
+    void RemoveLambdaEdges();
+
     /// explicit conversion to DFA
     explicit operator DFA();
 
