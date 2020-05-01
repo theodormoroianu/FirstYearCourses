@@ -1,19 +1,19 @@
 /// THIS IS THE DEFAULT HTML CODE FOR THE CREDITS -------------------------------------------------------------------------------
 
 CREDITS_html_code =
-`<header id="header">
-<h1>CREDITS</h1>
+`<header id="header" class='header'>
+<h1 class='h1'>CREDITS</h1>
 </header>
-<h3>We would like to begin the credits with some debug info (we all want it..)</h3>
-<p> This is all the information we know about you:</p>
-<p id='json-container'></p>
+<h3 class='h3'>We would like to begin the credits with some debug info (we all want it..)</h3>
+<p class='p'> This is all the information we know about you:</p>
+<p id='json-container' class='json-container p'></p>
 </br>
 
-<form action='#' onsubmit="return false">
-    <button onclick="CREDITS_Exit()">Exit</button>
+<form class='form' action='#' onsubmit="return false">
+    <button class='button' onclick="CREDITS_Exit()">Exit</button>
 </form>
 </br>
-<h3>Now we will display the LICENCE.txt of the stolen template we used</h3>
+<h3 class='h3'>Now we will display the LICENCE.txt of the stolen template we used</h3>
 <p>
 Creative Commons Attribution 3.0 Unported
 http://creativecommons.org/licenses/by/3.0/

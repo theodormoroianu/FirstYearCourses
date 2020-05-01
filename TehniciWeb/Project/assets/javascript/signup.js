@@ -1,26 +1,26 @@
 /// HTML CODE NEEDED TO RENDER THE PAGE -----------------------------------------------------------------------------------------
 
 SIGNUP_html_code =
-`<div id="create-user">
-    <header class='title'>
-        <h1>New User</h1>
+`<div id="create-user" class='create-user'>
+    <header class='title header'>
+        <h1 class='h1'>New User</h1>
     </header>
 
-    <section id="main">
-        <form action='#' onsubmit="SIGNUP_VerifyData();return false">
-            <label for="name"><b>Name</b></label>
-            <input type="text" placeholder="Enter Your Name" name="name" id="name" required>
-            <label for="username"><b>Username</b></label>
-            <input type="text" placeholder="Enter Your Prefered Username" name="username" id="username" required>
-            <label for="password"><b>Password</b></label>
-            <input type="password" placeholder="Enter Your Password" name="password" id="password" required>
-            <input type="password" placeholder="Enter Your Password Again" name="password" id="password_verification" required>
-            <div id="warning">
+    <section id="main" class="main section">
+        <form class='form' action='#' onsubmit="SIGNUP_VerifyData();return false">
+            <label class='label' for="name"><b>Name</b></label>
+            <input class='input' type="text" placeholder="Enter Your Name" name="name" id="name" required>
+            <label class='label' for="username"><b>Username</b></label>
+            <input class='input' type="text" placeholder="Enter Your Prefered Username" name="username" id="username" required>
+            <label class='label' for="password"><b>Password</b></label>
+            <input class='input' type="password" placeholder="Enter Your Password" name="password" id="password" required>
+            <input class='input' type="password" placeholder="Enter Your Password Again" name="password" id="password_verification" required>
+            <div id="warning" class="warning">
             </div>
-            <div id="positive-warning">
+            <div id="positive-warning" class="positive-warning">
             </div>
-            <button type="submit">Create Account</button>
-            <button onclick="SIGNUP_Cancel()">Cancel</button>
+            <button class='button' type="submit">Create Account</button>
+            <button class='button' onclick="SIGNUP_Cancel()">Cancel</button>
         </form>
     </section>
 </div>`;

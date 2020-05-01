@@ -5,13 +5,13 @@
  /// THIS IS THE DEFAULT HTML CODE FOR THE NOTES ---------------------------------------------------------------------------------
 
  NOTE_html_code =
-`<h1 style='text-align:center;border:10px 10px;'>Welcome to the Note editor!</h1>
-    <form action='#' onsubmit="return false">
-    <label for="note_name"><b>Title of the Note</b></label>
-    <input type="text" placeholder="Enter Title Here" name="note_name" id="note_name">
+`<h1 class='h1' style='text-align:center;border:10px 10px;'>Welcome to the Note editor!</h1>
+    <form class='form' action='#' onsubmit="return false">
+    <label class='label' for="note_name"><b class='b'>Title of the Note</b></label>
+    <input class='input' type="text" placeholder="Enter Title Here" name="note_name" id="note_name">
 
-    <label for="note_type"><b>Type of the note</b></label>
-    <select class="custom-select" name="note_type" id="note_type">
+    <label class="label" for="note_type"><b class='b'>Type of the note</b></label>
+    <select class="custom-select select" name="note_type" id="note_type">
         <option value="Work" class="dropdown-menu">Work</option>
         <option value="Family" class="dropdown-menu">Family</option>
         <option value="Cooking" class="dropdown-menu">Cooking</option>
@@ -19,17 +19,17 @@
         <option value="Having Fun" class="dropdown-menu">Having Fun</option>
     </select> 
 
-    <label for="deadline">Deadline</label>
-    <input type="date" id="deadline" name="deadline">
-    <label for="content">Content</label>       
-    <textarea name="content" cols="40" rows="10" id="content-textbox"></textarea>
-    <div id="warning">
+    <label class="label" for="deadline"><b class='b'>Deadline</b></label>
+    <input class="input" type="date" id="deadline" name="deadline">
+    <label class="label" for="content"><b class='b'>Content</b></label>       
+    <textarea class="textarea content-textbox" name="content" cols="40" rows="10" id="content-textbox"></textarea>
+    <div id="warning" class="warning">
     </div>
-    <div id="positive-warning">
+    <div id="positive-warning" class="positive-warning">
     </div>
-    <button type="NOTE_ProcessChanges()">Save</button>
-    <button onclick="NOTE_Discard()">Discard Changes</button>
-<button onclick="NOTE_Delete()">Delete Note</button>
+    <button class="button" onclick="NOTE_ProcessChanges()">Save</button>
+    <button class="button" onclick="NOTE_Discard()">Discard Changes</button>
+    <button class="button" onclick="NOTE_Delete()">Delete Note</button>
 </form>`;
  
  

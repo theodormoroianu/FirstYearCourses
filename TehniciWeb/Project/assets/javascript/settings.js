@@ -6,42 +6,42 @@
 
  SETTINGS_html_code =
 `
-<header id="header">
-<h1 style='text-align:center;border:10px 10px;'>Welcome to the SETTINGS editor!</h1>
+<header id="header" class="header">
+<h1 class='h1' style='text-align:center;border:10px 10px;'>Welcome to the SETTINGS editor!</h1>
 </header>        
-<form action='#' onsubmit="SETTINGS_ProcessChanges();return false">
-    <label for="name"><b>Name</b></label>
-    <input type="text" placeholder="Enter Your Name Here" name="name" id='name' required>
+<form class='form' action='#' onsubmit="SETTINGS_ProcessChanges();return false">
+    <label class='label' for="name"><b class='b'>Name</b></label>
+    <input class='input' type="text" placeholder="Enter Your Name Here" name="name" id='name' required>
     
-    <input type='checkbox' id='stay-signed-in'
+    <input class='input' type='checkbox' id='stay-signed-in'
         name ='stay-signed-in' value="Stay Signed In"/>
-    <label for='stay-signed-in'><b>Stay Signed In</b></label>
+    <label class='label' for='stay-signed-in'><b class='b'>Stay Signed In</b></label>
     
-    <label for="new-password"><b>New password</b></label>
-    <input type="password" placeholder="Enter Your New Password" name="new-password" id='new-password'>
-    <input type="password" placeholder="Enter Your New Password Again" name="new-password-repeat" id='new-password-repeat'>
+    <label class='label' for="new-password"><b class='b'>New password</b></label>
+    <input class='input' type="password" placeholder="Enter Your New Password" name="new-password" id='new-password'>
+    <input class='input' type="password" placeholder="Enter Your New Password Again" name="new-password-repeat" id='new-password-repeat'>
        
-    <label for='choose-avatar'><b>Avatar Picture</b></label>
-    <input type="text" placeholder="Enter Your Avatar Link Here" name="choose-avatar" id='choose-avatar' required>
+    <label class='label' for='choose-avatar'><b class='b'>Avatar Picture</b></label>
+    <input class='input' type="text" placeholder="Enter Your Avatar Link Here" name="choose-avatar" id='choose-avatar' required>
 
 
-    <label for="notes-order"><b>Sort Notes By</b></label>
-    <select class="custom-select" name="notes-order" id='notes-order' required>
+    <label class='label' for="notes-order"><b class='b'>Sort Notes By</b></label>
+    <select class="custom-select select" name="notes-order" id='notes-order' required>
         <option value ="Deadline" class="dropdown-menu">Deadline</option>
         <option value ="Creation Date" class="dropdown-menu">Creation Date</option>
         <option value ="Alphabetical" class="dropdown-menu">Alphabetical</option>
     </select> 
         
-    <input type='checkbox' id='sort-notes-asc'
+    <input class='input' type='checkbox' id='sort-notes-asc'
         name ='sort-notes-asc' value='sort-notes-asc'/>
-    <label for='sort-notes-asc'><b>Sort Notes in Ascendig order</b></label>
+    <label class='label' for='sort-notes-asc'><b class='b'>Sort Notes in Ascendig order</b></label>
     </br>
-    <div id="warning">
+    <div id="warning" class="warning div">
     </div>
-    <div id="positive-warning">
+    <div id="positive-warning" class="positive-warning div">
     </div>
-    <button type="submit">Save</button>
-    <button onclick="SETTINGS_Discard()">Discard</button>
+    <button class='button' type="submit">Save</button>
+    <button class='button' onclick="SETTINGS_Discard()">Discard</button>
 </form>`;
  
  

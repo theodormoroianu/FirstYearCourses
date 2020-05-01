@@ -1,4 +1,4 @@
-#content-textbox {
+.content-textbox {
     box-sizing: border-box;
     resize: none;
     margin-bottom: 30px;
@@ -15,23 +15,23 @@
     font-size: 20px;
 }
 
-input, select {
+.input, .select {
     margin-bottom: 30px;
     /* background-color: transparent; */
 }
 
-#warning {
+.warning {
   color: red;
   font-style: italic;
   font-size: small;
 }
-#positive-warning {
+.positive-warning {
   color: green;
   font-style: italic;
   font-size: small;
 }
 
-#list {
+.list {
     display: flex;
     flex-direction: row;
     flex-wrap: wrap;

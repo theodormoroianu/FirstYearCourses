@@ -6,20 +6,20 @@
 
 MENU_html_code =
 `<!-- Header -->
-<header id="header">
+<header id="header" class='header'>
     <span class="avatar" id='avatar'></span>
-    <h1>Hi <my_tag id="name"></my_tag>! We're exited to have you back. You have <a id="count-notes">a few</a>
-    notes, out of which <a id="count-exact-deadline">a few</a>
-    have their deadline today and <a id="count-passed-deadline">a few</a> are past their deadline.</h1>
-    <ul class="icons">
-        <li><a href="javascript:MENU_Note(-1)"><span class="label">New Task</span></a></li>
-        <li><a href="javascript:MENU_Settings()"><span class="label">Settings</span></a></li>
-        <li><a href="javascript:MENU_Credits()"><span class="label">Credits</span></a></li>
-        <li><a href="javascript:MENU_SignOut()"><span class="label">Sign Out</span></a></li>
+    <h1 class='h1'>Hi <my_tag id="name"></my_tag>! We're exited to have you back. You have <a class='a' id="count-notes">a few</a>
+    notes, out of which <a class='a' id="count-exact-deadline">a few</a>
+    have their deadline today and <a class='a' id="count-passed-deadline">a few</a> are past their deadline.</h1>
+    <ul class="icons ul">
+        <li class='li'><a class='a' href="javascript:MENU_Note(-1)"><span class="label a">New Task</span></a></li>
+        <li class='li'><a class='a' href="javascript:MENU_Settings()"><span class="label a">Settings</span></a></li>
+        <li class='li'><a class='a' href="javascript:MENU_Credits()"><span class="label a">Credits</span></a></li>
+        <li class='li'><a class='a' href="javascript:MENU_SignOut()"><span class="label a">Sign Out</span></a></li>
     </ul>
 </header>
 
-<section class="thumbnails" id="list">        
+<section class="thumbnails list section" id="list">        
 </section>`;
 
 
@@ -103,8 +103,8 @@ var MENU_Note = (id) => {
                 MENU_object.notes = MENU_object.notes.filter(note => {
                     return note !== notes[id].note_id;
                 });
-                MENU_Menu();
             }
+            MENU_Menu();
         }
         else if (!notes[id].hasOwnProperty('note_id')) {
             SYNC_CreateNote({
@@ -154,12 +154,14 @@ var MENU_RenderNotes = function() {
         
         var a = document.createElement('a');
         a.setAttribute('href', 'javascript:MENU_Note(' + i + ')');
-        a.setAttribute('class', 'image');
+        a.setAttribute('class', 'image a');
 
         var image = document.createElement('img');
         image.setAttribute('src', 'images/' + obj.asociated_picture);
+        image.setAttribute('class', 'img');
 
         var title = document.createElement('h3');
+        title.setAttribute('class', 'h3');
         title.textContent = obj.title;
 
         a.appendChild(image);
@@ -211,13 +213,6 @@ var MENU_Menu = (obj, callback) => {
     console.log("Entered menu. Obj = ");
     console.log(MENU_object);
 
-    var wrapper = document.getElementById('wrapper');
-    wrapper.innerHTML = MENU_html_code;
-
-    var date_now = (new Date()).toISOString().slice(0,10);
-    var deadline_today = 0;
-    var deadline_passed = 0;
-
     notes = []
     MENU_GetNotes().then(() => {
 
@@ -241,7 +236,7 @@ var MENU_Menu = (obj, callback) => {
         document.getElementById('count-exact-deadline').innerHTML = deadline_today;
         document.getElementById('count-passed-deadline').innerHTML = deadline_passed;
         document.getElementById('name').innerHTML = MENU_object.info.name;
-        document.getElementById('avatar').innerHTML = "<img src='" + MENU_object.config.avatar_url + "' alt='avatar'/>";
+        document.getElementById('avatar').innerHTML = "<img src='" + MENU_object.config.avatar_url + "' alt='avatar' class='img'/>";
 
         MENU_RenderNotes();
     });
