@@ -12,7 +12,7 @@ class PairingHeap {
         T val;
         vector <Node *> fii;
 
-        Node(int val) : val(val) { }
+        Node(T val) : val(val) { }
         ~Node()
         {
             for (auto i : fii)
@@ -85,6 +85,13 @@ public:
         root1 = pop(root1);
         return ans;  
     }
+    
+	/// returns if the heap is empty
+	bool Empty()
+	{
+		propagate();
+		return (root1 == nullptr);
+	}
 
     /// deletes a value from the heap
     void Erase(T val)
