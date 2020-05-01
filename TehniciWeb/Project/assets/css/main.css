@@ -315,13 +315,13 @@ input[type="radio"] + label:before {
 }
 
 
-@media(max-width: 480px) {
+/* @media(max-width: 480px) {
 
 	.button {
 		padding: 0;
 	}
 
-}
+} */
 
 /* Thumbnails */
 
