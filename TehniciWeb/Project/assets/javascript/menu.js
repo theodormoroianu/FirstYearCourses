@@ -8,9 +8,11 @@ MENU_html_code =
 `<!-- Header -->
 <header id="header" class='header'>
     <span class="avatar" id='avatar'></span>
-    <h1 class='h1'>Hi <my_tag id="name"></my_tag>! We're exited to have you back. You have <a class='a' id="count-notes">a few</a>
-    notes, out of which <a class='a' id="count-exact-deadline">a few</a>
-    have their deadline today and <a class='a' id="count-passed-deadline">a few</a> are past their deadline.</h1>
+    <summary>
+        <h1 class='h1'>Hi <my_tag id="name"></my_tag>! We're exited to have you back. You have <a class='a' id="count-notes">a few</a>
+        notes, out of which <a class='a' id="count-exact-deadline">a few</a>
+        have their deadline today and <a class='a' id="count-passed-deadline">a few</a> are past their deadline.</h1>
+    </summary>
     <ul class="icons ul">
         <li class='li'><a class='a' href="javascript:MENU_Note(-1)"><span class="label a">New Task</span></a></li>
         <li class='li'><a class='a' href="javascript:MENU_Settings()"><span class="label a">Settings</span></a></li>
@@ -173,7 +175,7 @@ var MENU_RenderNotes = function() {
 
 
 
-/// GET NOTES
+/// GETS NOTES FROM SERVER ------------------------------------------------------------------------------------------------------
 
 var MENU_GetNotes = async () => {
     for (var i = 0; i < MENU_object.notes.length; i++) {
@@ -185,22 +187,7 @@ var MENU_GetNotes = async () => {
     };
 }
 
-// var MENU_GetNotes = async () => {
-//     var promises = [];
-//     notes = [];
-//     for (var i = 0; i < MENU_object.notes.length; i++) {
-//         console.log("Requesting image #" + i);
-//         promises.push(SYNC_GetNote({
-//             token: MENU_object.info.token,
-//             note_id: MENU_object.notes[i]
-//         }));
-//     }
 
-//     var result = await Promise.all(promises);
-//     result.forEach(elem => {
-//         notes.push(elem.data);
-//     });
-// }
 
 /// FUNCTION CREATING THE MENU PAGE --------------------------------------------------------------------------------------------
 

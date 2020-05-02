@@ -5,7 +5,7 @@ LOGIN_html_code =
     <header class='title header'>
         <h1 class='h1'>Login Page</h1>
     </header>
-
+    <main>
     <section id="main" class="main section">
         <form action='#' onsubmit="LOGIN_VerifyData();return false" class='form'>
             <label class='label' for="username"><b>Username</b></label>
@@ -20,6 +20,7 @@ LOGIN_html_code =
             <button class='button' onclick="LOGIN_CreateAccount()">Create Account</button>
         </form>
     </section>
+    </main>
 </div>`;
 
 
