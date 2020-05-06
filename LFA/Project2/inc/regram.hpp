@@ -4,32 +4,30 @@
 #include "DFA.hpp"
 
 #include <string>
+#include <vector>
+#include <map>
 
 /**
  * Class able to convert a DFA from and to a regular grammar
  * The regular grammar respects:
- * 1. R = c
- * 2. R = ST
- * 3. R = S*
- * 4. R = S|T
- * 5. lambda is noted with '@'
- * The operations (except the paranthesis) all have the same
- * priority and are executed from left to right
- * E.G.: a(b)*|(ab|c)* accepts abb and abc but not aab
+ * Lambda is noted with '@' in input and \0 in Regram
+ * The grammar is a right-grammar (A -> xB)
  */
-class Regex {
-    std::string regex_;
+class Regram {
+    std::map <std::string, std::vector <std::pair <char, std::string>>> regram_;
+    std::string initial_state_;
 
 public:
 
     /// Empty constructor
-    Regex();
+    Regram();
 
-    /// Constructing regex from a string
-    Regex(const std::string & s);
+    /// Constructing a grammar from the operations
+    Regram(const std::string & initial_state, const std::map <std::string,
+        std::vector <std::pair <char, std::string>>> & gram);
 
-    /// Constructing regex from a DFA
-    Regex(const DFA & dfa);
+    /// Constructing a grammar from a DFA
+    Regram(const DFA & dfa);
 
     /// convers the regex to a dfa
     DFA ToDfa() const;
@@ -38,12 +36,12 @@ public:
     void FromDfa(const DFA & dfa);
 
     /// returns the regex string
-    std::string GetContent() const;
+    std::map <std::string, std::vector <std::pair <char, std::string>>> GetContent() const;
 
 
     /// I/O Operations
-    friend std::istream & operator>> (std::istream & in, Regex & reg);
-    friend std::ostream & operator<< (std::ostream & out, const Regex & reg);
+    friend std::istream & operator>> (std::istream & in, Regram & reg);
+    friend std::ostream & operator<< (std::ostream & out, const Regram & reg);
 };
 
 #endif // REGEX_

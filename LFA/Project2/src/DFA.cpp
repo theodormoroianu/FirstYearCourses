@@ -386,7 +386,7 @@ istream & operator>> (istream & in, DFA & dfa)
 
 ostream & operator<< (ostream & out, const DFA & dfa)
 {
-    out << "DFA at memory " << &dfa << ":\n";
+    out << "DFA at memory <" << &dfa << ">:\n";
     out << "Number of states: " << dfa.edges_.size() << endl;
     out << "Starting state: " << dfa.start_node_ << endl;
     out << "Ending states: " << "{ ";

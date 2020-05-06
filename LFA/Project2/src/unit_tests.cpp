@@ -2,6 +2,7 @@
 #include "NFA.hpp"
 #include "regex.hpp"
 #include "unit_tests.hpp"
+#include "regram.hpp"
 #include <bits/stdc++.h>
 using namespace std;
 
@@ -356,6 +357,63 @@ namespace {
 
         cerr << (ok ? "Pass\n" : "Fail\n");
     }
+
+    void RegramToDFA()
+    {
+        cerr << "Starting RegramToDFA unit test ... ";
+        bool ok = 1;
+
+        map <string, vector <pair <char, string>>> gram;
+        gram["A"].push_back({ 'b', "A" });
+        gram["A"].push_back({ 'a', "B" });
+        gram["A"].push_back({ 0, "" });
+        gram["B"].push_back({ 'a', "A" });
+        gram["B"].push_back({ 'b', "B" });
+
+        DFA ans = Regram("A", gram).ToDfa();
+
+        ok &= (ans.IsAccepted("aa"));
+        ok &= (ans.IsAccepted(""));
+        ok &= (!ans.IsAccepted("aaa"));
+        ok &= (!ans.IsAccepted("ab"));
+        ok &= (ans.IsAccepted("bbabbabb"));
+        ok &= (ans.IsAccepted("aabbb"));
+        ok &= (ans.IsAccepted("bbbb"));
+        ok &= (!ans.IsAccepted("abbbb"));
+        ok &= (!ans.IsAccepted("bbbabbbabbba"));
+        
+        cerr << (ok ? "Pass\n" : "Fail\n");
+    }
+
+    void RegramFromDFA()
+    {
+        cerr << "Starting RegramFromDFA unit test ... ";
+        bool ok = 1;
+        
+        /// dfa recognizing paterns with 2k a and 3k b        
+        vector <map <char, int>> dfa_edges = {
+            { { 'a', 3 }, { 'b', 4 } },
+            { { 'a', 2 }, { 'b', 0 } },
+            { { 'a', 1 }, { 'b', 3 } },
+            { { 'a', 0 }, { 'b', 5 } },
+            { { 'a', 5 }, { 'b', 1 } },
+            { { 'a', 4 }, { 'b', 2 } }
+        };
+        
+        DFA x(dfa_edges, 0, { 0 });
+        Regram reg(x);
+        DFA x2 = reg.ToDfa();
+
+        ok &= (x == x2);
+
+        x = DFA(dfa_edges, 0, { 0, 1, 2, 3 });
+        reg = Regram(x);
+        x2 = reg.ToDfa();
+        
+        ok &= (x == x2);
+
+        cerr << (ok ? "Pass\n" : "Fail\n");
+    }
 }
 
 void UnitTests()
@@ -367,7 +425,9 @@ void UnitTests()
     DFAIsEqual();
     DFAIntersection();
     DFAReunion();
-    MinimizationTester::Tester();
     RegexToDFA();
     RegexFromDFA();
+    RegramToDFA();
+    RegramFromDFA();
+    MinimizationTester::Tester();
 }

@@ -166,7 +166,7 @@ istream & operator>> (istream & in, NFA & nfa)
 
 ostream & operator<< (ostream & out, const NFA & nfa)
 {
-    out << "NFA at memory " << &nfa << ":\n";
+    out << "NFA at memory <" << &nfa << ">:\n";
     out << "Number of states: " << nfa.edges_.size() << endl;
     out << "Starting state: " << nfa.start_node_ << endl;
     out << "Ending states: " << "{ ";
