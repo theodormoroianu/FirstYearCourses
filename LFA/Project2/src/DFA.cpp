@@ -267,8 +267,8 @@ DFA operator&(const DFA& a, const DFA& b)
 
 bool operator==(const DFA& a, const DFA& b)
 {
-    /* Costel a zis ca e suficient sa verifici ca (A & ~B) = (B & ~A) = 0
     /**
+     *  Costel a zis ca e suficient sa verifici ca (A & ~B) = (B & ~A) = 0
      * vreau sa vad daca starile din minim1 si minim2 sunt identice
      * pana la permutare. Nu stiu daca e corect dar pare ok-ish
      */

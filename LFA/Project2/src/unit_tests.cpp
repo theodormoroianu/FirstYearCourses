@@ -1,5 +1,6 @@
 #include "DFA.hpp"
 #include "NFA.hpp"
+#include "regex.hpp"
 #include "unit_tests.hpp"
 #include <bits/stdc++.h>
 using namespace std;
@@ -252,6 +253,113 @@ namespace {
         cerr << (ok ? "Pass\n" : "Fail\n");
     }
 
+    namespace MinimizationTester {
+        void tester(DFA x, int sigma)
+        {
+            DFA minim = x.Minimize();
+
+            for (int _ = 0; _ < 10000; _++) {
+                string s;
+                int l = rnd() % 8;
+                for (int i = 0; i < l; i++)
+                    s += 'a' + rnd() % sigma;
+
+                if (x.IsAccepted(s) ^ minim.IsAccepted(s)) {
+                    cerr << "\nError for " << s << '\n';
+                    cerr << "X.IsAccepted(" << s << ") = " << x.IsAccepted(s) << "\nBut minim.IsAccepted(" << s << ") = ";
+                    cerr << minim.IsAccepted(s) << "!!\n";
+                    cerr << "Initial DFA: " << x << '\n' << "Minimized DFA: " << minim << '\n';
+                    exit(0);
+                }
+            }
+        }
+
+        DFA make_random(int sigma)
+        {
+            int start_node = 0;
+            int l = rnd() % 15 + 1;
+            set <int> end_nodes = { (int)(rnd() % l), (int)(rnd() % l) };
+            vector <map <char, int>> edges(l);
+            for (int i = 0; i < 2 * l * l; i++) {
+                char c = rnd() % sigma + 'a';
+                edges[rnd() % l][c] = rnd() % l;
+            }
+
+            return DFA(edges, start_node, end_nodes);
+        }
+
+        void Tester() 
+        {
+            cerr << "Starting DFA-Minimization stress test ... ";
+            auto time_act = chrono::system_clock::now();
+            while (1) {
+                DFA r = make_random(4);
+                tester(r, 4);
+                auto now = chrono::system_clock::now();
+                if (chrono::duration_cast<chrono::seconds>(now - time_act).count() > 4) {
+                    cerr << "Pass\n";
+                    return;
+                }
+            }
+        }
+    }
+
+
+    void RegexToDFA()
+    {
+        cerr << "Starting RegexToDFA unit test ... ";
+        bool ok = 1;
+
+        string reg = "((b*)a(b*)a(b*)*)|(a*(d|e))";
+
+        DFA ans = Regex(reg).ToDfa();
+
+        ok &= (ans.IsAccepted("babbbaaa"));
+        ok &= (ans.IsAccepted("aaaa"));
+        ok &= (!ans.IsAccepted("aaaaa"));
+        ok &= (!ans.IsAccepted("aaabbaba"));
+        ok &= (ans.IsAccepted(""));
+        ok &= (ans.IsAccepted("aad"));
+        ok &= (ans.IsAccepted("aaae"));
+        ok &= (!ans.IsAccepted("aaade"));
+        ok &= (!ans.IsAccepted("b"));
+        
+        cerr << (ok ? "Pass\n" : "Fail\n");
+    }
+
+    void RegexFromDFA()
+    {
+        cerr << "Starting RegexFromDFA unit test ... ";
+        bool ok = 1;
+        
+        /// dfa recognizing paterns with 2k a and 3k b        
+        // vector <map <char, int>> dfa_edges = {
+        //     { { 'a', 3 }, { 'b', 4 } },
+        //     { { 'a', 2 }, { 'b', 0 } },
+        //     { { 'a', 1 }, { 'b', 3 } },
+        //     { { 'a', 0 }, { 'b', 5 } },
+        //     { { 'a', 5 }, { 'b', 1 } },
+        //     { { 'a', 4 }, { 'b', 2 } }
+        // };
+        vector <map <char, int>> dfa_edges = {
+            { { 'a', 1 }, { 'b', 1 } },
+            { { 'a', 0 }, { 'b', 0 } }
+        };
+        
+        DFA x(dfa_edges, 0, { 0 });
+        Regex reg(x);
+        DFA x2 = reg.ToDfa();
+
+        ok &= (x == x2);
+
+        // x = DFA(dfa_edges, 0, { 0, 1, 2, 3 });
+        // reg = Regex(x);
+        // x2 = reg.ToDfa();
+        
+        // ok &= (x == x2);
+
+        cerr << (ok ? "Pass\n" : "Fail\n");
+    }
 }
 
 void UnitTests()
@@ -263,4 +371,7 @@ void UnitTests()
     DFAIsEqual();
     DFAIntersection();
     DFAReunion();
+    MinimizationTester::Tester();
+    RegexToDFA();
+    RegexFromDFA();
 }

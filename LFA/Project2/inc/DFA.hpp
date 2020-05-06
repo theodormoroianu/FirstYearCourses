@@ -91,6 +91,7 @@ public:
     /// I/O Operations
     friend std::istream & operator>> (std::istream & in, DFA & dfa);
     friend std::ostream & operator<< (std::ostream & out, const DFA & dfa);
+    friend class Regex;
 };
 
 #endif // INC_DFA_
