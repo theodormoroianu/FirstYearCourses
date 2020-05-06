@@ -151,7 +151,9 @@ void Regex::FromDfa(const DFA & dfa)
                 if (to.first == id)
                     continue; /// no need to process it
 
-                string act = string() + edges[from][id] + inside + to.second;
+                string act = "(" + edges[from][id] + inside + to.second + ")";
+                if (act.size() <= 3)
+                    act = (act.size() == 2 ? "@" : act.substr(1, 1));
 
                 if (edges[from].find(to.first) == edges[from].end())
                     edges[from][to.first] = act;

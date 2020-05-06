@@ -296,7 +296,7 @@ namespace {
                 DFA r = make_random(4);
                 tester(r, 4);
                 auto now = chrono::system_clock::now();
-                if (chrono::duration_cast<chrono::seconds>(now - time_act).count() > 4) {
+                if (chrono::duration_cast<chrono::seconds>(now - time_act).count() > 1) {
                     cerr << "Pass\n";
                     return;
                 }
@@ -333,17 +333,13 @@ namespace {
         bool ok = 1;
         
         /// dfa recognizing paterns with 2k a and 3k b        
-        // vector <map <char, int>> dfa_edges = {
-        //     { { 'a', 3 }, { 'b', 4 } },
-        //     { { 'a', 2 }, { 'b', 0 } },
-        //     { { 'a', 1 }, { 'b', 3 } },
-        //     { { 'a', 0 }, { 'b', 5 } },
-        //     { { 'a', 5 }, { 'b', 1 } },
-        //     { { 'a', 4 }, { 'b', 2 } }
-        // };
         vector <map <char, int>> dfa_edges = {
-            { { 'a', 1 }, { 'b', 1 } },
-            { { 'a', 0 }, { 'b', 0 } }
+            { { 'a', 3 }, { 'b', 4 } },
+            { { 'a', 2 }, { 'b', 0 } },
+            { { 'a', 1 }, { 'b', 3 } },
+            { { 'a', 0 }, { 'b', 5 } },
+            { { 'a', 5 }, { 'b', 1 } },
+            { { 'a', 4 }, { 'b', 2 } }
         };
         
         DFA x(dfa_edges, 0, { 0 });
@@ -352,11 +348,11 @@ namespace {
 
         ok &= (x == x2);
 
-        // x = DFA(dfa_edges, 0, { 0, 1, 2, 3 });
-        // reg = Regex(x);
-        // x2 = reg.ToDfa();
+        x = DFA(dfa_edges, 0, { 0, 1, 2, 3 });
+        reg = Regex(x);
+        x2 = reg.ToDfa();
         
-        // ok &= (x == x2);
+        ok &= (x == x2);
 
         cerr << (ok ? "Pass\n" : "Fail\n");
     }
