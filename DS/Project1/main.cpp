@@ -37,9 +37,14 @@ void Benchmark(int VMAX, double TMAX)
     vector <vector <double>> results;
     for (auto it : functions) {
         cerr << "Starting benchmark for " + it.second + " ...   ";
-        
-        results.push_back(Tester(it.first, VMAX, TMAX));
-        cerr << "Done" << endl;
+        try {
+            auto x = Tester(it.first, VMAX, TMAX);
+            results.push_back(x);
+            cerr << "Done" << endl;
+        } catch (...) {
+            results.emplace_back();
+        }
+
         n_max = max(n_max, (int)results.back().size());
     }
 
@@ -55,17 +60,12 @@ void Benchmark(int VMAX, double TMAX)
     }
 }
 
-int main()
+int main(int argv, char ** args)
 {
     auto sleep = [](int ml) {
         this_thread::sleep_for(chrono::milliseconds(ml));
     };
 
-    cout << "Welcome to this super awesome project!\n\
-    Here you will see more sorting algorithms than what you ever wished for ... " << endl;
-    sleep(500);
-    cout << "Whether you like it or not ..." << endl;
-    sleep(200);
 
     auto message = [&](string s, int t) {
         cout << s << ' ';
@@ -77,6 +77,31 @@ int main()
         }
         cout << " done!\n" << endl;
     };
+
+    if (argv > 1) {
+        vector <string> vec;
+        for (int i = 1; i < argv; i++)
+            vec.push_back(args[i]);
+
+        if (vec[0][0] == 'r' || vec[0][0] == 'R') {
+            bool found = 0;
+            for (auto i : functions)
+                if (i.second == vec[1])
+                    ExecTime(i.first, vec[2]), found = 1;
+            
+            if (!found)
+                cout << "Unable to find requested function." << endl;
+        }
+        else
+            cout << "Invalid command\n";
+        return 0;
+    }
+        
+    cout << "Welcome to this super awesome project!\n\
+    Here you will see more sorting algorithms than what you ever wished for ... " << endl;
+    sleep(500);
+    cout << "Whether you like it or not ..." << endl;
+    sleep(200);
 
     message("Loading stuff", 300);
     message("Loading other stuff", 400);

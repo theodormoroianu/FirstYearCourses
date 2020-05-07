@@ -41,9 +41,15 @@ void ExecTime(void (*f)(int [], int), std::string file)
         for (auto & i : v)
             in >> i;
 
+        cout << "Starting benchmark with length of " << n << " ...\n";
         auto before = chrono::high_resolution_clock::now();
         (*f)(v.data(), n);
+        
+        for (int i = 1; i < (int)v.size(); i++)
+            assert(v[i] >= v[i - 1]);
+
         auto after = chrono::high_resolution_clock::now();
+        cout << "Finished benchmark!\n";
         double duration = chrono::duration_cast <chrono::nanoseconds> (after - before).count() / 1e9;
         cout << "Sorting took " << duration << " seconds." << endl;
     }

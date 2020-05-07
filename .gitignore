@@ -7,3 +7,4 @@ TehniciWeb/Test/node_modules/*
 *.aux
 *.gz
 *.log
+*.in

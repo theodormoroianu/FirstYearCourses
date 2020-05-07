@@ -1,6 +1,7 @@
-3
-A -> aB | cC
+4
+A -> aB | cC | D
 B -> bA
+D -> xA
 C -> @
 A
 
