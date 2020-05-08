@@ -27,7 +27,8 @@ vector <pair <void(*)(int[], int), string>> functions = {
     { HeapSort,       "HeapSort" },
     { TreapSort,      "TreapSort" },
     { AVLSort,        "AVLSort" },
-    { SplayTreeSort,  "SplayTreeSort" }
+    { SplayTreeSort,  "SplayTreeSort" },
+    { standard_sort,  "STLSort" }
 };
 
 void Benchmark(int VMAX, double TMAX)
@@ -62,6 +63,9 @@ void Benchmark(int VMAX, double TMAX)
 
 int main(int argv, char ** args)
 {
+    Benchmark(10000000, 2);
+    return 0;
+
     auto sleep = [](int ml) {
         this_thread::sleep_for(chrono::milliseconds(ml));
     };

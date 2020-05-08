@@ -1,112 +1,120 @@
-
+## Benchmark with random numbers with values ranging between [0 - 10000000]:
 
 For a length of 1024 (2 ^ 10), sorting algorithms took:
-   1. SkipListSort:   0.00144516 seconds
-   2. CountSort:   0.021117 seconds
-   3. MergeSort:   0.000100149 seconds
-   4. QuickSort:   4.9993e-05 seconds
-   5. BubbleSort:   0.000755093 seconds
-   6. RadixSort:   0.000315927 seconds
-   7. HeapSort:   9.4023e-05 seconds
-   8. TreapSort:   0.000173042 seconds
-   9. AVLSort:   0.000171831 seconds
-   10. SplayTreeSort:   0.000175863 seconds
+   1. SkipListSort:   0.000262534 seconds
+   2. CountSort:   0.0188021 seconds
+   3. MergeSort:   0.000120511 seconds
+   4. QuickSort:   4.7597e-05 seconds
+   5. BubbleSort:   0.000877404 seconds
+   6. RadixSort:   0.000636069 seconds
+   7. HeapSort:   5.3638e-05 seconds
+   8. TreapSort:   0.00018472 seconds
+   9. AVLSort:   0.000109666 seconds
+   10. SplayTreeSort:   0.000181449 seconds
+   11. STLSort:   3.2245e-05 seconds
 
 
 For a length of 4096 (2 ^ 12), sorting algorithms took:
-   1. SkipListSort:   0.00365199 seconds
-   2. CountSort:   0.0203409 seconds
-   3. MergeSort:   0.000428256 seconds
-   4. QuickSort:   0.000226808 seconds
-   5. BubbleSort:   0.0142637 seconds
-   6. RadixSort:   0.000415373 seconds
-   7. HeapSort:   0.000245216 seconds
-   8. TreapSort:   0.000880591 seconds
-   9. AVLSort:   0.000624617 seconds
-   10. SplayTreeSort:   0.00105667 seconds
+   1. SkipListSort:   0.00118203 seconds
+   2. CountSort:   0.0185721 seconds
+   3. MergeSort:   0.000486129 seconds
+   4. QuickSort:   0.000206944 seconds
+   5. BubbleSort:   0.0148419 seconds
+   6. RadixSort:   0.000685557 seconds
+   7. HeapSort:   0.000249057 seconds
+   8. TreapSort:   0.000904438 seconds
+   9. AVLSort:   0.000508434 seconds
+   10. SplayTreeSort:   0.000909416 seconds
+   11. STLSort:   0.000146182 seconds
 
 
 For a length of 16384 (2 ^ 14), sorting algorithms took:
-   1. SkipListSort:   0.0125377 seconds
-   2. CountSort:   0.0210562 seconds
-   3. MergeSort:   0.00317134 seconds
-   4. QuickSort:   0.00134815 seconds
-   5. BubbleSort:   0.350732 seconds
-   6. RadixSort:   0.00066151 seconds
-   7. HeapSort:   0.00117995 seconds
-   8. TreapSort:   0.00580535 seconds
-   9. AVLSort:   0.00341974 seconds
-   10. SplayTreeSort:   0.00545199 seconds
+   1. SkipListSort:   0.00605906 seconds
+   2. CountSort:   0.0191384 seconds
+   3. MergeSort:   0.0032952 seconds
+   4. QuickSort:   0.000938527 seconds
+   5. BubbleSort:   0.344501 seconds
+   6. RadixSort:   0.000617677 seconds
+   7. HeapSort:   0.00117788 seconds
+   8. TreapSort:   0.0053493 seconds
+   9. AVLSort:   0.00306822 seconds
+   10. SplayTreeSort:   0.0058754 seconds
+   11. STLSort:   0.000694195 seconds
 
 
 For a length of 65536 (2 ^ 16), sorting algorithms took:
-   1. SkipListSort:   0.0380256 seconds
-   2. CountSort:   0.0230007 seconds
-   3. MergeSort:   0.00875567 seconds
-   4. QuickSort:   0.00506747 seconds
-   5. BubbleSort:   6.56165 seconds
-   6. RadixSort:   0.00177907 seconds
-   7. HeapSort:   0.00595978 seconds
-   8. TreapSort:   0.0275812 seconds
-   9. AVLSort:   0.015806 seconds
-   10. SplayTreeSort:   0.0257051 seconds
+   1. SkipListSort:   0.0316527 seconds
+   2. CountSort:   0.0197092 seconds
+   3. MergeSort:   0.00912495 seconds
+   4. QuickSort:   0.00500174 seconds
+   5. BubbleSort:   6.42742 seconds
+   6. RadixSort:   0.00170016 seconds
+   7. HeapSort:   0.00551106 seconds
+   8. TreapSort:   0.0257414 seconds
+   9. AVLSort:   0.0154425 seconds
+   10. SplayTreeSort:   0.0242778 seconds
+   11. STLSort:   0.0032555 seconds
 
 
 For a length of 262144 (2 ^ 18), sorting algorithms took:
-   1. SkipListSort:   0.248465 seconds
-   2. CountSort:   0.0265993 seconds
-   3. MergeSort:   0.0357091 seconds
-   4. QuickSort:   0.0203941 seconds
+   1. SkipListSort:   0.197079 seconds
+   2. CountSort:   0.0232692 seconds
+   3. MergeSort:   0.0374196 seconds
+   4. QuickSort:   0.018406 seconds
    5. BubbleSort:   > 2 seconds
-   6. RadixSort:   0.00622131 seconds
-   7. HeapSort:   0.0260874 seconds
-   8. TreapSort:   0.20277 seconds
-   9. AVLSort:   0.0964835 seconds
-   10. SplayTreeSort:   0.164641 seconds
+   6. RadixSort:   0.00585436 seconds
+   7. HeapSort:   0.0272404 seconds
+   8. TreapSort:   0.183082 seconds
+   9. AVLSort:   0.0934924 seconds
+   10. SplayTreeSort:   0.139498 seconds
+   11. STLSort:   0.013881 seconds
 
 
 For a length of 1048576 (2 ^ 20), sorting algorithms took:
-   1. SkipListSort:   1.42368 seconds
-   2. CountSort:   0.0403063 seconds
-   3. MergeSort:   0.154083 seconds
-   4. QuickSort:   0.0908038 seconds
+   1. SkipListSort:   1.19723 seconds
+   2. CountSort:   0.036205 seconds
+   3. MergeSort:   0.155106 seconds
+   4. QuickSort:   0.0789858 seconds
    5. BubbleSort:   > 2 seconds
-   6. RadixSort:   0.0523315 seconds
-   7. HeapSort:   0.12219 seconds
-   8. TreapSort:   1.34441 seconds
-   9. AVLSort:   0.751547 seconds
-   10. SplayTreeSort:   1.03768 seconds
+   6. RadixSort:   0.0398885 seconds
+   7. HeapSort:   0.131015 seconds
+   8. TreapSort:   1.25822 seconds
+   9. AVLSort:   0.680558 seconds
+   10. SplayTreeSort:   0.90354 seconds
+   11. STLSort:   0.0617777 seconds
 
 
 For a length of 4194304 (2 ^ 22), sorting algorithms took:
    1. SkipListSort:   > 2 seconds
-   2. CountSort:   0.103244 seconds
-   3. MergeSort:   0.643617 seconds
-   4. QuickSort:   0.415463 seconds
+   2. CountSort:   0.0883545 seconds
+   3. MergeSort:   0.663802 seconds
+   4. QuickSort:   0.354001 seconds
    5. BubbleSort:   > 2 seconds
-   6. RadixSort:   0.557105 seconds
-   7. HeapSort:   0.690665 seconds
+   6. RadixSort:   0.461576 seconds
+   7. HeapSort:   0.699754 seconds
    8. TreapSort:   > 2 seconds
-   9. AVLSort:   4.57244 seconds
+   9. AVLSort:   4.05269 seconds
    10. SplayTreeSort:   > 2 seconds
+   11. STLSort:   0.270699 seconds
 
 
 For a length of 16777216 (2 ^ 24), sorting algorithms took:
    1. SkipListSort:   > 2 seconds
-   2. CountSort:   0.296793 seconds
-   3. MergeSort:   2.70287 seconds
-   4. QuickSort:   1.94618 seconds
+   2. CountSort:   0.256137 seconds
+   3. MergeSort:   2.90409 seconds
+   4. QuickSort:   1.63266 seconds
    5. BubbleSort:   > 2 seconds
-   6. RadixSort:   2.46696 seconds
-   7. HeapSort:   3.95489 seconds
+   6. RadixSort:   2.20943 seconds
+   7. HeapSort:   3.75199 seconds
    8. TreapSort:   > 2 seconds
    9. AVLSort:   > 2 seconds
    10. SplayTreeSort:   > 2 seconds
+   11. STLSort:   1.16358 seconds
 
 
 For a length of 67108864 (2 ^ 26), sorting algorithms took:
    1. SkipListSort:   > 2 seconds
-   2. CountSort:   0.985233 seconds
+   2. CountSort:   0.800824 seconds
    3. MergeSort:   > 2 seconds
    4. QuickSort:   > 2 seconds
    5. BubbleSort:   > 2 seconds
@@ -115,11 +123,12 @@ For a length of 67108864 (2 ^ 26), sorting algorithms took:
    8. TreapSort:   > 2 seconds
    9. AVLSort:   > 2 seconds
    10. SplayTreeSort:   > 2 seconds
+   11. STLSort:   > 2 seconds
 
 
 For a length of 268435456 (2 ^ 28), sorting algorithms took:
    1. SkipListSort:   > 2 seconds
-   2. CountSort:   3.2496 seconds
+   2. CountSort:   2.91143 seconds
    3. MergeSort:   > 2 seconds
    4. QuickSort:   > 2 seconds
    5. BubbleSort:   > 2 seconds
@@ -128,3 +137,4 @@ For a length of 268435456 (2 ^ 28), sorting algorithms took:
    8. TreapSort:   > 2 seconds
    9. AVLSort:   > 2 seconds
    10. SplayTreeSort:   > 2 seconds
+   11. STLSort:   > 2 seconds
