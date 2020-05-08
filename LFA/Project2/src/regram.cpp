@@ -141,8 +141,8 @@ ostream & operator<< (ostream & out, const Regram & reg)
     out << "Regular grammar at location <" << &reg << ">:\n";
     out << "Number of symbols: " << reg.regram_.size() << '\n';
     out << "Productions:\n";
+    int cnt = 0;
     for (auto i : reg.regram_) {
-        static int cnt = 0;
         out << ' ' << ++cnt << ": " + i.first + " -> ";
         string o = "";
         for (auto p : i.second) {
@@ -151,6 +151,7 @@ ostream & operator<< (ostream & out, const Regram & reg)
         }
         out << '\n';
     }
+    out << "Initial symbol: " + reg.initial_state_ + "\n";
 
     return out;
 }
