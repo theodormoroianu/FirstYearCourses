@@ -87,16 +87,13 @@ var MENU_Note = (id) => {
     if (id == -1) {
         /// I must create a new note
         notes.push({
-            title: "",
-            task: "",
-            creation_date: Date.now(),
-            content: '',
-            asociated_picture: ""
+            head: -1,
+            versions: []
         })
         id = notes.length - 1;
     }
     NOTE_Note(notes[id], function() {
-        if (notes[id].title.length == 0) { /// must delete the note
+        if (notes[id].head == -1) { /// must delete the note
             if (notes[id].hasOwnProperty('note_id')) {
                 SYNC_DeleteNote({
                     token: MENU_object.info.token,
@@ -133,7 +130,10 @@ var MENU_Note = (id) => {
 /// RENDERS THE NOTES TO THE PAGE --------------------------------------------------------------------------------------------------
 
 var MENU_RenderNotes = function() {
-    notes.sort((a, b) => {
+    notes.sort((x, y) => {
+        a = x.versions[x.versions.length - 1]
+        b = y.versions[y.versions.length - 1]
+
         var asmall = false;
         if (MENU_object.config.sort_notes_by == 'Deadline')
             asmall = (a.deadline < b.deadline);
@@ -152,7 +152,7 @@ var MENU_RenderNotes = function() {
     const list = document.getElementById('list');
 
     for (var i = 0; i < notes.length; i++) {
-        obj = notes[i];
+        obj = notes[i].versions[notes[i].versions.length - 1];
         
         var a = document.createElement('a');
         a.setAttribute('href', 'javascript:MENU_Note(' + i + ')');
@@ -209,12 +209,14 @@ var MENU_Menu = (obj, callback) => {
         var date_now = (new Date()).toISOString().slice(0,10);
         var deadline_today = 0;
         var deadline_passed = 0;
-
+    
         for (var i = 0; i < notes.length; i++) {
-            if (notes[i].deadline.length == 10) {
-                if (notes[i].deadline == date_now)
+            var note_act = notes[i].versions[notes[i].head];
+
+            if (note_act.deadline.length == 10) {
+                if (note_act.deadline == date_now)
                     deadline_today++;
-                if (notes[i].deadline < date_now)
+                if (note_act.deadline < date_now)
                     deadline_passed++;
             }
         }

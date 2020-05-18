@@ -1,4 +1,4 @@
-.body {
+body {
 	background-color: #000;
 	background-image: url("../images/bg.jpg");
 	background-size: cover;
@@ -8,7 +8,7 @@
 
 /* Type */
 
-.body, .input, .select, .textarea {
+body, input, select, textarea {
 	color: rgba(255, 255, 255, 0.65);
 	font-family: "Source Sans Pro", Helvetica, sans-serif;
 	font-size: 13pt;
@@ -17,48 +17,48 @@
 }
 
 @media(max-width: 1280px) {
-	.body, .input, .select, .textarea {
+	body, input, select, textarea {
 		font-size: 12pt;
 	}
 }
 
-.a {
+a {
 	color: inherit;
 	text-decoration: none;
 	border-bottom: dotted 1px rgba(255, 255, 255, 0.35);
 }
 
-.a:hover {
+a:hover {
 	color: #ffffff;
 	border-bottom-color: transparent;
 }
 
-.strong, .b {
+strong, b {
 	color: #ffffff;
 	font-weight: 200;
 }
 
 
-.h1, .h2, .h3, .h4, .h5, .h6 {
+h1, h2, h3, h4, h5, h6 {
 	color: #ffffff;
 	font-weight: 200;
 	line-height: 1.5;
 	margin: 0 0 1em 0;
 }
 
-.h1 {
+h1 {
 	font-size: 1.75em;
 }
 
 @media screen and (max-width: 1280px) {
-	.h1 {
+	h1 {
 		font-size: 1.5em;
 	}
 
 }
 
 @media screen and (max-width: 768px) {
-	.h1 {
+	h1 {
 		font-size: 1.25em;
 	}
 
@@ -66,11 +66,11 @@
 
 /* Form */
 
-.form {
+form {
 	margin: 0 0 2em 0;
 }
 
-.label {
+label {
 	color: #ffffff;
 	display: block;
 	font-size: 0.9em;
@@ -81,8 +81,10 @@
 input[type="text"],
 input[type="date"],
 input[type="password"],
-.select,
-.textarea {
+input[type="email"],
+input[type="tel"],
+select,
+textarea {
 	appearance: none;
 	background: rgba(255, 255, 255, 0.075);
 	border-radius: 4px;
@@ -100,16 +102,20 @@ input[type="password"],
 input[type="text"]:invalid,
 input[type="date"]:invalid,
 input[type="password"]:invalid,
-.select:invalid,
-.textarea:invalid {
+input[type="email"]:invalid,
+input[type="tel"]:invalid,
+select:invalid,
+textarea:invalid {
 	box-shadow: none;
 }
 
 input[type="text"]:focus,
 input[type="date"]:focus,
 input[type="password"]:focus,
-.select:focus,
-.textarea:focus {
+input[type="email"]:focus,
+input[type="tel"]:focus,
+select:focus,
+textarea:focus {
 	border-color: #FF6382;
 	box-shadow: 0 0 0 1px #FF6382;
 }
@@ -149,11 +155,12 @@ input[type="password"]:focus,
 input[type="text"],
 input[type="date"],
 input[type="password"],
-.select {
+input[type="email"],
+select {
 	height: 2.75em;
 }
 
-.textarea {
+textarea {
 	padding: 0.75em 1em;
 }
 
@@ -255,19 +262,19 @@ input[type="radio"] + label:before {
 }
 
 /* List */
-.ul {
+ul {
 	list-style: disc;
 	margin: 0 0 2em 0;
 	padding-left: 1em;
 }
 
-.ul .li {
+ul li {
 	padding-left: 0.5em;
 	display: inline-block;
 	padding: 0 1em 0 0;
 }
 
-.ul.icons {
+ul.icons {
 	cursor: default;
 	list-style: none;
 	padding-left: 0;
@@ -275,6 +282,10 @@ input[type="radio"] + label:before {
 			
 /* Button */
 
+input[type="submit"],
+input[type="reset"],
+input[type="button"],
+button,
 .button {
 	appearance: none;
 	transition: background-color 0.2s ease-in-out, color 0.2s ease-in-out;
@@ -292,41 +303,52 @@ input[type="radio"] + label:before {
 	white-space: nowrap;
 }
 
+input[type="submit"]:hover,
+input[type="reset"]:hover,
+input[type="button"]:hover,
+button:hover,
 .button:hover {
 	background-color: #ff7c96;
 }
 
+input[type="submit"]:active,
+input[type="reset"]:active,
+input[type="button"]:active,
+button:active,
 .button:active {
 	background-color: #ff496e;
 }
 
+input[type="submit"].icon,
+input[type="reset"].icon,
+input[type="button"].icon,
+button.icon,
 .button.icon {
 	padding-left: 1.35em;
 }
 
+input[type="submit"].icon:before,
+input[type="reset"].icon:before,
+input[type="button"].icon:before,
+button.icon:before,
 .button.icon:before {
 	margin-right: 0.5em;
 }
 
+input[type="submit"].fit,
+input[type="reset"].fit,
+input[type="button"].fit,
+button.fit,
 .button.fit {
 	display: block;
 	margin: 0 0 1em 0;
 	width: 100%;
 }
 
-
-/* @media(max-width: 480px) {
-
-	.button {
-		padding: 0;
-	}
-
-} */
-
 /* Thumbnails */
 
 
-.thumbnails .a {
+.thumbnails a {
 	transition: all 0.3s ease;
 	border-bottom: none;
 	display: block;
@@ -340,14 +362,14 @@ input[type="radio"] + label:before {
 	overflow: hidden;
 }
 
-.thumbnails .a .img {
+.thumbnails a img {
 	display: block;
 	width: 100%;
 	border-top-left-radius: 4px;
 	border-top-right-radius: 4px;
 }
 
-.thumbnails .a .h3 {
+.thumbnails a h3 {
 	margin: 1em;
 }
 
@@ -362,7 +384,7 @@ input[type="radio"] + label:before {
 
 /* Wrapper */
 
-.wrapper {
+#wrapper {
 	max-width: 68em;
 	margin: 0 auto;
 	padding: 0 2em;
@@ -375,12 +397,12 @@ input[type="radio"] + label:before {
 
 /* Header */
 
-.header {
+#header {
 	text-align: center;
 	padding: 6em 0 4em 0;
 }
 
-.h1 {
+h1 {
 	color: rgba(255, 255, 255, 0.65);
 }
 
@@ -393,7 +415,7 @@ input[type="radio"] + label:before {
 	background-color: rgba(255, 255, 255, 0.075);
 }
 
-.avatar .img {
+.avatar img {
 	border-radius: 100%;
 	display: block;
 	width: 10em;
@@ -401,7 +423,7 @@ input[type="radio"] + label:before {
 
 @media screen and (max-width: 1280px) {
 
-	.header {
+	#header {
 		padding: 4em 0 2em 0;
 	}
 

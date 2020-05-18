@@ -81,8 +81,6 @@
 input[type="text"],
 input[type="date"],
 input[type="password"],
-input[type="email"],
-input[type="tel"],
 .select,
 .textarea {
 	appearance: none;
@@ -102,8 +100,6 @@ input[type="tel"],
 input[type="text"]:invalid,
 input[type="date"]:invalid,
 input[type="password"]:invalid,
-input[type="email"]:invalid,
-input[type="tel"]:invalid,
 .select:invalid,
 .textarea:invalid {
 	box-shadow: none;
@@ -112,8 +108,6 @@ input[type="tel"]:invalid,
 input[type="text"]:focus,
 input[type="date"]:focus,
 input[type="password"]:focus,
-input[type="email"]:focus,
-input[type="tel"]:focus,
 .select:focus,
 .textarea:focus {
 	border-color: #FF6382;
@@ -155,7 +149,6 @@ input[type="tel"]:focus,
 input[type="text"],
 input[type="date"],
 input[type="password"],
-input[type="email"],
 .select {
 	height: 2.75em;
 }
@@ -282,10 +275,6 @@ input[type="radio"] + label:before {
 			
 /* Button */
 
-input[type="submit"],
-input[type="reset"],
-input[type="button"],
-.button,
 .button {
 	appearance: none;
 	transition: background-color 0.2s ease-in-out, color 0.2s ease-in-out;
@@ -303,42 +292,22 @@ input[type="button"],
 	white-space: nowrap;
 }
 
-input[type="submit"]:hover,
-input[type="reset"]:hover,
-input[type="button"]:hover,
-.button:hover,
 .button:hover {
 	background-color: #ff7c96;
 }
 
-input[type="submit"]:active,
-input[type="reset"]:active,
-input[type="button"]:active,
-.button:active,
 .button:active {
 	background-color: #ff496e;
 }
 
-input[type="submit"].icon,
-input[type="reset"].icon,
-input[type="button"].icon,
-.button.icon,
 .button.icon {
 	padding-left: 1.35em;
 }
 
-input[type="submit"].icon:before,
-input[type="reset"].icon:before,
-input[type="button"].icon:before,
-.button.icon:before,
 .button.icon:before {
 	margin-right: 0.5em;
 }
 
-input[type="submit"].fit,
-input[type="reset"].fit,
-input[type="button"].fit,
-.button.fit,
 .button.fit {
 	display: block;
 	margin: 0 0 1em 0;
@@ -346,17 +315,13 @@ input[type="button"].fit,
 }
 
 
-@media(max-width: 480px) {
+/* @media(max-width: 480px) {
 
-	input[type="submit"],
-	input[type="reset"],
-	input[type="button"],
-	.button,
 	.button {
 		padding: 0;
 	}
 
-}
+} */
 
 /* Thumbnails */
 

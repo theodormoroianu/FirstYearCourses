@@ -19,7 +19,7 @@ body {
   margin-top: 30px;
 }
 
-.resume-container {
+.resume-container, .picture-container, .contact-container {
   background: white;
   width: 990px;
   margin: 0 auto 30px auto;
@@ -29,3 +29,57 @@ body {
   border-radius: 0px 0px 4px 4px;
   display: flex;
 }
+
+* {
+  font-family: 'Open Sans', ;
+  font-family: 'Lato', ;
+}
+
+.title {
+    margin: 0p;
+    font-family: 'Lato';
+    font-size: 38px;
+    font-weight: bold;
+    text-align: center;
+    text-transform: uppercase;
+}
+
+.subtitle {
+    color: #999;
+    margin-bottom: 1em;
+    font-family: 'Lato';
+    font-size: 1.5em;
+    text-transform: uppercase;
+    text-align: center;
+}
+
+.menu {
+    width: 990px;
+    margin: 80px auto 0 auto;
+    text-align: center;
+}
+
+.menu-item {
+    display: inline-block;
+    margin-right: 10px;
+    margin-left: 20px;
+    padding: 10px 40px 10px 40px;
+    background-color: white;
+    text-decoration: none;
+    font-weight: bold;
+    text-transform: uppercase;
+    font-family: 'Lato';
+    font-size: 14px;
+    color: #999;
+    vertical-align: bottom;
+}
+
+.menu-item-active {
+    position: relative;
+    bottom: -1px;
+    color: #c0392b;
+    padding: 15px 40px 15px 40px;
+    margin-top: 0;
+}
+
+

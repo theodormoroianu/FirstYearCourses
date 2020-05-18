@@ -1,3 +1,37 @@
+# Exam Project
+
+## Ideea
+1. Add options to already existing website
+2. Add version control for notes (1)
+3. Add admins, able to do whathever they want (2)
+4. Add Twitter-like messages (3)
+
+
+### (1)
+    1. Basic command for generating a graph is
+        `dot -Tpng graph1.gv -o graph1.png -Gsize=9,15\!`
+    2. Each note stores a history (each version has a parent
+        except for the root one)
+    3. Each note has an additional button with 'history', which opens:
+        a. A list with all the versions, which can then be edited thus creating a new version
+        b. A graph with the versions history (generated using the command above from the server)
+    4. Even the deleted notes aren't really deleted, they can still be accessed from the "deleted notes" menu, and be restored.
+
+
+### (2)
+    1. Each admin can only be created by editing server config files.
+    2. When an admin sign-in it basically creates an universal token.
+    3. Any request with an admin token is accepted.
+    4. As all is single-page, the admin can:
+        a. Sign-in as another person
+        b. has a button on the top of the screen for going back
+
+### (3)
+    1. Each user can create a new message that will be published publicly.
+    2. A user or an admin can edit his own messages.
+    3. A guest can only see messages
+    Usefull links: (this)[https://www.w3schools.com/howto/howto_js_popup_chat.asp] and (this)[https://www.w3schools.com/howto/howto_css_chat.asp]
+
 # Nota: toate taskurile trebuie sa fie integrate cu sens in aplicatie. Cautati in lista un task care sa se potriveasca tipului vostru de proiect. Se pot alege in total maxim 5 taskuri din toate categoriile. Punctajul obtinut este reprezentat de suma punctajelor pe taskuri, in cazul in care depaseste 6 puncte, suma fiind trunchiata la 6. Nu pot exista doi studenti cu cod similar la acelasi task (se anuleaza tot punctajul). Fiecare student se va consulta cu profesorul de laborator, si sa ajunga la comun acord cu studentul referitor la alegerea setului de taskuri. 
 Ne rezervam dreptul de a adauga variante noi de taskuri pentru a fi alese de studenti.
  

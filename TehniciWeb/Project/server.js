@@ -2,17 +2,51 @@
 
 var express = require("express")
 var morgan  = require('morgan')
+const { exec } = require('child_process');
 
 var fs = require('fs');
 app = express()
 app.use(express.json())
 app.use(morgan('tiny'))
 
+exec('mkdir ' + __dirname + '/data -p', (err, stdout, stderr) => { });
+exec('mkdir ' + __dirname + '/data/notes -p', (err, stdout, stderr) => { });
+exec('mkdir ' + __dirname + '/data/users -p', (err, stdout, stderr) => { });
+
+
+/// DECLARING USED FUNCTIONS ----------------------------------------------------------------------------------------------------
+
 var assert = (condition) => {
     if (!condition)
         throw "Assertion failed";
 }
 
+var log = (message) => {
+    fs.appendFile('data/events.log', message, function (err) {
+        if (err) throw err;
+    });
+}
+
+var GetShortDate = () => {
+    var oDate = new Date();
+    var sDate;
+    if (oDate instanceof Date) {
+        sDate = oDate.getYear() + 1900
+            + ':'
+            + ((oDate.getMonth() + 1 < 10) ? '0' + (oDate.getMonth() + 1) : oDate.getMonth() + 1)
+            + ':' + oDate.getDate()
+            + ':' + oDate.getHours()
+            + ':' + ((oDate.getMinutes() < 10) ? '0' + (oDate.getMinutes()) : oDate.getMinutes())
+            + ':' + ((oDate.getSeconds() < 10) ? '0' + (oDate.getSeconds()) : oDate.getSeconds());
+    } else {
+        throw new Error("oDate is not an instance of Date");
+    }
+    return sDate + ' ';
+}
+
+var GetNiceDate = () => {
+    return new Date().toString().replace(/T/, ':').replace(/\.\w*/, '');
+}
 
 
 /// DECLARING USEFULL JSONS AND ERROR JSONS ---------------------------------------------------------------------------------
@@ -127,7 +161,7 @@ var CreateUniqueID = () => {
 
 // active tokens store for each token
 // the user and the creation_date
-active_tokens = { }
+active_tokens = { 1: { user: "123" } }
 
 
 
@@ -158,6 +192,9 @@ var Authentificate = (token) => {
 
 app.post('/API/login', function(req, res) {
     var obj = req.body;
+
+    log(GetShortDate() + "Received login request from " + obj.user + " ... ");
+
     try {
         if (!obj.hasOwnProperty('token'))
             obj['token'] = CreateToken(obj.user, obj.password);
@@ -173,20 +210,32 @@ app.post('/API/login', function(req, res) {
         };
 
         res.end(JSON.stringify(user_json));
-    } catch (e) {
+        log("ACCEPTED\n");
+    }
+    catch (e) {
         res.end(JSON.stringify(wrong_user_or_password_json));
+        log("DECLINED\n");
     }
 });
 
 app.post('/API/signup', function(req, res) {
     var obj = req.body;
+
+    log(GetShortDate() + "Received signup request from " + obj.user + " ... ");
+
     try {
-        if (!ValidUserName(obj.user))
+        if (!ValidUserName(obj.user)) {
             res.end(JSON.stringify(invalid_username_json));
-        else if (obj.password.length < 6)
+            log("DECLINED\n");
+        }
+        else if (obj.password.length < 6) {
             res.end(JSON.stringify(invalid_password_json));
-        else if (ExistsUser(obj.user))
+            log("DECLINED\n");
+        }
+        else if (ExistsUser(obj.user)) {
             res.end(JSON.stringify(user_already_exists_json));
+            log("DECLINED\n");
+        }
         else {
             var user_json = {
                 info: {
@@ -203,13 +252,16 @@ app.post('/API/signup', function(req, res) {
                 notes: [CreateUniqueID()]
             };
             var welcome_note = {
-                title: "Getting Started",
-                task: "Work",
-                creation_date: Date.now(),
-                content: `Welcome to the note manager!`,
-                asociated_picture: "Work/0.jpg",
                 note_id: user_json.notes[0],
-                deadline: ''
+                head: 0,
+                versions: [{
+                    title: "Getting Started",
+                    task: "Work",
+                    creation_date: Date.now(),
+                    content: `Welcome to the note manager!`,
+                    asociated_picture: "Work/0.jpg",
+                    deadline: ''
+                }]
             };
 
             WriteNote(welcome_note);
@@ -223,20 +275,28 @@ app.post('/API/signup', function(req, res) {
             delete user_json.info.password;
 
             res.end(JSON.stringify(user_json));
+            log("ACCEPTED\n");
         }
         
     } catch(e) {
         res.end(JSON.stringify(invalid_authentification_json));
+        log("DECLINED\n");
     }
 });
 
 app.delete('/API/signout', function(req, res) {
     var obj = req.body;
+
+    log(GetShortDate() + "Received signout request from " + obj.user + " ... ");
+
     try {
         delete active_tokens[obj.token];
         res.end(JSON.stringify(authentification_ok_json));
-    } catch(e) {
+        log("ACCEPTED\n");
+    }
+    catch(e) {
         res.end(JSON.stringify(invalid_authentification_json));
+        log("DECLINED\n");
     }
 });
 
@@ -246,6 +306,9 @@ app.delete('/API/signout', function(req, res) {
 
 app.post('/API/notes', (req, res) => {
     var obj = req.body;
+
+    log(GetShortDate() + "Received POST request to note " + obj.note_id + " ... ");
+
     try {
         assert(active_tokens.hasOwnProperty(obj.token));
         user_json = ReadUser(active_tokens[obj.token].user);
@@ -262,14 +325,19 @@ app.post('/API/notes', (req, res) => {
             note_id: user_json.notes[user_json.notes.length - 1]
         }));
         WriteUser(user_json);
-
-    } catch (e) {
+        log("ACCEPTED\n");
+    }
+    catch (e) {
         res.end(JSON.stringify(invalid_authentification_json));
+        log("DECLINED\n");
     }
 });
 
 app.delete('/API/notes', (req, res) => {
     var obj = req.body;
+
+    log(GetShortDate() + "Received DELETE request to note " + obj.note_id + " ... ");
+
     try {
         assert(active_tokens.hasOwnProperty(obj.token));
         user_json = ReadUser(active_tokens[obj.token].user);
@@ -283,22 +351,29 @@ app.delete('/API/notes', (req, res) => {
             }
         }));
         WriteUser(user_json);
-
-    } catch (e) {
+        log("ACCEPTED\n");
+    }
+    catch (e) {
         res.end(JSON.stringify(invalid_authentification_json));
+        log("DECLINED\n");
     }
 });
 
 app.get('/API/notes', (req, res) => {
+    
     try {        
         var token = req.query.token;
         var note_id = req.query.note_id;
 
+        log(GetShortDate() + "Received GET request to note " + note_id + " ... ");
+
         assert(active_tokens.hasOwnProperty(token));
         user_json = ReadUser(active_tokens[token].user);
 
-        if (!user_json.notes.includes(note_id))
+        if (!user_json.notes.includes(note_id)) {
             res.end(JSON.stringify(forbidden_resource_json));
+            log("DECLINED\n");
+        }
         else {
             var note = ReadNote(note_id);
             res.end(JSON.stringify({
@@ -308,6 +383,7 @@ app.get('/API/notes', (req, res) => {
                 },
                 data: note
             }));
+            log("ACCEPTED\n");
         }
     } catch (e) {
         res.end(JSON.stringify(invalid_authentification_json));
@@ -316,6 +392,7 @@ app.get('/API/notes', (req, res) => {
 
 app.put('/API/notes', (req, res) => {
     var obj = req.body;
+    log(GetShortDate() + "Received PUT request to note " + obj.note_id + " ... ");
 
     try {
         assert(active_tokens.hasOwnProperty(obj.token));
@@ -332,8 +409,11 @@ app.put('/API/notes', (req, res) => {
                 }
             }));
         }
-    } catch (e) {
+        log("ACCEPTED\n");
+    }
+    catch (e) {
         res.end(JSON.stringify(invalid_authentification_json));
+        log("DECLINED\n");
     }
 });
 
@@ -343,6 +423,9 @@ app.put('/API/notes', (req, res) => {
 
 app.put('/API/settings', function(req, res) {
     var obj = req.body;
+
+    log(GetShortDate() + "Received PUT request to settings of user with token " + obj.token + " ... ");
+
     try {
         assert(active_tokens.hasOwnProperty(obj.token));
         user_json = ReadUser(active_tokens[obj.token].user);
@@ -362,7 +445,32 @@ app.put('/API/settings', function(req, res) {
                 message: "OK"
             }
         }));
-    } catch (e) {
+        log("ACCEPTED\n");
+    }
+    catch (e) {
+        res.end(JSON.stringify(invalid_authentification_json));
+        log("DECLINED\n");
+    }
+});
+
+
+
+/// HANDLING GET REQUESTS TO PICTURE GRAPH --------------------------------------------------------------------------------------
+
+app.get('/API/note_graph', (req, res) => {
+    try {        
+        var note_id = req.query.note_id;
+
+        exec('python ' + __dirname + '/scripts/generate_graph.py ' + __dirname + '/data/notes/' + note_id, (err, stdout, stderr) => {
+            if (err) {
+                console.log("Unable to run script: Unhandled error!");
+                console.log(stdout);
+                return;
+            }
+            res.sendFile(__dirname + '/scripts/diagram.png');
+        });
+    }
+    catch (e) {
         res.end(JSON.stringify(invalid_authentification_json));
     }
 });
@@ -377,4 +485,6 @@ app.use(express.static('assets'));
 
 /// STARTING SERVER -------------------------------------------------------------------------------------------------------------
 
+
+log("\n\n\nSTARTING NEW SERVER AT DATE " + GetNiceDate() + "\n\n");
 app.listen(3000, () => console.log(`Listening on port 3000`));
