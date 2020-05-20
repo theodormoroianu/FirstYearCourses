@@ -461,7 +461,7 @@ app.get('/API/note_graph', (req, res) => {
     try {        
         var note_id = req.query.note_id;
 
-        exec('python ' + __dirname + '/scripts/generate_graph.py ' + __dirname + '/data/notes/' + note_id, (err, stdout, stderr) => {
+        exec('python3 ' + __dirname + '/scripts/generate_graph.py ' + __dirname + '/data/notes/' + note_id, (err, stdout, stderr) => {
             if (err) {
                 console.log("Unable to run script: Unhandled error!");
                 console.log(stdout);
