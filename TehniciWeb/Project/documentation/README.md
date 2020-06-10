@@ -16,11 +16,3 @@ The app is able to:
 2. [Notes Menu](menu.md)
 3. [Login Menu](login_signup.md)
 
-## Reqired packages
-
-Required `npm` packages are:
-* express
-
-``` bash
-npm install express
-```
