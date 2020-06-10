@@ -16,14 +16,13 @@ MENU_html_code =
     <ul class="icons ul">
         <li class='li'><a class='a' href="javascript:MENU_Note(-1)"><span class="label a">New Task</span></a></li>
         <li class='li'><a class='a' href="javascript:MENU_Settings()"><span class="label a">Settings</span></a></li>
-        <li class='li'><a class='a' href="javascript:MENU_Credits()"><span class="label a">Credits</span></a></li>
+        <li class='li'><a class='a' href="javascript:MENU_Credits()"><span class="label a">Informations</span></a></li>
         <li class='li'><a class='a' href="javascript:MENU_SignOut()"><span class="label a">Sign Out</span></a></li>
     </ul>
 </header>
 
 <section class="thumbnails list section" id="list">        
 </section>`;
-
 
 
 /// SIDE FUNCTIONS NEEDED -------------------------------------------------------------------------------------------------------
@@ -37,7 +36,7 @@ var MENU_SignOut = function() {
         token: MENU_object.info.token
     }, () => { });
 
-    delete MENU_object;
+    MENU_object = undefined;
     window.localStorage.clear();
     MENU_callback();
 }
@@ -194,8 +193,10 @@ var MENU_GetNotes = async () => {
 var MENU_Menu = (obj, callback) => {
     if (callback !== null && callback !== undefined)
         MENU_callback = callback;
-    if (obj !== null && obj !== undefined)
+    if (obj !== null && obj !== undefined) {
         MENU_object = obj;
+        TIME_SPENT_time_left_start();
+    }
 
     console.log("Entered menu. Obj = ");
     console.log(MENU_object);

@@ -18,6 +18,10 @@ var TIME_SPENT_time_left_compute = () => {
         document.getElementById('time_left').innerText = '-';
         return;
     }
+    if (MENU_object === undefined) {
+        document.getElementById('time_left').innerText = '-';
+        return;
+    }
 
     // var hours = String(Math.floor(time / 3600)) + " hours ";
     var minutes = String(Math.floor(time / 60 % 60)) + " min ";

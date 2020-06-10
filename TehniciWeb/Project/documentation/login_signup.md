@@ -45,6 +45,9 @@ var obj {
         user: /// username
         name: /// name
         token: /// authentification token
+        login_count: /// number of login counts
+        last_ip: /// last login ip
+        last_login_date: /// last login date
     },
     config: {
         sort_notes_by: "deadline / creation / alphabetical",

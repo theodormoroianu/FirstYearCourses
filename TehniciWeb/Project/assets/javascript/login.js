@@ -43,7 +43,6 @@ var LOGIN_checker = (obj) => {
         if (obj.config.stay_signed_in)
             window.localStorage.setItem('token', obj.info.token);
         
-        TIME_SPENT_time_left_start();
         setTimeout(function() { MENU_Menu(obj, LOGIN_Login); }, 1000);
     }
     else
@@ -56,7 +55,6 @@ var LOGIN_checker_localstorage = (obj) => {
         if (obj.config.stay_signed_in)
             window.localStorage.setItem('token', obj.info.token);
         
-        TIME_SPENT_time_left_start();
         MENU_Menu(obj, LOGIN_Login);
     }
 }

@@ -185,6 +185,7 @@ var CreateToken = (user, password) => {
 var Authentificate = (token) => {
     assert(active_tokens.hasOwnProperty(token));
     assert((Date.now() - active_tokens[token].creation_date) / 1000 < 30 * 60);
+    active_tokens[token].creation_date = Date.now();
     /// o sesiune e valida numai 30 de min
     return active_tokens[token].user;
 }
@@ -196,11 +197,10 @@ var Authentificate = (token) => {
 app.post('/API/login', function(req, res) {
     
     var ip = req.connection.remoteAddress;
-    console.log(ip);
 
     var obj = req.body;
 
-    log(GetShortDate() + "Received login request from " + obj.user + " ... ");
+    log(GetShortDate() + "Received login request from " + obj.user + " with ip " + ip + " ... ");
 
     try {
         if (!obj.hasOwnProperty('token'))
@@ -218,6 +218,12 @@ app.post('/API/login', function(req, res) {
 
         res.end(JSON.stringify(user_json));
         log("ACCEPTED\n");
+        
+        user_json = ReadUser(user);
+        user_json.info.login_count++;
+        user_json.info.last_ip = ip;
+        user_json.info.last_login_date = GetNiceDate();
+        WriteUser(user_json);
     }
     catch (e) {
         res.end(JSON.stringify(wrong_user_or_password_json));
@@ -248,7 +254,10 @@ app.post('/API/signup', function(req, res) {
                 info: {
                     user: obj.user,
                     name: obj.name,
-                    password: obj.password
+                    password: obj.password,
+                    login_count: 0,
+                    last_ip: "This is your first login!",
+                    last_login_date: "This is you first login!"
                 },
                 config: {
                     sort_notes_by: "Alphabetical",
