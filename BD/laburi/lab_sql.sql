@@ -268,10 +268,122 @@ WHERE e.hire_date < m.hire_date;
 
 -- LAB 3 ============================================================================
 
+--1
+SELECT e.first_name, TO_CHAR(e.hire_date, 'MONTH YYYY')
+FROM employees e JOIN employees b ON (e.department_id = b.department_id)
+WHERE e.employee_id != b.employee_id
+        AND b.last_name = 'Gates'
+        AND UPPER(e.last_name) LIKE '%A%';
 
+--2
+SELECT DISTINCT e1.employee_id, e1.last_name, e1.department_id, d.department_name
+FROM employees e1 JOIN employees e2 ON (e1.department_id = e2.department_id)
+        JOIN departments d ON (e1.department_id = d.department_id)
+WHERE UPPER(e2.last_name) LIKE '%T%'
+ORDER BY e1.last_name;
+
+--3
+SELECT e.last_name, e.salary, j.job_title, l.city, c.country_name
+FROM employees e JOIN employees boss ON (e.manager_id = boss.employee_id)
+    JOIN jobs j ON (e.job_id = j.job_id)
+    LEFT JOIN departments d ON (d.department_id = e.department_id)
+    LEFT JOIN locations l ON (l.location_id = d.location_id)
+    LEFT JOIN countries c ON (l.country_id = c.country_id)
+WHERE boss.last_name = 'King';
+
+--4
+SELECT d.department_name, e.last_name, j.job_title, TO_CHAR(e.salary, '$99,999.99')
+FROM employees e JOIN departments d ON (e.department_id = d.department_id)
+    JOIN jobs j ON (e.job_id = j.job_id)
+WHERE UPPER(d.department_name) LIKE '%TI%' 
+ORDER BY d.department_name, e.last_name;
+
+--5
+SELECT e.last_name, d.department_id, d.department_name, l.city, j.job_title
+FROM employees e JOIN departments d ON (e.department_id = d.department_id)
+    JOIN jobs j ON (e.job_id = j.job_id)
+    JOIN locations l ON (d.location_id = l.location_id)
+WHERE LOWER(l.city) = 'oxford';
+
+--6
+SELECT DISTINCT e.employee_id, e.last_name, e.salary
+FROM employees e JOIN employees oth ON (e.department_id = oth.department_id AND e.employee_id != oth.employee_id)
+    JOIN jobs j ON (e.job_id = j.job_id)
+WHERE e.salary > (j.min_salary + j.max_salary) / 2;
+
+--7
+SELECT e.last_name, d.department_name
+FROM employees e LEFT JOIN departments d ON (e.department_id = d.department_id);
+
+--8
+SELECT e.last_name, d.department_name
+FROM employees e RIGHT JOIN departments d ON (e.department_id = d.department_id);
+
+--9
+SELECT e.last_name, d.department_name
+FROM employees e RIGHT JOIN departments d ON (e.department_id = d.department_id)
+UNION
+SELECT e.last_name, d.department_name
+FROM employees e LEFT JOIN departments d ON (e.department_id = d.department_id);
+
+--10
+SELECT DISTINCT d.department_name
+FROM employees e JOIN departments d ON (e.department_id = d.department_id)
+WHERE e.job_id = 'SA_REP' OR LOWER(d.department_name) LIKE '%re%';
+
+--11
+SELECT department_name
+FROM departments
+MINUS
+SELECT department_name
+FROM employees e JOIN departments d ON (e.department_id = d.department_id);
+
+SELECT department_name --- RETURNS 16 rows
+FROM departments
+WHERE department_id NOT IN (SELECT e.department_id
+                            FROM employees e JOIN departments q ON (e.department_id = q.department_id));
+                            
+SELECT department_name --- RETURNS 0 rows
+FROM departments
+WHERE department_id NOT IN (SELECT department_id
+                            FROM employees);
+                            
+--12
+SELECT department_name
+FROM departments
+WHERE LOWER(department_name) LIKE '%re%'
+INTERSECT
+SELECT department_name
+FROM employees e JOIN departments d ON (e.department_id = d.department_id)
+WHERE e.job_id = 'HR_REP';
+
+--13
+SELECT employee_id, e.job_id, e.last_name
+FROM employees e JOIN jobs j ON (e.job_id = j.job_id)
+WHERE e.salary > 3000 OR e.salary = (j.max_salary + j.min_salary) / 2;
+
+--14
+SELECT 'Departamentul ' || department_name || ' este condus de ' || NVL(e.last_name, 'nimeni') || ' si ' ||
+    CASE WHEN EXISTS (SELECT * FROM employees WHERE department_id = d.department_id) THEN 'are angajati'
+        ELSE 'nu are angajati' END Info
+FROM departments d LEFT JOIN employees e ON (d.manager_id = e.employee_id);
+
+--15
+SELECT first_name, last_name, NULLIF(LENGTH(first_name), LENGTH(last_name))
+FROM employees;
+
+--16
+SELECT employee_id, last_name, hire_date, salary, DECODE(EXTRACT(YEAR FROM hire_date), 1989, 1.2,
+                                                                               1990, 1.15,
+                                                                               1991, 1.1, 1) * salary "Salariu Nou"
+FROM employees;
+
+
+-- LAB 4 ====================================================================================
 
 
 ;
+SELECT * FROM countries;
 SELECT * FROM locations;
 SELECT * FROM jobs;
 SELECT * FROM departments;

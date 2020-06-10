@@ -37,7 +37,7 @@ var MENU_SignOut = function() {
     }, () => { });
 
     MENU_object = undefined;
-    window.localStorage.clear();
+    window.localStorage.removeItem('token');
     MENU_callback();
 }
 
