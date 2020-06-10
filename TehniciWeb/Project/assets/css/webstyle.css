@@ -82,3 +82,24 @@
 .dropdown-menu {
   background-color: rgb(45, 45, 45);
 }
+
+footer {
+  position: fixed;
+  left: 0;
+  bottom: 0;
+  width: 100%;
+  text-align: center;
+  background-color: rgba(0, 71, 119, 0.253);
+  padding-top: 10px;
+  padding-bottom: 10px;
+  display: flex;
+  justify-content: space-evenly;
+}
+
+body > footer {
+  backdrop-filter: blur(10px);
+}
+
+footer > h1, p {
+  margin: 0px;
+}

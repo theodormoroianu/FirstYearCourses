@@ -1,13 +1,14 @@
 /// IMPORTING NECESSARY STUFF ---------------------------------------------------------------------------------------------------
 
-var express = require("express")
-var morgan  = require('morgan')
+var express = require("express");
+var morgan  = require('morgan');
 const { exec } = require('child_process');
 
 var fs = require('fs');
-app = express()
-app.use(express.json())
-app.use(morgan('tiny'))
+app = express();
+app.use(express.json());
+app.use(morgan('tiny'));
+app.set('trust proxy', true);
 
 exec('mkdir ' + __dirname + '/data -p', (err, stdout, stderr) => { });
 exec('mkdir ' + __dirname + '/data/notes -p', (err, stdout, stderr) => { });
@@ -175,7 +176,7 @@ var CreateToken = (user, password) => {
 
     active_tokens[token] = {
         user: user,
-        creation_date: Date()
+        creation_date: Date.now()
     }
     return token;
 }
@@ -183,6 +184,8 @@ var CreateToken = (user, password) => {
 /// returns the user for a token of throws an error
 var Authentificate = (token) => {
     assert(active_tokens.hasOwnProperty(token));
+    assert((Date.now() - active_tokens[token].creation_date) / 1000 < 30 * 60);
+    /// o sesiune e valida numai 30 de min
     return active_tokens[token].user;
 }
 
@@ -191,6 +194,10 @@ var Authentificate = (token) => {
 /// USER AUTHENTIFICATION CRUD --------------------------------------------------------------------------------------------------
 
 app.post('/API/login', function(req, res) {
+    
+    var ip = req.connection.remoteAddress;
+    console.log(ip);
+
     var obj = req.body;
 
     log(GetShortDate() + "Received login request from " + obj.user + " ... ");
@@ -458,16 +465,22 @@ app.put('/API/settings', function(req, res) {
 /// HANDLING GET REQUESTS TO PICTURE GRAPH --------------------------------------------------------------------------------------
 
 app.get('/API/note_graph', (req, res) => {
-    try {        
+    try { 
+        start = Date.now();
+
         var note_id = req.query.note_id;
+        log(GetShortDate() + "Received request to update graph of note " + note_id + " ... ");
 
         exec('python3 ' + __dirname + '/scripts/generate_graph.py ' + __dirname + '/data/notes/' + note_id, (err, stdout, stderr) => {
             if (err) {
                 console.log("Unable to run script: Unhandled error!");
                 console.log(stdout);
+                log("ERROR\n");
                 return;
             }
             res.sendFile(__dirname + '/scripts/diagram.png');
+            end = Date.now();
+            log("FINISHED. Computing time: " + (end - start) / 1000 + "\n");
         });
     }
     catch (e) {

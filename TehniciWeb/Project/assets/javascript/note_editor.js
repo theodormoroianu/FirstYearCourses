@@ -36,7 +36,7 @@
 var EDITOR_callback = null;
 var EDITOR_object = null;
 var EDITOR_id = null;
-
+var EDITOR_start_time = null;
 
 /// FUNCTION PROCESSING CHANGES
 
@@ -75,6 +75,8 @@ var EDITOR_ProcessChanges = function() {
     
     window.onbeforeunload = function() { }
     setTimeout(EDITOR_callback, 1000);
+
+    console.log("Updated the note after " + (Date.now() - EDITOR_start_time) / 1000 + " seconds.");
 }
 
 
@@ -90,6 +92,8 @@ var EDITOR_Delete = function() {
 
     window.onbeforeunload = function() { }
     setTimeout(EDITOR_callback, 1000);
+
+    console.log("Deleted the note after " + (Date.now() - EDITOR_start_time) / 1000 + " seconds.");
 }
 
 
@@ -102,6 +106,8 @@ var EDITOR_Discard = function() {
 
     window.onbeforeunload = function() { }
     setTimeout(EDITOR_callback, 1000);
+
+    console.log("Discarded the note after " + (Date.now() - EDITOR_start_time) / 1000 + " seconds."); 
 }
 
 
@@ -109,6 +115,10 @@ var EDITOR_Discard = function() {
 /// FUNCTION CREATING THE NOTE --------------------------------------------------------------------------------------------------
 
 var EDITOR_Editor = function(callback, obj, id) {
+    
+    /// for computing the total time taken for editing the note
+    EDITOR_start_time = Date.now();
+
     window.onbeforeunload = function() {
         return 'Are you sure you want to leave?';
     };
