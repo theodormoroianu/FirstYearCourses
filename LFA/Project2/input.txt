@@ -1,3 +1,12 @@
+3 4
+0 1 a
+1 0 a
+0 2 b
+1 2 b
+0
+1
+2
+
 ((aa|bb|abab|abba|baba|baab)*)(b|aba)((aa|bb|abab|abba|baba|baab)*)
 
 4 8

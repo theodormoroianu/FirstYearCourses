@@ -63,6 +63,15 @@ void ConvertDFAToRegram()
     out << x << '\n';
 }
 
+void MinimizeDFA()
+{
+    ifstream in("input.txt");
+    DFA d;
+    in >> d;
+    ofstream out("output.txt");
+    out << d.Minimize(1) << '\n';
+}
+
 int main()
 {
     cout << "Welcome!\nAll operations are made from `input.txt` to `output.txt`\n";
@@ -72,7 +81,8 @@ int main()
     cout << "3. Convert DFA to Regex\n";
     cout << "4. Convert regular grammar to DFA\n";
     cout << "5. Convert DFA to regular grammar\n";
-    cout << "6. Exit\n";
+    cout << "6. Minimize DFA\n";
+    cout << "7. Exit\n";
 
     while (1) {
         cout << " $ ";
@@ -88,6 +98,8 @@ int main()
             ConvertRegramToDFA();
         else if (x == 5)
             ConvertDFAToRegram();
+        else if (x == 6)
+            MinimizeDFA();
         else
             break;
         cout << "Done!\n";

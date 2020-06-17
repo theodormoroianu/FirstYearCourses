@@ -55,7 +55,7 @@ public:
     int CountStates() const;
 
     // DFA minimization, returns the minimised DFA
-    DFA Minimize() const;
+    DFA Minimize(bool tell = 0) const;
 
     /**
      * new automaton accepts a word <=> initial DFA does not

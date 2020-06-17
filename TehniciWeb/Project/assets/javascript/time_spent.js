@@ -41,7 +41,7 @@ var TIME_SPENT_time_left_start = () => {
 // Starts the timer that counts the time spent on the website
 var TIME_SPENT_start = () => {
     var x = window.localStorage.getItem('total-time');
-    if (x == null || x == undefined)
+    if (x == null || x == undefined || x == "NaN")
         window.localStorage.setItem('total-time', 0);
     TIME_SPENT_compute();
 }

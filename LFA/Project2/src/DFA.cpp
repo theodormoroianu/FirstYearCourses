@@ -90,7 +90,7 @@ int DFA::CountStates() const
     return edges_.size(); 
 }
 
-DFA DFA::Minimize() const
+DFA DFA::Minimize(bool tell) const
 {
     int Q = edges_.size();
     int cnt_states = 0;
@@ -163,6 +163,9 @@ DFA DFA::Minimize() const
         }
     }
 
+    if (tell)
+        cout << "Echivalence classes:\n";
+
     /// construction of new DFA
     vector <map <char, int>> new_edges(cnt_states);
     set <int> new_end_nodes;
@@ -171,6 +174,14 @@ DFA DFA::Minimize() const
     for (int i = 0; i < cnt_states; i++) {
         /// imi aleg un element random din state care ar trebui
         /// sa fie identic cu toti ceilalti
+
+        if (tell) {
+            cout << "State " << i << ": { ";
+            for (auto j : states[i])
+                cout << j << ' ';
+            cout << "}\n";
+        }
+
         int x = states[i][0];
         if (end_nodes_.find(x) != end_nodes_.end())
             new_end_nodes.insert(i);
