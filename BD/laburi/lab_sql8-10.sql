@@ -260,6 +260,357 @@ ROLLBACK TO p;
 COMMIT;
 
 
+-- LAB 9 =============================================================================
+
+--1
+
+CREATE TABLE angajati_tmo (
+    cod_ang number(4),
+    nume varchar2(20),
+    prenume varchar2(20),
+    email char(15),
+    data_ang date,
+    job varchar2(20),
+    cod_sef number(4),
+    salariu number(8, 2),
+    cod_dep number(2));
+DROP TABLE angajati_tmo;
+
+CREATE TABLE angajati_tmo (
+    cod_ang number(4) PRIMARY KEY,
+    nume varchar2(20) NOT NULL,
+    prenume varchar2(20) NOT NULL,
+    email char(15),
+    data_ang date,
+    job varchar2(20),
+    cod_sef number(4),
+    salariu number(8, 2),
+    cod_dep number(2));
+
+DROP TABLE angajati_tmo;
+
+CREATE TABLE angajati_tmo (
+    cod_ang number(4),
+    nume varchar2(20) NOT NULL,
+    prenume varchar2(20),
+    email char(15),
+    data_ang date DEFAULT sysdate,
+    job varchar2(20),
+    cod_sef number(4),
+    salariu number(8, 2) NOT NULL,
+    cod_dep number(2),
+    PRIMARY KEY(cod_ang),
+    FOREIGN KEY (cod_ang) REFERENCES employees(employee_id));
+
+DESC angajati_tmo;
+
+SELECT * FROM user_constraints
+WHERE LOWER(table_name) = 'angajati_tmo';
+
+--2
+
+TRUNCATE TABLE angajati_tmo;
+
+INSERT INTO angajati_tmo (cod_ang, nume, prenume, email, data_ang, job, cod_sef, salariu, cod_dep)
+SELECT 100, 'Nume1', 'Prenume1', NULL, NULL, 'Director', NULL, 20000, 10 FROM DUAL
+UNION
+SELECT 103, 'Nume4', 'Prenume4', NULL, NULL, 'Inginer', 100, 9000, 20 FROM DUAL;
+
+INSERT INTO angajati_tmo
+SELECT 101, 'Nume2', 'Prenume2', 'Nume2', '02-FEB-2014', 'Inginer', 100, 10000, 10 FROM dual;
+
+--3
+
+CREATE TABLE angajati10_tmo AS (SELECT *
+                                FROM angajati_tmo
+                                WHERE cod_dep = 10);
+                                
+DESC angajati10_tmo;
+
+--4
+
+ALTER TABLE angajati_tmo
+ADD comision number(4, 2);
+
+DESC angajati_tmo;
+
+--5
+
+ALTER TABLE angajati_tmo
+MODIFY salariu NUMBER(1, 10); -- NU
+
+--6
+
+ALTER TABLE angajati_tmo
+MODIFY salariu DEFAULT 10;
+
+--7
+
+ALTER TABLE angajati_tmo
+MODIFY (comision NUMBER(2, 2), salariu NUMBER(10, 2));
+
+--8
+
+UPDATE angajati_tmo
+SET comision = 0.1
+WHERE LOWER(job) LIKE 'i%';
+
+--9
+
+ALTER TABLE angajati_tmo
+MODIFY email VARCHAR2(100);
+
+--10
+
+ALTER TABLE angajati_tmo
+ADD nr_telefon VARCHAR2(10) DEFAULT '123';
+
+--11
+
+SELECT *
+FROM angajati_tmo;
+
+ALTER TABLE angajati_tmo
+DROP (nr_telefon);
+
+--12
+
+RENAME angajati_tmo TO angajati3_tmo;
+
+--13
+
+SELECT * FROM TAB
+WHERE tname = 'ANGAJATI3_TMO';
+RENAME angajati3_tmo TO angajati_tmo;
+
+--14
+
+TRUNCATE TABLE angajati_tmo;
+
+--15
+
+DROP TABLE departamente_tmo;
+CREATE TABLE departamente_tmo (
+    cod_dep number(2),
+    nume varchar2(15) NOT NULL,
+    cod_director number(4)
+);
+DESC departamente_tmo;
+
+--16
+
+INSERT INTO departamente_tmo
+(SELECT 10, 'Administrativ', 100 FROM DUAL
+    UNION
+ SELECT 20, 'PRoiectare', 101 FROM DUAL
+    UNION
+ SELECT 30, 'Programara', null FROM DUAL);
+
+--17
+
+ALTER TABLE departamente_tmo
+ADD CONSTRAINT dep_tmo_pk PRIMARY KEY(cod_dep);
+
+--18
+
+DESC angajati_tmo;
+DESC departamente_tmo;
+ALTER TABLE angajati_tmo
+ADD CONSTRAINT ang_fk FOREIGN KEY (cod_dep) REFERENCES departamente_tmo(cod_dep);
+
+DROP TABLE angajati_tmo;
+CREATE TABLE angajati_tmo (
+    cod_ang NUMBER(4) PRIMARY KEY,
+    nume VARCHAR2(20) NOT NULL,
+    prenume VARCHAR2(20) NOT NULL,
+    email VARCHAR2(100),
+    data_ang DATE,
+    job VARCHAR2(20),
+    cod_sef NUMBER(4),
+    salariu NUMBER(10, 2) NOT NULL,
+    cod_dep NUMBER(2),
+    comision NUMBER(2, 2),
+    CONSTRAINT fk_ang_tmo FOREIGN KEY (cod_dep) REFERENCES departamente_tmo(cod_dep),
+    CONSTRAINT un_num_pren UNIQUE(nume, prenume),
+    CONSTRAINT un_email UNIQUE(email),
+    CONSTRAINT chk_ang_tmo CHECK(cod_dep > 0),
+    CONSTRAINT chk2_Ang_tmo CHECK(salariu > 100 * comision)
+);
+
+--19
+DROP TABLE angajati_tmo;
+CREATE TABLE angajati_tmo (
+    cod_ang NUMBER(4),
+    nume VARCHAR2(20) NOT NULL,
+    prenume VARCHAR2(20) NOT NULL,
+    email VARCHAR2(100),
+    data_ang DATE,
+    job VARCHAR2(20),
+    cod_sef NUMBER(4),
+    salariu NUMBER(10, 2) NOT NULL,
+    cod_dep NUMBER(2),
+    comision NUMBER(2, 2),
+    PRIMARY KEY(cod_ang),
+    CONSTRAINT fk_ang_tmo FOREIGN KEY (cod_dep) REFERENCES departamente_tmo(cod_dep),
+    CONSTRAINT un_num_pren UNIQUE(nume, prenume),
+    CONSTRAINT un_email UNIQUE(email),
+    CONSTRAINT chk_ang_tmo CHECK(cod_dep > 0),
+    CONSTRAINT chk2_Ang_tmo CHECK(salariu > 100 * comision)
+);
+
+--20
+
+TRUNCATE TABLE angajati_tmo;
+ALTER TABLE angajati_tmo
+ADD CONSTRAINT chk2_Ang_tmo CHECK(salariu > 0);
+
+SELECT *
+FROM departamente_tmo;
+
+INSERT INTO angajati_tmo (cod_ang, nume, prenume, salariu, cod_dep)
+VALUES(1, 'popescu', 'marian', 123, 10);
+
+--21
+
+DELETE FROM departamente_tmo;
+
+--22
+
+DROP TABLE departame
+SELECT *
+FROM user_tables
+WHERE LOWER(table_name) = 'angajati_tmo';
+
+
+--23
+
+SELECT *
+FROM user_constraints
+WHERE LOWER(table_name) IN ('departamente_tmo', 'angajati_tmo');
+
+SELECT *
+FROM user_cons_columns
+WHERE LOWER(table_name) IN ('departamente_tmo', 'angajati_tmo');
+
+--24
+
+SELECT *
+FROM angajati_tmo;
+
+UPDATE angajati_tmo
+SET email = nume
+WHERE email IS NULL;
+
+ALTER TABLE angajati_tmo
+MODIFY (email NOT NULL);
+
+
+--25
+
+DESC angajati_tmo;
+INSERT INTO angajati_tmo (cod_ang, nume, prenume, email, salariu, cod_dep)
+VALUES (643, '123', '123', '123', 123, 50);
+
+--26
+
+DESC departamente_tmo;
+INSERT INTO departamente_tmo
+VALUES (60, 'Testare', NULL);
+
+COMMIT;
+
+--27
+
+DELETE FROM departamente_tmo
+WHERE cod_dep = 20;
+
+--28
+
+DELETE FROM departamente_tmo
+WHERE cod_dep = 60;
+
+ROLLBACK;
+
+--29
+
+DESC angajati_tmo;
+
+ALTER TABLE angajati_tmo
+ADD CONSTRAINT fk_sef FOREIGN KEY (cod_sef) REFERENCES angajati_tmo(cod_ang);
+
+INSERT INTO angajati_tmo(cod_ang, nume, prenume, email, cod_sef, salariu)
+VALUES (151, '1123', '1123', '1213', 114, 123);
+
+--30
+
+INSERT INTO angajati_tmo(cod_ang, nume, prenume, email, salariu)
+VALUES (114, '123', '123', '123', 23);
+
+--31
+
+SELECT *
+FROM user_constraints
+WHERE LOWER(table_name) = 'angajati_tmo';
+
+DESC departamente_tmo;
+
+ALTER TABLE angajati_tmo
+DROP CONSTRAINT fk_ang_tmo;
+ALTER TABLE angajati_tmo
+ADD CONSTRAINT fk_dep FOREIGN KEY(cod_dep) REFERENCES departamente_tmo(cod_dep) ON DELETE CASCADE;
+
+--32
+
+DELETE FROM departamente_tmo
+WHERE cod_dep = 20;
+ROLLBACK;
+--33
+
+UPDATE departamente_tmo
+SET cod_Director = NULL;
+
+ALTER TABLE departamente_tmo
+ADD CONSTRAINT fk_director FOREIGN KEY (cod_director)
+            REFERENCES angajati_tmo(cod_ang) ON DELETE SET NULL;
+
+--34
+
+INSERT INTO angajati_tmo(cod_ang, nume, prenume, email, cod_dep, salariu)
+VALUES (102, '102', '102', '102', 30, 12);
+
+UPDATE departamente_tmo
+SET cod_director = 102
+WHERE cod_dep = 30;
+
+--35
+
+ALTER TABLE angajati_tmo
+ADD CONSTRAINT chk_sal CHECK(salariu <= 30000);
+
+--36
+
+INSERT INTO angajati_tmo(cod_ang, nume, prenume, email, salariu)
+VALUES(1234, '1233', '1232', '42', 35000);
+
+--37
+
+ALTER TABLE angajati_tmo
+DISABLE CONSTRAINT chk_sal;
+
+ALTER TABLE angajati_tmo
+ENABLE CONSTRAINT chk_sal;
+
+
+-- LAB 10 ===================================================================
+
+
+;
+SELECT * FROM departamente_tmo;
+SELECT * FROM angajati_tmo;
+DESC departamente_tmo;
+DESC angajati_tmo;
+
+
 
 
 ;
