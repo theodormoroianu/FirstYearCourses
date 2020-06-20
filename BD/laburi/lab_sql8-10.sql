@@ -603,6 +603,22 @@ ENABLE CONSTRAINT chk_sal;
 
 -- LAB 10 ===================================================================
 
+--1
+CREATE OR REPLACE VIEW VIZ_EMP30_TMO AS
+SELECT employee_id, last_name, email, hire_date, job_id
+FROM emp_tmo
+WHERE department_id = 30;
+
+SELECT * FROM viz_emp30_tmo;
+DESC emp_tmo;
+--2
+
+INSERT INTO viz_emp30_tmo
+VALUES(12, '123', 't', sysdate, '12');
+
+--3
+
+DESC emp_tmo;
 
 ;
 SELECT * FROM departamente_tmo;
